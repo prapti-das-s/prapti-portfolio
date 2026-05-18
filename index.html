@@ -97,7 +97,7 @@
     <div class="lightning"></div>
 
     <div class="hero-content">
-      <div class="hero-eyebrow">Bengaluru, India &nbsp;·&nbsp; BBA Finance &amp; Economics</div>
+      <div class="hero-eyebrow">Bengaluru, India &nbsp;·&nbsp; Growth Marketing &amp; Content Strategy</div>
       <h1 class="hero-name">Prapti<br>Das</h1>
       <p class="hero-tagline">Growth Marketer. Content Strategist. Creative Problem Solver.</p>
       <p class="hero-bio">
@@ -114,7 +114,7 @@
     <div class="hero-aside">
       <span class="v-tag">Fashion · Film · Food</span>
       <span class="v-tag">Strategy · Growth · Content</span>
-      <span class="v-tag">BBA · Finance · Economics</span>
+      <span class="v-tag">Campaigns · Analytics · Copy</span>
     </div>
   </section>
 
@@ -126,44 +126,57 @@
         <h2 class="sec-title">About Me</h2>
         <div class="ornament">⚗</div>
       </div>
-      <div class="about-grid">
-        <div>
-          <div class="img-frame">
-            <img src="assets/images/poster.jpg" alt="Zariya Productions — Street Play — Mood Indigo 2025">
-            <div class="corner c-tl"></div>
-            <div class="corner c-tr"></div>
-            <div class="corner c-bl"></div>
-            <div class="corner c-br"></div>
-          </div>
-          <p class="img-caption">Zariya Productions · Mood Indigo, IIT Bombay 2025 · 2nd Runner-Up</p>
-        </div>
+      <div class="about-full">
         <div class="about-text">
           <h3>Who I Am</h3>
           <p>
-            I am a BBA student at Christ (Deemed to be) University, Bengaluru,
-            specializing in Finance and Economics. I graduate in 2027. Between now and then,
-            I am building the kind of experience that most people wait until after graduation to chase.
+            I am a growth marketer and content strategist based in Bengaluru. My work sits at the
+            intersection of creative instinct and analytical thinking — I can write a campaign concept
+            in the morning and dig into funnel data in the afternoon, and I think that range is what
+            makes me useful.
           </p>
           <p>
-            My internships span five industries: marketing technology, real estate, premium fashion,
-            edtech, and event management. Each one taught me something different about how brands
-            grow, where campaigns break down, and what actually moves people to act.
+            Five internships across fashion, real estate, edtech, martech, and event management have
+            given me a wide lens. I have run paid acquisition, built content roadmaps from scratch,
+            managed social accounts, run A/B tests, and tracked performance across every campaign I
+            have touched. I follow fashion closely, watch a lot of films, and have a genuine interest
+            in architecture and design history — because the best marketing borrows from everywhere.
           </p>
-          <p>
-            Outside of work, I follow fashion history closely, watch a lot of films, and stay sharp
-            on architecture and design. I think the best marketing borrows from everywhere.
-          </p>
-          <div class="tags">
-            <span class="tag">Growth Marketing</span>
-            <span class="tag">Content Strategy</span>
-            <span class="tag">Fashion &amp; Apparel</span>
-            <span class="tag">Film &amp; Entertainment</span>
-            <span class="tag">Architecture &amp; Design</span>
-            <span class="tag">Social Media</span>
-            <span class="tag">A/B Testing</span>
-            <span class="tag">Analytics</span>
-            <span class="tag">Python · Automation</span>
+        </div>
+
+        <div class="about-stats">
+          <div class="stat-card">
+            <span class="stat-number">5</span>
+            <span class="stat-label">Industries</span>
+            <span class="stat-sub">Fashion · EdTech · MarTech · Real Estate · Events</span>
           </div>
+          <div class="stat-card">
+            <span class="stat-number">10K+</span>
+            <span class="stat-label">Downloads in 1 month</span>
+            <span class="stat-sub">Aavo app campaign, Sept 2024</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">86%</span>
+            <span class="stat-label">Win Rate</span>
+            <span class="stat-sub">10+ inter-collegiate business fests</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">3K</span>
+            <span class="stat-label">Followers in 3 months</span>
+            <span class="stat-sub">Synapse club content series</span>
+          </div>
+        </div>
+
+        <div class="tags" style="margin-top:2.5rem;">
+          <span class="tag">Growth Marketing</span>
+          <span class="tag">Content Strategy</span>
+          <span class="tag">Fashion &amp; Apparel</span>
+          <span class="tag">Film &amp; Entertainment</span>
+          <span class="tag">Architecture &amp; Design</span>
+          <span class="tag">Social Media</span>
+          <span class="tag">A/B Testing</span>
+          <span class="tag">Analytics</span>
+          <span class="tag">Python · Automation</span>
         </div>
       </div>
     </div>
@@ -254,58 +267,71 @@
       <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:0.5rem; letter-spacing:.06em;">
         Video Edits
       </h3>
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Hover to play</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Click to watch</p>
       <div class="video-grid">
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/event_reel.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/event_reel.mp4','Event Reel')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Event Reel</div>
         </div>
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/story_telling.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/story_telling.mp4','Storytelling')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Storytelling</div>
         </div>
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/fast_paced_edit.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/fast_paced_edit.mp4','Fast-Paced Edit')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Fast-Paced Edit</div>
         </div>
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/montage.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/montage.mp4','Montage')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Montage</div>
         </div>
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/story_board.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/story_board.mp4','Storyboard Edit')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Storyboard Edit</div>
         </div>
-        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
-          <video muted loop playsinline preload="metadata">
-            <source src="assets/videos/typography_based.mp4" type="video/mp4">
-          </video>
-          <div class="video-play-icon">&#9654;</div>
+        <div class="video-card" onclick="openVideoModal('assets/videos/typography_based.mp4','Typography Edit')">
+          <div class="video-thumb-inner">
+            <span class="video-play-btn">&#9654;</span>
+          </div>
           <div class="video-label">Typography Edit</div>
         </div>
       </div>
 
-      <!-- CAMPAIGN CAROUSEL -->
+      <!-- VIDEO MODAL -->
+      <div id="video-modal" class="video-modal" onclick="closeVideoModal(event)">
+        <div class="video-modal-inner">
+          <button class="video-modal-close" onclick="closeVideoModal()">&#10005;</button>
+          <div class="video-modal-title" id="video-modal-title"></div>
+          <video id="modal-video" controls playsinline style="width:100%; max-height:80vh; display:block;">
+          </video>
+        </div>
+      </div>
+
+      <!-- GRAPHIC DESIGN WORK -->
       <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:1.5rem; letter-spacing:.06em; margin-top:3.5rem;">
-        Spec Campaign — Smash Burger
+        Graphic Design &amp; Campaign Work
       </h3>
 
-      <div class="campaign-block">
+      <div class="design-grid">
+        <div class="design-card">
+          <div class="design-card-label">◈ &nbsp;Poster Design · Zariya Productions</div>
+          <img src="assets/images/poster.jpg" alt="Zariya Productions Street Play Poster — Mood Indigo 2025" class="design-img">
+          <div class="design-card-caption">Social campaign poster for Zariya Productions street play — Mood Indigo, IIT Bombay 2025</div>
+        </div>
+
+        <div class="design-card">
+          <div class="design-card-label">◈ &nbsp;Spec Campaign · Smash Burger · 2025</div>
+          <div class="campaign-block" style="border:none; background:transparent;">
         <div class="campaign-header">
           <span class="campaign-header-text">Smash Burger · Spec Campaign · Self-Initiated · 2025</span>
           <span class="campaign-sub">Scroll to see all three posts</span>
@@ -329,6 +355,8 @@
             <div class="c-dot" onclick="goToSlide(1)"></div>
             <div class="c-dot" onclick="goToSlide(2)"></div>
           </div>
+        </div>
+          <div class="design-card-caption">Self-initiated spec campaign for Smash Burger — concept, copy, and art direction</div>
         </div>
       </div>
 

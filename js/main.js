@@ -188,3 +188,35 @@ document.querySelectorAll('.tl-item, .skill-card, .quest-card, .industry-card, .
   el.style.transition = 'opacity .5s ease, transform .5s ease';
   observer.observe(el);
 });
+
+// ── VIDEO MODAL ──────────────────────────────────────────────
+function openVideoModal(src, title) {
+  const modal = document.getElementById('video-modal');
+  const video = document.getElementById('modal-video');
+  const titleEl = document.getElementById('video-modal-title');
+
+  if (!modal || !video) return;
+
+  video.src = src;
+  titleEl.textContent = title;
+  modal.classList.add('open');
+  video.play().catch(() => {});
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal(e) {
+  // if called from backdrop click, only close if clicking backdrop itself
+  if (e && e.target !== document.getElementById('video-modal')) return;
+  const modal = document.getElementById('video-modal');
+  const video = document.getElementById('modal-video');
+  if (!modal) return;
+  video.pause();
+  video.src = '';
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeVideoModal();
+});
