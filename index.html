@@ -251,44 +251,51 @@
       </div>
 
       <!-- VIDEO GRID -->
-      <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:1.5rem; letter-spacing:.06em;">
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:0.5rem; letter-spacing:.06em;">
         Video Edits
       </h3>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Hover to play</p>
       <div class="video-grid">
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/event_reel.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Event Reel</div>
         </div>
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/story_telling.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Storytelling</div>
         </div>
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/fast_paced_edit.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Fast-Paced Edit</div>
         </div>
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/montage.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Montage</div>
         </div>
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/story_board.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Storyboard Edit</div>
         </div>
-        <div class="video-card">
-          <video autoplay muted loop playsinline>
+        <div class="video-card" onmouseenter="this.querySelector('video').play()" onmouseleave="this.querySelector('video').pause()">
+          <video muted loop playsinline preload="metadata">
             <source src="assets/videos/typography_based.mp4" type="video/mp4">
           </video>
+          <div class="video-play-icon">&#9654;</div>
           <div class="video-label">Typography Edit</div>
         </div>
       </div>

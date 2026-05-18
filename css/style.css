@@ -473,6 +473,19 @@ body::before {
 }
 .video-card:hover video { opacity:1; }
 
+.video-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: rgba(201,168,76,.7);
+  pointer-events: none;
+  transition: opacity .28s;
+  text-shadow: 0 0 20px rgba(201,168,76,.4);
+}
+.video-card:hover .video-play-icon { opacity: 0; }
+
 .video-label {
   position: absolute;
   bottom:0; left:0; right:0;
@@ -520,19 +533,33 @@ body::before {
   color: var(--tarnished);
 }
 
-.carousel-wrap { position: relative; overflow: hidden; }
+.carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  /* Instagram portrait post ratio: 4:5 = 1080x1350px */
+  aspect-ratio: 4 / 5;
+  max-width: 540px;
+  margin: 0 auto;
+  background: #000;
+}
 
 .carousel-track {
   display: flex;
+  height: 100%;
   transition: transform .55s cubic-bezier(.25,.46,.45,.94);
 }
 
-.carousel-slide { min-width: 100%; }
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
 
 .carousel-slide img {
   width: 100%;
-  max-height: 540px;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
