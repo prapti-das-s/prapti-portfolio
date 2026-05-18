@@ -1,0 +1,9 @@
+# Git Large File Storage (LFS) — tracks video files
+# This tells Git to store these files on LFS instead of regular Git
+# Without this, GitHub will reject files over 100MB
+
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.webm filter=lfs diff=lfs merge=lfs -text
+*.mp4 !text !filter !merge !diff
