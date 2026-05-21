@@ -267,53 +267,61 @@
       <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:0.5rem; letter-spacing:.06em;">
         Video Edits
       </h3>
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Click to watch</p>
-      <div class="video-grid">
-        <div class="video-card" onclick="openVideoModal('assets/videos/event_reel.mp4','Event Reel')">
-          <div class="video-thumb-inner">
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Click any card to watch</p>
+
+      <div class="video-grid" id="video-grid">
+        <div class="video-card" onclick="openYTModal('PX56KsfuxCQ','Event Reel')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/PX56KsfuxCQ/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Event Reel</div>
         </div>
-        <div class="video-card" onclick="openVideoModal('assets/videos/story_telling.mp4','Storytelling')">
-          <div class="video-thumb-inner">
+        <div class="video-card" onclick="openYTModal('OQyjY4RaYOA','Storytelling')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/OQyjY4RaYOA/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Storytelling</div>
         </div>
-        <div class="video-card" onclick="openVideoModal('assets/videos/fast_paced_edit.mp4','Fast-Paced Edit')">
-          <div class="video-thumb-inner">
+        <div class="video-card" onclick="openYTModal('3UgiNTPewd4','Fast-Paced Edit')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/3UgiNTPewd4/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Fast-Paced Edit</div>
         </div>
-        <div class="video-card" onclick="openVideoModal('assets/videos/montage.mp4','Montage')">
-          <div class="video-thumb-inner">
+        <div class="video-card" onclick="openYTModal('2KKxfu-ZAeY','Montage')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/2KKxfu-ZAeY/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Montage</div>
         </div>
-        <div class="video-card" onclick="openVideoModal('assets/videos/story_board.mp4','Storyboard Edit')">
-          <div class="video-thumb-inner">
+        <div class="video-card" onclick="openYTModal('9gqXWOG6lOk','Storyboard Edit')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/9gqXWOG6lOk/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Storyboard Edit</div>
         </div>
-        <div class="video-card" onclick="openVideoModal('assets/videos/typography_based.mp4','Typography Edit')">
-          <div class="video-thumb-inner">
+        <div class="video-card" onclick="openYTModal('fZNkgR2OqyA','Typography Edit')">
+          <div class="video-thumb-inner" style="background-image:url('https://img.youtube.com/vi/fZNkgR2OqyA/mqdefault.jpg');">
             <span class="video-play-btn">&#9654;</span>
           </div>
           <div class="video-label">Typography Edit</div>
         </div>
       </div>
 
-      <!-- VIDEO MODAL -->
-      <div id="video-modal" class="video-modal" onclick="closeVideoModal(event)">
-        <div class="video-modal-inner">
-          <button class="video-modal-close" onclick="closeVideoModal()">&#10005;</button>
-          <div class="video-modal-title" id="video-modal-title"></div>
-          <video id="modal-video" controls playsinline style="width:100%; max-height:80vh; display:block;">
-          </video>
+      <!-- YOUTUBE MODAL -->
+      <div id="yt-modal" class="video-modal" onclick="closeYTModal(event)">
+        <div class="video-modal-inner" style="max-width:520px;">
+          <button class="video-modal-close" onclick="closeYTModal()">&#10005;</button>
+          <div class="video-modal-title" id="yt-modal-title"></div>
+          <div style="position:relative; aspect-ratio:9/16; width:100%;">
+            <iframe
+              id="yt-iframe"
+              src=""
+              style="position:absolute; inset:0; width:100%; height:100%; border:none;"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
       </div>
 

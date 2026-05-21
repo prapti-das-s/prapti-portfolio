@@ -1347,6 +1347,27 @@ footer {
   align-items: center;
   justify-content: center;
   background: radial-gradient(ellipse at center, #1a1208 0%, #0d0a06 100%);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* dark overlay so play button is always visible over thumbnail */
+.video-thumb-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  transition: background .28s;
+}
+
+.video-card:hover .video-thumb-inner::after {
+  background: rgba(0,0,0,.15);
+}
+
+.video-play-btn {
+  position: relative;
+  z-index: 1;
 }
 
 .video-play-btn {

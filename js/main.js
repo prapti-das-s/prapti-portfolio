@@ -189,34 +189,31 @@ document.querySelectorAll('.tl-item, .skill-card, .quest-card, .industry-card, .
   observer.observe(el);
 });
 
-// ── VIDEO MODAL ──────────────────────────────────────────────
-function openVideoModal(src, title) {
-  const modal = document.getElementById('video-modal');
-  const video = document.getElementById('modal-video');
-  const titleEl = document.getElementById('video-modal-title');
+// ── YOUTUBE MODAL ────────────────────────────────────────────
+function openYTModal(videoId, title) {
+  const modal   = document.getElementById('yt-modal');
+  const iframe  = document.getElementById('yt-iframe');
+  const titleEl = document.getElementById('yt-modal-title');
+  if (!modal) return;
 
-  if (!modal || !video) return;
-
-  video.src = src;
+  // autoplay=1 starts the video immediately when modal opens
+  iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
   titleEl.textContent = title;
   modal.classList.add('open');
-  video.play().catch(() => {});
   document.body.style.overflow = 'hidden';
 }
 
-function closeVideoModal(e) {
-  // if called from backdrop click, only close if clicking backdrop itself
-  if (e && e.target !== document.getElementById('video-modal')) return;
-  const modal = document.getElementById('video-modal');
-  const video = document.getElementById('modal-video');
+function closeYTModal(e) {
+  if (e && e.target !== document.getElementById('yt-modal')) return;
+  const modal  = document.getElementById('yt-modal');
+  const iframe = document.getElementById('yt-iframe');
   if (!modal) return;
-  video.pause();
-  video.src = '';
+  iframe.src = ''; // stops the video
   modal.classList.remove('open');
   document.body.style.overflow = '';
 }
 
 // close on Escape key
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeVideoModal();
+  if (e.key === 'Escape') closeYTModal();
 });
