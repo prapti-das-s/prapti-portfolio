@@ -189,31 +189,24 @@ document.querySelectorAll('.tl-item, .skill-card, .quest-card, .industry-card, .
   observer.observe(el);
 });
 
-// ── YOUTUBE MODAL ────────────────────────────────────────────
-function openYTModal(videoId, title) {
-  const modal   = document.getElementById('yt-modal');
-  const iframe  = document.getElementById('yt-iframe');
-  const titleEl = document.getElementById('yt-modal-title');
-  if (!modal) return;
+// ── INLINE VIDEO PLAYBACK ─────────────────────────────────────
+function playInline(videoId) {
+  const card  = document.getElementById('card-' + videoId);
+  const thumb = card.querySelector('.video-thumb-inner');
 
-  // autoplay=1 starts the video immediately when modal opens
+  // swap thumb for iframe in place
+  thumb.innerHTML = '';
+  thumb.style.padding = '0';
+  thumb.style.background = '#000';
+  thumb.style.cursor = 'default';
+  thumb.onclick = null;
+
+  const iframe = document.createElement('iframe');
   iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-  titleEl.textContent = title;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  iframe.style.cssText = 'width:100%; height:100%; position:absolute; inset:0; border:none;';
 
-function closeYTModal(e) {
-  if (e && e.target !== document.getElementById('yt-modal')) return;
-  const modal  = document.getElementById('yt-modal');
-  const iframe = document.getElementById('yt-iframe');
-  if (!modal) return;
-  iframe.src = ''; // stops the video
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
+  thumb.style.position = 'relative';
+  thumb.appendChild(iframe);
 }
-
-// close on Escape key
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeYTModal();
-});
