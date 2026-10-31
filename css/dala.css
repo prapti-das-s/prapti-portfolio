@@ -187,3 +187,12 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 .deck-col .deck{margin:0 auto}
 @media(max-width:860px){.gd-row{grid-template-columns:1fr}.gd-media{max-width:420px}}
 @media(prefers-reduced-motion:reduce){.mk-eye{animation:none}}
+
+/* carousel row: keep the fanned side cards inside their own column so they never cover the text */
+.gd-row-2{grid-template-columns:minmax(0,500px) 1fr;column-gap:clamp(48px,7vw,110px)}
+.gd-row-2 .deck-col{overflow:hidden;padding:0 clamp(8px,2vw,24px)}
+.gd-row-2 .deck{max-width:380px}
+.gd-row-2 .deck-card[data-p="1"]{transform:translateX(14%) rotate(6deg) scale(.9)}
+.gd-row-2 .deck-card[data-p="2"]{transform:translateX(-14%) rotate(-6deg) scale(.9)}
+.gd-row-2 .gd-copy{position:relative;z-index:5;padding-left:clamp(0px,1.5vw,20px)}
+@media(max-width:860px){.gd-row-2{grid-template-columns:1fr}.gd-row-2 .deck-col{padding:0 18px}}

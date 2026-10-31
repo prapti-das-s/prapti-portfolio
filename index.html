@@ -398,8 +398,8 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
-  addEventListener('pointermove',e=>{seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
-  let seen=false;
+  addEventListener('pointermove',e=>{fastMove+=Math.hypot(e.clientX-lpx,e.clientY-lpy)/30;lpx=e.clientX;lpy=e.clientY;seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
+  let seen=false,lpx=0,lpy=0;const VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
   const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
   const t0=performance.now();
   (function loop(now){
@@ -412,33 +412,42 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
      const T=U.uTime.value;
-     const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0;
+     const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
+     const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*.95),cam.position.x+hx*.95);BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
+     DP.copy(BD);let spd;
      if(seen){
-       /* follow the cursor from a comfortable distance, slowly circling it so the bird never sits on the pointer */
-       const rad=Math.max(W*.11,3.2)*amp,an=T*.55;
-       TG.set(
-         Math.min(Math.max(cam.position.x+mx*hx+Math.cos(an)*rad*1.1,cam.position.x-hx*.9),cam.position.x+hx*.9),
-         Math.min(Math.max(cam.position.y+my*hy+Math.sin(an)*rad*.55+rad*.25,cam.position.y-hy*.8),cam.position.y+hy*.8),
-         base.z-2+Math.sin(T*.07+1)*2);
+       /* hover about an inch from the pointer, drifting round it, with its head always turned toward the pointer like eyes following a target */
+       const inch=100*2*hx/vw,rad=Math.max(inch,1.6),an=T*.7+Math.sin(T*.23)*1.6;
+       TG.set(cxw+Math.cos(an)*rad,cyw+Math.sin(an)*rad*.7+Math.sin(T*2.3)*.12,base.z-2+Math.sin(T*.07+1)*1.5);
+       /* springy follow: eases out of rests, overshoots a touch on sudden moves, like a bird settling on a new perch */
+       VEL.x+=((TG.x-BP.x)*8-VEL.x*3.6)*dt;VEL.y+=((TG.y-BP.y)*8-VEL.y*3.6)*dt;VEL.z+=((TG.z-BP.z)*3-VEL.z*3)*dt;
+       spd=Math.hypot(VEL.x,VEL.y);const cap=16;if(spd>cap){VEL.x*=cap/spd;VEL.y*=cap/spd;spd=cap}
+       BP.addScaledVector(VEL,dt);clampB();
+       /* heading: face the pointer when hovering, face the direction of travel when travelling fast */
+       DS.set(cxw-BP.x,cyw-BP.y,0);if(DS.lengthSq()<1e-4)DS.copy(BD);DS.normalize();
+       const run=Math.min(Math.max((spd-3.5)/5,0),1);
+       if(run>0&&spd>.01){F.set(VEL.x,VEL.y,0).normalize();DS.lerp(F,run).normalize()}
+       BD.lerp(DS,Math.min(1,5*dt)).normalize();BD.z*=.8;BD.normalize();
+       /* occasional flip: a full roll, now and then, and when the pointer is flung across the screen */
+       fastMove=Math.max(0,fastMove-dt*2);
+       if(rollP<0){rollWait-=dt;if(rollWait<=0||(fastMove>14&&rollWait<8)){rollP=0;rollDir=Math.random()<.5?1:-1;rollWait=7+Math.random()*7}}
+       else{rollP+=dt/1.05;if(rollP>=1)rollP=-1}
      }else{
        TG.set(Math.sin(T*.10)*W*.30*amp+Math.sin(T*.27+1)*W*.08*amp,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+       DS.subVectors(TG,BP).normalize();
+       BD.lerp(DS,Math.min(1,.7*dt)).normalize();
+       BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
+       BP.addScaledVector(BD,3.4*dt);spd=3.4;clampB();VEL.set(BD.x*3.4,BD.y*3.4,0);
      }
-     DS.subVectors(TG,BP).normalize();DP.copy(BD);
-     BD.lerp(DS,Math.min(1,(seen?1.5:.7)*dt)).normalize();
-     BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
-     const gapD=TG.distanceTo(BP);
-     BP.addScaledVector(BD,(seen?Math.min(2.6+gapD*.35,6.5):3.4)*dt);
-     /* never leave the hero: keep the bird inside the visible area */
-     BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*.95),cam.position.x+hx*.95);
-     BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85);
      const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
      bank+=(Math.max(-.6,Math.min(.6,-yaw*.9))-bank)*Math.min(1,1.6*dt);
-     fm+=(((BD.y>.05)||Math.sin(T*.5)>.15?1:0)-fm)*Math.min(1,.8*dt);   /* flap while climbing / in bursts, glide otherwise */
+     /* wingbeats: steady flapping while hovering, flap-and-glide on long runs */
+     fm+=((spd>8?(Math.sin(T*1.7)>.1?1:.2):seen?1:((BD.y>.05)||Math.sin(T*.5)>.15?1:0))-fm)*Math.min(1,2.2*dt);
      U.uFA.value=.22+.78*fm;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
      const rgt=RG.crossVectors(BD,up).normalize();
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
-     QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,2.2*dt));U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QS));
+     QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,4*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
      U.uBirdOff.value.copy(BP).lerp(base,1-k);
      const r=heroTxt?heroTxt.getBoundingClientRect():null;let f=0;
      /* f: 0 = clear of the text, 1 = right behind it; eased so the bird fades out gradually and glows back in as it leaves */
