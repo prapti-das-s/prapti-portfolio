@@ -1,965 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prapti Das — Portfolio</title>
-  <meta name="description" content="Prapti Das — Growth Marketer, Content Strategist, and Creative based in Bengaluru.">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prapti Das — Growth Marketer & Content Strategist</title>
+<meta name="description" content="Prapti Das is a growth marketer and content strategist in Bengaluru. Five industries, 10K+ downloads in a month, and an 86% win rate across inter-collegiate fests.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Prapti Das — Growth Marketer & Content Strategist">
+<meta property="og:description" content="I build brands from the ground up and push them into spaces they haven't occupied yet.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><rect x='9' y='9' width='14' height='14' fill='none' stroke='%238052ff' stroke-width='3'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#000;--bone:#fff;--ash:#9a9a9a;--mist:#bdbdbd;--iris:#8052ff;--saffron:#ffb829;--verdant:#15846e;
+  --font:'PPNeueMontreal','Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --pad:clamp(20px,4vw,48px);--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{background:var(--void);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:transparent;color:var(--bone);font:200 18px/1.5 var(--font);font-feature-settings:"ss01" on;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:1px solid var(--saffron);outline-offset:6px;border-radius:4px}
+::selection{background:var(--iris);color:#fff}
 
-  <!-- Inline SVG favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230d0a06' stroke='%23c9a84c' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='16' fill='%23c9a84c'>P</text></svg>">
+/* nav */
+body>nav{position:fixed;inset:0 0 auto 0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px var(--pad);max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px;font:400 18px/1 var(--font);letter-spacing:-.02em}
+.logo i{width:18px;height:18px;border:2px solid var(--iris);display:block;transform:rotate(12deg);transition:transform .6s var(--ease),border-radius .6s var(--ease)}
+.logo:hover i{transform:rotate(135deg);border-radius:50%}
+.links{display:flex;align-items:center;gap:30px}
+.links a{font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;color:var(--ash);transition:color .3s}
+.links a:hover{color:var(--bone)}
+.pill{background:var(--iris);color:#fff!important;padding:14px 18px;border-radius:24px;transition:transform .4s var(--ease),filter .3s}
+.pill:hover{transform:translateY(-2px);filter:brightness(1.15)}
+
+/* layout */
+section{min-height:100vh;display:flex;align-items:center;padding:120px var(--pad)}
+.wrap{max-width:1280px;margin:0 auto;width:100%}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.r{grid-column:2}
+h1,h2{font-weight:400;margin:0;letter-spacing:-.04em}
+h1{font-size:clamp(60px,10vw,113px);line-height:1.02;letter-spacing:-.04em}
+h2{font-size:clamp(42px,6.1vw,78px);line-height:1.08}
+.label{display:block;margin-bottom:24px;font:600 12px/1.2 var(--font);letter-spacing:.05em;text-transform:uppercase;color:var(--saffron)}
+.sub{font:400 clamp(22px,2.3vw,27px)/1.2 var(--font);letter-spacing:-.02em;max-width:17em;margin:30px 0 0}
+p{margin:30px 0 0;max-width:34em;color:var(--bone)}
+p+p{margin-top:18px;color:var(--mist)}
+.ghost{display:inline-flex;gap:12px;margin-top:60px;font:400 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;color:var(--saffron);transition:gap .4s var(--ease)}
+.ghost:hover{gap:20px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:72px 36px}
+.stat b{display:block;font:400 clamp(56px,7vw,78px)/1 var(--font);letter-spacing:-.04em}
+.stat span{display:block;margin-top:12px;color:var(--bone)}
+.stat small{display:block;margin-top:6px;font:200 14px/1.4 var(--font);color:var(--ash)}
+
+/* explore */
+.list{display:flex;flex-direction:column;margin-top:0}
+.list a{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:18px 0;font:400 clamp(30px,3.7vw,48px)/1.1 var(--font);letter-spacing:-.035em;color:var(--ash);opacity:calc(1 - var(--i)*.14);transition:color .4s,opacity .4s,transform .6s var(--ease)}
+.list a em{font:200 14px/1.2 var(--font);font-style:normal;letter-spacing:.025em;text-transform:uppercase;color:var(--ash);white-space:nowrap;transition:color .4s}
+.list a:hover,.list a:focus-visible{color:var(--bone);opacity:1;transform:translateX(14px)}
+.list a:hover em{color:var(--saffron)}
+
+/* contact */
+.contact a{display:block;width:max-content;max-width:100%;margin-top:12px;font:400 clamp(20px,2.4vw,27px)/1.2 var(--font);letter-spacing:-.02em;color:var(--ash);transition:color .3s}
+.contact a:hover{color:var(--saffron)}
+footer{padding:0 var(--pad) 36px;font:200 12px/1.5 var(--font);color:var(--ash)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.in{opacity:1;transform:none}
+h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:calc(var(--k)*55ms + .15s)}
+.ready h1 .c{opacity:1;transform:none;filter:none}
+
+@media(max-width:860px){
+  .links a:not(.pill){display:none}
+  .grid{grid-template-columns:1fr;gap:36px}.r{grid-column:1}
+  #hero{align-items:flex-end;padding-bottom:84px}
+  .ghost{margin-top:36px}
+  .stats{gap:48px 24px}
+  p,h2,.stat{text-shadow:0 0 24px #000,0 0 8px #000}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv,h1 .c{transition:none;opacity:1;transform:none;filter:none}}
+</style>
+<noscript><style>.rv,h1 .c{opacity:1;transform:none;filter:none}</style></noscript>
 </head>
 <body>
+<canvas id="gl" aria-hidden="true"></canvas>
 
-<!-- ============================================================
-     NAVIGATION
-     ============================================================ -->
-<nav id="nav">
-  <!-- LOGO -->
-  <a class="nav-logo" onclick="showPage('home')">
-    <svg class="nav-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- outer ring -->
-      <circle cx="24" cy="24" r="22" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity=".6"/>
-      <!-- inner ring -->
-      <circle cx="24" cy="24" r="16" stroke="#c9a84c" stroke-width=".8" fill="none" opacity=".35"/>
-      <!-- P letterform -->
-      <text x="24" y="31" text-anchor="middle"
-            font-family="serif" font-size="20" font-weight="bold"
-            fill="#c9a84c" letter-spacing=".5">P</text>
-      <!-- corner ornaments -->
-      <path d="M6 6 L10 6 L10 10" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M42 6 L38 6 L38 10" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M6 42 L10 42 L10 38" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M42 42 L38 42 L38 38" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-    </svg>
-    <span class="nav-logo-text">Prapti</span>
-  </a>
-
-  <!-- NAV LINKS -->
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#home"       id="nav-home"       onclick="showPage('home');return false;">Home</a></li>
-    <li><a href="#works"      id="nav-works"      onclick="showPage('works');return false;">Work</a></li>
-    <li><a href="#resume"     id="nav-resume"     onclick="showPage('resume');return false;">Resume</a></li>
-    <li><a href="#blog"       id="nav-blog"       onclick="showPage('blog');return false;">Writing</a></li>
-    <li><a href="#skills"     id="nav-skills"     onclick="showPage('skills');return false;">Skills</a></li>
-    <li><a href="#experience" id="nav-experience" onclick="showPage('experience');return false;">Experience</a></li>
-    <li><a href="#passion"    id="nav-passion"    onclick="showPage('passion');return false;">Industries</a></li>
-  </ul>
-
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+<nav aria-label="Primary">
+  <a class="logo" href="#top"><i></i>Prapti Das</a>
+  <div class="links">
+    <a href="site.html#works">Work</a>
+    <a href="site.html#resume">Resume</a>
+    <a href="site.html#blog">Writing</a>
+    <a href="site.html#skills">Skills</a>
+    <a class="pill" href="mailto:das.2006prapti@gmail.com">Get in touch</a>
+  </div>
 </nav>
 
-
-<!-- ============================================================
-     PAGE: HOME
-     ============================================================ -->
-<div id="page-home" class="page">
-
-  <!-- ticker -->
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span class="ticker-item">Prapti Das</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Growth Marketing</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Content Strategy</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Campaign Management</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Fashion &amp; Film</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Bengaluru, India</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item">Prapti Das</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Growth Marketing</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Content Strategy</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Campaign Management</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Fashion &amp; Film</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Bengaluru, India</span>
-      <span class="ticker-item ticker-sep">✦</span>
-    </div>
-  </div>
-
-  <!-- hero -->
-  <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="lightning"></div>
-    <div class="lightning"></div>
-    <div class="lightning"></div>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow">Bengaluru, India &nbsp;·&nbsp; Growth Marketing &amp; Content Strategy</div>
-      <h1 class="hero-name">Prapti<br>Das</h1>
-      <p class="hero-tagline">Growth Marketer. Content Strategist. Creative Problem Solver.</p>
-      <p class="hero-bio">
-        I build brands from the ground up and push them into spaces they haven't occupied yet.
-        Five internships across fashion, real estate, edtech, martech, and events have given me
-        a wide lens and a very specific skill set: I know how to grow things.
-      </p>
-      <div class="hero-cta">
-        <a href="#works" class="btn btn-red" onclick="showPage('works');return false;">See My Work</a>
-        <a href="#resume" class="btn btn-outline" onclick="showPage('resume');return false;">View Resume</a>
-      </div>
-    </div>
-
-    <div class="hero-aside">
-      <span class="v-tag">Fashion · Film · Food</span>
-      <span class="v-tag">Strategy · Growth · Content</span>
-      <span class="v-tag">Campaigns · Analytics · Copy</span>
-    </div>
+<main id="top">
+  <section id="hero">
+    <div class="wrap grid"><div>
+      <span class="label rv">Bengaluru, India &nbsp;·&nbsp; Growth Marketing &amp; Content Strategy</span>
+      <h1 aria-label="Prapti Das." id="h1">Prapti Das.</h1>
+      <p class="sub rv" style="--d:.7s;margin-top:30px">Growth Marketer. Content Strategist. Creative Problem Solver.</p>
+      <a class="ghost rv" style="--d:.9s" href="#about">Discover My Journey <span aria-hidden="true">↓</span></a>
+    </div></div>
   </section>
 
-  <!-- about -->
-  <section class="section" style="background:radial-gradient(ellipse at 20% 50%,#1a0e00 0%,#0d0a06 60%);">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Chapter I</span>
-        <h2 class="sec-title">About Me</h2>
-        <div class="ornament">⚗</div>
-      </div>
-      <div class="about-full">
-        <div class="about-text">
-          <h3>Who I Am</h3>
-          <p>
-            I am a growth marketer and content strategist based in Bengaluru. My work sits at the
-            intersection of creative instinct and analytical thinking — I can write a campaign concept
-            in the morning and dig into funnel data in the afternoon, and I think that range is what
-            makes me useful.
-          </p>
-          <p>
-            Five internships across fashion, real estate, edtech, martech, and event management have
-            given me a wide lens. I have run paid acquisition, built content roadmaps from scratch,
-            managed social accounts, run A/B tests, and tracked performance across every campaign I
-            have touched. I follow fashion closely, watch a lot of films, and have a genuine interest
-            in architecture and design history — because the best marketing borrows from everywhere.
-          </p>
-        </div>
+  <section id="about" data-cl="0" data-side="-1">
+    <div class="wrap grid"><div class="r">
+      <span class="label rv">About</span>
+      <h2 class="rv" style="--d:.1s">I know how to grow things.</h2>
+      <p class="rv" style="--d:.2s">I build brands from the ground up and push them into spaces they haven't occupied yet. Five internships across fashion, real estate, edtech, martech, and events have given me a wide lens and a very specific skill set.</p>
+      <p class="rv" style="--d:.3s">I write a campaign concept in the morning and dig into funnel data in the afternoon. That range is what makes me useful.</p>
+    </div></div>
+  </section>
 
-        <div class="about-stats">
-          <div class="stat-card">
-            <span class="stat-number">5</span>
-            <span class="stat-label">Industries</span>
-            <span class="stat-sub">Fashion · EdTech · MarTech · Real Estate · Events</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">10K+</span>
-            <span class="stat-label">Downloads in 1 month</span>
-            <span class="stat-sub">Aavo app campaign, Sept 2024</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">86%</span>
-            <span class="stat-label">Win Rate</span>
-            <span class="stat-sub">10+ inter-collegiate business fests</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">3K</span>
-            <span class="stat-label">Followers in 3 months</span>
-            <span class="stat-sub">Synapse club content series</span>
-          </div>
-        </div>
+  <section id="stats" data-cl="1" data-side="1">
+    <div class="wrap grid"><div class="stats">
+      <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small>Fashion · EdTech · MarTech · Real Estate · Events</small></div>
+      <div class="stat rv" style="--d:.12s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaign, Sept 2024</small></div>
+      <div class="stat rv" style="--d:.24s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ inter-collegiate business fests</small></div>
+      <div class="stat rv" style="--d:.36s"><b data-n="3" data-s="K">3K</b><span>Followers in 3 months</span><small>Synapse club content series</small></div>
+    </div></div>
+  </section>
 
-        <div class="tags" style="margin-top:2.5rem;">
-          <span class="tag">Growth Marketing</span>
-          <span class="tag">Content Strategy</span>
-          <span class="tag">Fashion &amp; Apparel</span>
-          <span class="tag">Film &amp; Entertainment</span>
-          <span class="tag">Architecture &amp; Design</span>
-          <span class="tag">Social Media</span>
-          <span class="tag">A/B Testing</span>
-          <span class="tag">Analytics</span>
-          <span class="tag">Python · Automation</span>
-        </div>
+  <section id="explore" data-cl="2" data-side="-1">
+    <div class="wrap grid">
+      <div><span class="label rv">Explore</span><h2 class="rv" style="--d:.1s">Where would you like to go?</h2></div>
+      <div class="list" role="navigation" aria-label="Explore">
+        <a class="rv" style="--i:0" href="site.html#works">The Workshop<em>Creative Work</em></a>
+        <a class="rv" style="--i:1;--d:.08s" href="site.html#resume">Hogwarts Registry<em>Resume</em></a>
+        <a class="rv" style="--i:2;--d:.16s" href="site.html#blog">The Written Word<em>Writing</em></a>
+        <a class="rv" style="--i:3;--d:.24s" href="site.html#skills">The Armory<em>Skills</em></a>
+        <a class="rv" style="--i:4;--d:.32s" href="site.html#experience">The Quest Log<em>Experience</em></a>
       </div>
     </div>
   </section>
 
-  <!-- quick nav portals -->
-  <section class="section-sm" style="background:var(--shadow); border-top:1px solid var(--tarnished); border-bottom:1px solid var(--tarnished);">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Explore</span>
-        <h2 class="sec-title">Where Would You Like to Go?</h2>
-      </div>
-      <div class="portals-grid">
-        <a class="portal-card" style="--pc:#8b1a1a" onclick="showPage('works');return false;" href="#works">
-          <span class="portal-icon">🎬</span>
-          <span class="portal-world">The Workshop</span>
-          <span class="portal-name">Creative Work</span>
-          <span class="portal-desc">Video edits, spec campaigns, and personal creative projects</span>
-        </a>
-        <a class="portal-card" style="--pc:#4a3010" onclick="showPage('resume');return false;" href="#resume">
-          <span class="portal-icon">📜</span>
-          <span class="portal-world">Hogwarts Registry</span>
-          <span class="portal-name">Resume</span>
-          <span class="portal-desc">Education, experience, and credentials</span>
-        </a>
-        <a class="portal-card" style="--pc:#c41e3a" onclick="showPage('blog');return false;" href="#blog">
-          <span class="portal-icon">📖</span>
-          <span class="portal-world">The Written Word</span>
-          <span class="portal-name">Writing</span>
-          <span class="portal-desc">An essay on Brutalist architecture</span>
-        </a>
-        <a class="portal-card" style="--pc:#20208a" onclick="showPage('skills');return false;" href="#skills">
-          <span class="portal-icon">⚔️</span>
-          <span class="portal-world">The Armory</span>
-          <span class="portal-name">Skills</span>
-          <span class="portal-desc">Technical and strategic capabilities</span>
-        </a>
-        <a class="portal-card" style="--pc:#1e5f8a" onclick="showPage('experience');return false;" href="#experience">
-          <span class="portal-icon">🔱</span>
-          <span class="portal-world">The Quest Log</span>
-          <span class="portal-name">Experience</span>
-          <span class="portal-desc">Internships, leadership, and competitions</span>
-        </a>
-        <a class="portal-card" style="--pc:#5a3a1a" onclick="showPage('passion');return false;" href="#passion">
-          <span class="portal-icon">☕</span>
-          <span class="portal-world">The Long Game</span>
-          <span class="portal-name">Industries</span>
-          <span class="portal-desc">Where I'm headed and why</span>
-        </a>
-      </div>
-    </div>
+  <section id="contact" data-cl="3" data-side="1">
+    <div class="wrap grid"><div class="contact">
+      <span class="label rv">Contact</span>
+      <h2 class="rv" style="--d:.1s;margin-bottom:48px">Let's build what's next.</h2>
+      <a class="rv" style="--d:.2s" href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a>
+      <a class="rv" style="--d:.28s" href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="rv" style="--d:.36s" href="tel:+917619505512">+91 761 950 5512</a>
+    </div></div>
   </section>
-
-  <footer>
-    <span class="footer-sigil">𝔓𝔯𝔞𝔭𝔱𝔦 𝔇𝔞𝔰</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="tel:+917619505512">+91 761 950 5512</a></li>
-    </ul>
-    <p class="footer-copy">"It's alive." — Mary Shelley, Frankenstein (and this portfolio)</p>
-  </footer>
-
-</div><!-- /page-home -->
-
-
-<!-- ============================================================
-     PAGE: WORK
-     ============================================================ -->
-<div id="page-works" class="page">
-
-  <div style="padding:.75rem 2rem; background:rgba(10,8,4,.6); border-bottom:1px solid rgba(122,96,48,.3);">
-    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
-  </div>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">The Workshop</span>
-        <h2 class="sec-title">Creative Work</h2>
-        <div class="ornament">🎬</div>
-        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--aged); margin-top:1rem; font-size:1.05rem;">
-          Video edits, ad creatives, and campaign work across clients and internships.
-        </p>
-      </div>
-
-      <!-- VIDEO GRID -->
-      <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:0.5rem; letter-spacing:.06em;">
-        Video Edits
-      </h3>
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Click any card to watch</p>
-
-      <div class="video-grid" id="video-grid">
-        <div class="video-card" id="card-PX56KsfuxCQ">
-          <div class="video-thumb-inner" onclick="playInline('PX56KsfuxCQ')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Event Reel</span>
-          </div>
-          <div class="video-label">Event Reel</div>
-        </div>
-        <div class="video-card" id="card-OQyjY4RaYOA">
-          <div class="video-thumb-inner" onclick="playInline('OQyjY4RaYOA')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Storytelling</span>
-          </div>
-          <div class="video-label">Storytelling</div>
-        </div>
-        <div class="video-card" id="card-3UgiNTPewd4">
-          <div class="video-thumb-inner" onclick="playInline('3UgiNTPewd4')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Fast-Paced Edit</span>
-          </div>
-          <div class="video-label">Fast-Paced Edit</div>
-        </div>
-        <div class="video-card" id="card-2KKxfu-ZAeY">
-          <div class="video-thumb-inner" onclick="playInline('2KKxfu-ZAeY')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Montage</span>
-          </div>
-          <div class="video-label">Montage</div>
-        </div>
-        <div class="video-card" id="card-9gqXWOG6lOk">
-          <div class="video-thumb-inner" onclick="playInline('9gqXWOG6lOk')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Storyboard Edit</span>
-          </div>
-          <div class="video-label">Storyboard Edit</div>
-        </div>
-        <div class="video-card" id="card-fZNkgR2OqyA">
-          <div class="video-thumb-inner" onclick="playInline('fZNkgR2OqyA')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Typography Edit</span>
-          </div>
-          <div class="video-label">Typography Edit</div>
-        </div>
-      </div>
-
-
-
-      <!-- GRAPHIC DESIGN WORK -->
-      <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:1.5rem; letter-spacing:.06em; margin-top:3.5rem;">
-        Graphic Design &amp; Campaign Work
-      </h3>
-
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-card-label">◈ &nbsp;Poster Design · Zariya Productions</div>
-          <img src="assets/images/poster.jpg" alt="Zariya Productions Street Play Poster — Mood Indigo 2025" class="design-img">
-          <div class="design-card-caption">Social campaign poster for Zariya Productions street play — Mood Indigo, IIT Bombay 2025</div>
-        </div>
-
-        <div class="design-card">
-          <div class="design-card-label">◈ &nbsp;Spec Campaign · Smash Burger · 2025</div>
-          <div class="campaign-block" style="border:none; background:transparent;">
-        <div class="campaign-header">
-          <span class="campaign-header-text">Smash Burger · Spec Campaign · Self-Initiated · 2025</span>
-          <span class="campaign-sub">Scroll to see all three posts</span>
-        </div>
-        <div class="carousel-wrap">
-          <div class="carousel-track" id="carousel-track">
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-1.png" alt="Smash Burger Spec Campaign — Post 1">
-            </div>
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-2.png" alt="Smash Burger Spec Campaign — Post 2">
-            </div>
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-3.png" alt="Smash Burger Spec Campaign — Post 3">
-            </div>
-          </div>
-          <button class="c-arrow prev" onclick="moveCarousel(-1)" aria-label="Previous slide">&#8592;</button>
-          <button class="c-arrow next" onclick="moveCarousel(1)"  aria-label="Next slide">&#8594;</button>
-          <div class="c-dots">
-            <div class="c-dot active" onclick="goToSlide(0)"></div>
-            <div class="c-dot" onclick="goToSlide(1)"></div>
-            <div class="c-dot" onclick="goToSlide(2)"></div>
-          </div>
-        </div>
-          <div class="design-card-caption">Self-initiated spec campaign for Smash Burger — concept, copy, and art direction</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <footer>
-    <span class="footer-sigil">𝔓</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn</a></li>
-    </ul>
-  </footer>
-
-</div><!-- /page-works -->
-
-
-<!-- ============================================================
-     PAGE: RESUME (HARRY POTTER)
-     ============================================================ -->
-<div id="page-resume" class="page">
-
-  <div style="padding:.75rem 2rem; background:rgba(10,8,4,.6); border-bottom:1px solid rgba(74,48,16,.5);">
-    <button class="back-btn" onclick="showPage('home')">← Return Through the Veil</button>
-  </div>
-
-  <div class="hp-registry">
-    <span class="hp-registry-label">✦ Hogwarts Registry of Accomplished Witches &amp; Wizards ✦</span>
-    <div class="hp-registry-title">Official Academic &amp; Professional Record — Anno Domini MMXXVI</div>
-  </div>
-
-  <div class="hp-parchment">
-    <div class="hp-watermark">Prapti</div>
-
-    <div class="hp-header">
-      <span class="hp-crest">⚡ 🦅 ⚡</span>
-      <h1 class="hp-name">Prapti Das</h1>
-      <p class="hp-tagline">"Solemnly sworn to be up to some good."</p>
-    </div>
-
-    <div class="hp-contact">
-      <p>📍 Bengaluru, Karnataka &nbsp;·&nbsp; 📞 +91 7619505512</p>
-      <p>✉ das.2006prapti@gmail.com &nbsp;·&nbsp; 🔗 linkedin.com/in/praptid2006</p>
-    </div>
-
-    <hr class="hp-divider">
-
-    <h2 class="hp-section-title">📚 Education</h2>
-
-    <div class="hp-edu-item">
-      <div class="hp-edu-school">Christ (Deemed to be) University — Bengaluru, Karnataka</div>
-      <div class="hp-edu-detail">Bachelor of Business Administration · Finance &amp; Economics · Class of May 2027</div>
-    </div>
-    <div class="hp-edu-item">
-      <div class="hp-edu-school">Bharatiya Vidya Bhavans Public School — Hyderabad, Telangana</div>
-      <div class="hp-edu-detail">High School · Physics, Chemistry, Math, Computer Science · Feb 2024</div>
-    </div>
-
-    <hr class="hp-divider">
-
-    <h2 class="hp-section-title">🪄 Experience</h2>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">GenAIPeople (EdTech) · Bengaluru · Dec 2025 – Present</div>
-      <div class="hp-exp-role">Growth Intern</div>
-      <ul class="hp-exp-bullets">
-        <li>Built and deployed digital ad creatives for paid acquisition campaigns</li>
-        <li>Developed and optimized landing pages and core web assets</li>
-        <li>Tracked performance metrics and supported cross-functional marketing execution</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Darshe (Premium Fashion) · Bengaluru · Sept – Nov 2025</div>
-      <div class="hp-exp-role">Growth &amp; Marketing Intern</div>
-      <ul class="hp-exp-bullets">
-        <li>Ran the founder's social media presence including content planning and daily engagement</li>
-        <li>Designed a pre-launch marketing roadmap covering content pillars and influencer outreach</li>
-        <li>Grew organic reach through SEO, hashtag strategy, and performance analytics</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Solid Corp (MarTech) · Bengaluru · Sept 2025 – Jan 2026</div>
-      <div class="hp-exp-role">Growth Marketing Intern</div>
-      <ul class="hp-exp-bullets">
-        <li>Led growth marketing for multiple clients, improving ROI and audience targeting</li>
-        <li>Ran A/B testing and funnel analytics to lift conversion rates</li>
-        <li>Coordinated between product, design, and client teams around shared KPI goals</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Propalyst (Real Estate Tech) · Bengaluru · Sept 2025 – Jan 2026</div>
-      <div class="hp-exp-role">Growth &amp; Operations Intern</div>
-      <ul class="hp-exp-bullets">
-        <li>Managed property listing workflows in coordination with brokers and verification teams</li>
-        <li>Improved backend data processes for accuracy and operational efficiency</li>
-        <li>Supported local SEO, listing copy, and campaign tracking initiatives</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Aavo (Event Management) · Bengaluru · Sept 2024 – April 2025</div>
-      <div class="hp-exp-role">Marketing &amp; Social Media Intern</div>
-      <ul class="hp-exp-bullets">
-        <li>Led digital campaigns that took Aavo from zero to 10K+ downloads and 1K+ followers in one month</li>
-        <li>Ran user behavior analysis to inform growth and engagement strategy</li>
-        <li>Produced marketing assets and community-focused content across platforms</li>
-      </ul>
-    </div>
-
-    <hr class="hp-divider">
-
-    <h2 class="hp-section-title">🏆 Leadership &amp; Achievements</h2>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">CUSBMA · Christ University · July 2025 – Present</div>
-      <div class="hp-exp-role">Business Festing Team</div>
-      <ul class="hp-exp-bullets">
-        <li>86% win rate across 10+ inter-collegiate fests, leading team strategy and on-ground execution</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Synapse · Christ University · Jan 2025 – Mar 2026</div>
-      <div class="hp-exp-role">R&amp;D Head</div>
-      <ul class="hp-exp-bullets">
-        <li>Launched a social media content series that reached 10K+ views and added 3K followers in 3 months</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Mood Indigo · IIT Bombay · Dec 2025</div>
-      <div class="hp-exp-role">2nd Runner-Up — Aagaz Street Play (Zariya Productions)</div>
-      <ul class="hp-exp-bullets">
-        <li>Placed 3rd at one of India's largest cultural festivals in the street play category</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">Cross-Currents · Mount Carmel College · Nov 2024</div>
-      <div class="hp-exp-role">3rd Position — Marketing</div>
-      <ul class="hp-exp-bullets">
-        <li>Recognized for campaign ideation, brand positioning, and pitch delivery</li>
-      </ul>
-    </div>
-
-    <div class="hp-exp-item">
-      <div class="hp-exp-company">BVBPSMUN · Hyderabad · Aug 2023</div>
-      <div class="hp-exp-role">Secretary General</div>
-      <ul class="hp-exp-bullets">
-        <li>Led full conference operations, chaired committees, and managed delegate coordination</li>
-      </ul>
-    </div>
-
-    <hr class="hp-divider">
-
-    <h2 class="hp-section-title">✨ Skills &amp; Certifications</h2>
-    <div class="hp-skills">
-      <span class="hp-skill">Social Media Marketing</span>
-      <span class="hp-skill">Content Strategy</span>
-      <span class="hp-skill">Growth Marketing</span>
-      <span class="hp-skill">A/B Testing</span>
-      <span class="hp-skill">Funnel Analytics</span>
-      <span class="hp-skill">SEO</span>
-      <span class="hp-skill">Python</span>
-      <span class="hp-skill">Microsoft Office</span>
-      <span class="hp-skill">Public Speaking</span>
-      <span class="hp-skill">Creative Writing</span>
-      <span class="hp-skill">English · Hindi · Bengali (Native)</span>
-      <span class="hp-skill">Infosys — Intro to AI</span>
-      <span class="hp-skill">Oracle — GenAI Certified</span>
-    </div>
-
-    <hr class="hp-divider">
-    <div style="text-align:center; font-family:'IM Fell English',serif; font-style:italic; font-size:.82rem; color:#6b4020; margin-top:.9rem; position:relative; z-index:1;">
-      Bengaluru · 2026 · "Not all those who wander are lost."
-    </div>
-  </div>
-
-</div><!-- /page-resume -->
-
-
-<!-- ============================================================
-     PAGE: BLOG (BOOK THIEF THEME)
-     ============================================================ -->
-<div id="page-blog" class="page">
-
-  <div style="padding:.75rem 2rem; background:#0e0e0e; border-bottom:1px solid #2a0808;">
-    <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Return to the Atelier</button>
-  </div>
-
-  <div class="blog-banner">
-    <div class="wrap">
-      <span class="blog-eyebrow">✦ Prapti Das Writes · Essay · 2025 ✦</span>
-      <h1 class="blog-title">Brutalism: Post-War Necessity or Urban Decay?</h1>
-      <div class="blog-meta">Architecture · History · Design · 2025</div>
-    </div>
-  </div>
-
-  <div class="wrap-sm blog-body">
-
-    <p>
-      The first phrase that comes to mind when you look at a brutalist building is: "big, bold,
-      and taking up more space than it needs to." But that was never the original intention.
-    </p>
-
-    <p>
-      Brutalist architecture emerged in Europe after World War II. It peaked in the 1960s
-      and became the dominant style for public buildings and social housing across the UK, USA,
-      Eastern Europe, Israel, Japan, and Australia. The movement's foundation lies in honesty.
-      Raw materials, visible structure, no ornamentation. The architects believed that truth
-      in material would produce truth in society.
-    </p>
-
-    <div class="blog-pull">
-      <p>"These buildings were not meant to intimidate. They were meant to give people a blank canvas to fill in with their own memories."</p>
-    </div>
-
-    <h2>Where It Came From</h2>
-
-    <p>
-      The term "brutalist" comes from the French <em>béton brut</em>, meaning raw concrete.
-      Le Corbusier introduced this vocabulary to architecture. His 1952 Unité d'Habitation
-      housing block in Marseilles set the template. But the architects who gave brutalism its
-      name and its philosophy were Alison and Peter Smithson, a British couple who believed
-      ornamentation was a moral crime.
-    </p>
-
-    <p>
-      The movement spread fast, partly because the 1950s demanded it. Post-war cities needed
-      rebuilding, budgets were tight, and concrete was cheap. This produced some remarkable work:
-      the Boston City Hall by Kallmann, McKinnell and Knowles; Paul Rudolph's Yale Art and
-      Architecture Building; the Barbican Estate in London; Erno Goldfinger's Trellick Tower;
-      and Kenzo Tange's Yoyogi National Gymnasium, built for the 1964 Tokyo Olympics.
-    </p>
-
-    <div class="blog-pull">
-      <p>"Concrete was not just affordable. It allowed the forms that brutalism required: massive, honest, uncompromising."</p>
-    </div>
-
-    <h2>The Fall</h2>
-
-    <p>
-      Brutalism collapsed in the 1970s. The energy crisis made these enormous buildings
-      commercially unviable. Many were badly constructed, and their maintenance costs became
-      unsustainable. Worse, concrete does not age gracefully. It stains, cracks, and darkens
-      under the weather. The buildings that were supposed to feel bold started to feel oppressive.
-    </p>
-
-    <p>
-      By the 1980s, structural expressionism and deconstructivism had taken over.
-      Brutalist buildings sat abandoned, too expensive to demolish because of the
-      carbon footprint involved in tearing them down.
-    </p>
-
-    <h2>The Comeback</h2>
-
-    <p>
-      Today brutalism is back, and this time it is celebrated. Its scale and uncompromising
-      aesthetic read as futuristic rather than depressing. Filmmakers have been drawn to it
-      for decades: Blade Runner's dystopian cityscapes owe a great deal to brutalist logic.
-      Architects and designers now look at these structures through a nostalgic lens, appreciating
-      what their creators actually intended.
-    </p>
-
-    <p>
-      There is a lesson in that. The buildings did not change. The way we see them did.
-    </p>
-
-    <div style="margin-top:3.5rem; padding:2rem; border:1px solid #2a0808; background:rgba(196,30,58,.04); text-align:center;">
-      <div style="font-family:'Special Elite',monospace; font-size:.58rem; letter-spacing:.38em; color:#c41e3a; text-transform:uppercase; margin-bottom:.9rem;">End of Essay</div>
-      <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Return to the Atelier</button>
-    </div>
-  </div>
-
-</div><!-- /page-blog -->
-
-
-<!-- ============================================================
-     PAGE: SKILLS (MORTAL INSTRUMENTS)
-     ============================================================ -->
-<div id="page-skills" class="page">
-
-  <div style="padding:.75rem 2rem; background:#060614; border-bottom:1px solid #1a1a6a;">
-    <button class="back-btn" style="color:#7070c0;" onclick="showPage('home')">← Through the Portal</button>
-  </div>
-
-  <div class="shadow-banner">
-    <div class="rune-circle"></div>
-    <div class="rune-circle"></div>
-    <div class="wrap" style="position:relative; z-index:1;">
-      <span class="eyebrow" style="color:#7070c0;">Skills &amp; Capabilities</span>
-      <h1 class="shadow-title">What I Bring to the Table</h1>
-      <p class="shadow-sub">Strategy, execution, and the tools to back it up</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="skills-grid">
-
-        <div class="skill-card" style="--sc:#7070cc;">
-          <span class="skill-icon">📈</span>
-          <h3>Growth Marketing</h3>
-          <p>
-            Paid acquisition, funnel optimization, A/B testing, and conversion analysis.
-            Ran this across clients in martech, fashion, and edtech with measurable ROI improvements.
-          </p>
-        </div>
-
-        <div class="skill-card" style="--sc:#9050cc;">
-          <span class="skill-icon">📝</span>
-          <h3>Content Strategy</h3>
-          <p>
-            Content pillars, platform calendars, and campaign copywriting. Built pre-launch
-            roadmaps for a premium fashion brand. Wrote scripts and posts that drove 10K+ views
-            within a single quarter.
-          </p>
-        </div>
-
-        <div class="skill-card" style="--sc:#5080cc;">
-          <span class="skill-icon">📊</span>
-          <h3>Analytics &amp; Performance</h3>
-          <p>
-            User behavior analysis, funnel tracking, hashtag strategy performance, and
-            campaign reporting. Comfortable reading data and turning it into action.
-          </p>
-        </div>
-
-        <div class="skill-card" style="--sc:#cc5070;">
-          <span class="skill-icon">🎙️</span>
-          <h3>Public Speaking &amp; Pitching</h3>
-          <p>
-            Competed across 10+ inter-collegiate fests with an 86% win rate. Experience
-            pitching campaigns, marketing strategies, and business plans to panels and audiences.
-          </p>
-        </div>
-
-        <div class="skill-card" style="--sc:#50aacc;">
-          <span class="skill-icon">⚙️</span>
-          <h3>Technical Skills</h3>
-          <p>
-            Python (automation, PyAutoGUI, n8n workflows), Microsoft Office suite,
-            Streamlit dashboards, social media APIs, and Tally Prime. Can build tools
-            to automate what others do manually.
-          </p>
-        </div>
-
-        <div class="skill-card" style="--sc:#70cc50;">
-          <span class="skill-icon">✍️</span>
-          <h3>Creative Writing</h3>
-          <p>
-            Long-form essays, campaign copy, email sequences, ad scripts, and editorial content.
-            Produced the copy for multiple brand campaigns and an edtech content engine.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <footer style="background:#060614; border-top:1px solid #1a1a6a;">
-    <span class="footer-sigil" style="background:linear-gradient(135deg,#a0a0ff,#6060cc); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">𝔓</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com" style="color:#6060a0;">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener" style="color:#6060a0;">LinkedIn</a></li>
-    </ul>
-  </footer>
-
-</div><!-- /page-skills -->
-
-
-<!-- ============================================================
-     PAGE: EXPERIENCE (PERCY JACKSON)
-     ============================================================ -->
-<div id="page-experience" class="page">
-
-  <div style="padding:.75rem 2rem; background:#050e1a; border-bottom:1px solid #1e5f8a;">
-    <button class="back-btn" style="color:#4dc9ff;" onclick="showPage('home')">← Back to Camp Half-Blood</button>
-  </div>
-
-  <div class="olympian-banner">
-    <div class="wave-wrap">
-      <svg class="wave-path" viewBox="0 0 1440 55" preserveAspectRatio="none">
-        <path d="M0,30 C360,55 1080,0 1440,30 L1440,55 L0,55 Z" fill="rgba(30,100,150,.28)"/>
-      </svg>
-      <svg class="wave-path" viewBox="0 0 1440 55" preserveAspectRatio="none">
-        <path d="M0,15 C480,50 960,0 1440,25 L1440,55 L0,55 Z" fill="rgba(20,80,120,.18)"/>
-      </svg>
-    </div>
-    <div class="wrap" style="position:relative; z-index:1;">
-      <span class="eyebrow" style="color:#2a7aaa;">Quests Completed</span>
-      <h1 class="olympian-title">Experience &amp; Internships</h1>
-      <p class="olympian-sub">Five industries. Five internships. One very specific skill set.</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" style="color:#4dc9ff;">Internships</span>
-        <h2 class="sec-title" style="color:#4dc9ff;">Work History</h2>
-      </div>
-
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">Dec 2025 – Present</div>
-          <div class="tl-company">GenAIPeople — EdTech · Bengaluru</div>
-          <div class="tl-role">Growth Intern</div>
-          <ul class="tl-bullets">
-            <li>Built and deployed digital ad creatives for paid acquisition</li>
-            <li>Developed landing pages and core web assets for campaign support</li>
-            <li>Monitored performance metrics and executed cross-functional marketing tasks</li>
-          </ul>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">Sept – Nov 2025</div>
-          <div class="tl-company">Darshe — Premium Fashion · Bengaluru</div>
-          <div class="tl-role">Growth &amp; Marketing Intern</div>
-          <ul class="tl-bullets">
-            <li>Managed the founder's social media accounts day-to-day</li>
-            <li>Built a full pre-launch marketing roadmap from content pillars to influencer briefs</li>
-            <li>Drove organic growth through SEO, analytics review, and platform-specific hashtag strategy</li>
-          </ul>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">Sept 2025 – Jan 2026</div>
-          <div class="tl-company">Solid Corp — MarTech · Bengaluru</div>
-          <div class="tl-role">Growth Marketing Intern</div>
-          <ul class="tl-bullets">
-            <li>Managed growth marketing for multiple clients with focus on ROI and targeting quality</li>
-            <li>Ran A/B tests and analyzed funnel data to boost conversion rates</li>
-            <li>Aligned product, design, and client teams on shared KPI objectives</li>
-          </ul>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">Sept 2025 – Jan 2026</div>
-          <div class="tl-company">Propalyst — Real Estate Tech · Bengaluru</div>
-          <div class="tl-role">Growth &amp; Operations Intern</div>
-          <ul class="tl-bullets">
-            <li>Coordinated property listing workflows with brokers and verification teams</li>
-            <li>Improved data accuracy and backend process efficiency</li>
-            <li>Supported listing copy, local SEO, and campaign tracking</li>
-          </ul>
-        </div>
-
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-date">Sept 2024 – April 2025</div>
-          <div class="tl-company">Aavo — Event Management · Bengaluru</div>
-          <div class="tl-role">Marketing &amp; Social Media Intern</div>
-          <ul class="tl-bullets">
-            <li>Took Aavo from zero to 10K+ downloads and 1K+ followers in one month through digital campaigns</li>
-            <li>Ran user behavior analysis to sharpen growth and engagement strategy</li>
-            <li>Produced high-performing marketing assets and community content</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- LEADERSHIP -->
-      <div class="section-head" style="margin-top:4rem;">
-        <span class="eyebrow" style="color:#4dc9ff;">Leadership</span>
-        <h2 class="sec-title" style="color:#4dc9ff;">Competitions &amp; Roles</h2>
-      </div>
-
-      <div class="quest-grid">
-        <div class="quest-card">
-          <span class="quest-icon">⚔️</span>
-          <h3>CUSBMA Business Festing Team</h3>
-          <p>Christ University · July 2025 – Present<br>86% win rate across 10+ inter-collegiate fests. Led team coordination, event strategy, and execution.</p>
-        </div>
-        <div class="quest-card">
-          <span class="quest-icon">📡</span>
-          <h3>Synapse — R&amp;D Head</h3>
-          <p>Christ University · Jan 2025 – Mar 2026<br>Launched a content series that reached 10K+ views and grew the club's following by 3K in 3 months.</p>
-        </div>
-        <div class="quest-card">
-          <span class="quest-icon">🎭</span>
-          <h3>Mood Indigo, IIT Bombay</h3>
-          <p>Dec 2025 · 2nd Runner-Up, Aagaz Street Play (Zariya Productions)<br>Placed 3rd at India's largest cultural festival.</p>
-        </div>
-        <div class="quest-card">
-          <span class="quest-icon">🏅</span>
-          <h3>Cross-Currents, Mount Carmel</h3>
-          <p>Nov 2024 · 3rd Position — Marketing<br>Recognized for campaign ideation, brand positioning, and pitch performance.</p>
-        </div>
-        <div class="quest-card">
-          <span class="quest-icon">🎖️</span>
-          <h3>BVBPSMUN — Secretary General</h3>
-          <p>Hyderabad · Aug 2023<br>Led conference operations, chaired committees, and managed delegate coordination end to end.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer style="background:#050e1a; border-top:1px solid #1e5f8a;">
-    <span class="footer-sigil" style="background:linear-gradient(135deg,#4dc9ff,#1e8abf); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">𝔓</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com" style="color:#2a7aaa;">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener" style="color:#2a7aaa;">LinkedIn</a></li>
-    </ul>
-  </footer>
-
-</div><!-- /page-experience -->
-
-
-<!-- ============================================================
-     PAGE: INDUSTRIES / PASSION (BEFORE THE COFFEE)
-     ============================================================ -->
-<div id="page-passion" class="page">
-
-  <div style="padding:.75rem 2rem; background:#0c0906; border-bottom:1px solid #3a2010;">
-    <button class="back-btn" style="color:#d4a060;" onclick="showPage('home')">← Back Home</button>
-  </div>
-
-  <div class="passion-banner">
-    <div class="steam-wrap">
-      <div class="steam-line"></div>
-      <div class="steam-line"></div>
-      <div class="steam-line"></div>
-    </div>
-    <div class="wrap" style="position:relative; z-index:1;">
-      <span class="eyebrow" style="color:#8a6040;">Where I'm Headed</span>
-      <h1 class="passion-title">Industries &amp; Interests</h1>
-      <p class="passion-sub">The sectors I want to work in and what I have already done in them</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" style="color:#d4a060;">The Long Game</span>
-        <h2 class="sec-title" style="color:#d4a060;">Where I Want to Build a Career</h2>
-        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#a08060; margin-top:1rem; font-size:1.05rem; max-width:600px; margin-left:auto; margin-right:auto;">
-          My goal is to work in marketing that actually matters to the culture. These are the three
-          industries I am actively working toward.
-        </p>
-      </div>
-
-      <div class="industry-grid">
-
-        <div class="industry-card" style="--ic:#d4a060;">
-          <span class="industry-icon">🎬</span>
-          <div class="industry-label">Entertainment</div>
-          <h3>Film &amp; Media Marketing</h3>
-          <p>
-            Film has always shaped how people see the world. I want to work on the marketing side
-            of that: campaigns, release strategy, social campaigns for films and streaming projects.
-            I follow film marketing closely, study how studios position releases, and have a strong
-            sense of what works for entertainment audiences.
-          </p>
-        </div>
-
-        <div class="industry-card" style="--ic:#c080a0;">
-          <span class="industry-icon">👗</span>
-          <div class="industry-label">Apparel &amp; Lifestyle</div>
-          <h3>Fashion Marketing</h3>
-          <p>
-            I interned at Darshe, a premium fashion brand, where I built the marketing roadmap
-            from scratch and managed the founder's entire social presence. Fashion marketing
-            demands both cultural awareness and executional precision. I have experience in both,
-            and a genuine interest in the history and business of fashion that makes me better
-            at the work.
-          </p>
-        </div>
-
-        <div class="industry-card" style="--ic:#e08840;">
-          <span class="industry-icon">🍽️</span>
-          <div class="industry-label">FMCG &amp; F&amp;B</div>
-          <h3>Food &amp; Beverage Marketing</h3>
-          <p>
-            I created a self-initiated spec campaign for Smash Burger because I like the brand
-            and wanted to see what I could do with it. Food marketing is high-volume, high-competition,
-            and endlessly creative. The Work section has the full set of posts. I want to work
-            more in this space because it forces you to be sharp, fast, and genuinely funny.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <footer style="background:#0c0906; border-top:1px solid #3a2010;">
-    <span class="footer-sigil" style="color:#d4a060;">𝔓</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com" style="color:#8a6040;">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener" style="color:#8a6040;">LinkedIn</a></li>
-    </ul>
-    <p class="footer-copy" style="color:#5a3a1a;">"The coffee is still warm. There is still time."</p>
-  </footer>
-
-</div><!-- /page-passion -->
-
-
-<script src="js/main.js"></script>
+</main>
+<footer><div class="wrap"><span>© 2026 Prapti Das</span><span>Bengaluru, India</span></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ---------- UI: reveal, letters, counters ---------- */
+(()=>{
+  const h=document.getElementById('h1'),t=h.textContent;h.textContent='';
+  [...t].forEach((ch,i)=>{const s=document.createElement('span');s.className='c';s.style.setProperty('--k',i);s.textContent=ch===' '?'\u00a0':ch;s.setAttribute('aria-hidden','true');h.appendChild(s)});
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('ready')));
+  const count=el=>{const n=+el.dataset.n,sf=el.dataset.s||'',t0=performance.now();
+    (function f(now){const p=Math.min((now-t0)/1500,1),e=1-Math.pow(1-p,4);el.textContent=Math.round(n*e)+(p<1?'':sf);if(p<1)requestAnimationFrame(f)})(t0)};
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
+    const b=e.target.querySelector&&e.target.querySelector('b[data-n]');if(b)count(b);io.unobserve(e.target)}),{threshold:.2});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+})();
+
+/* ---------- 3D: particle bird → shatter → constellations ---------- */
+(()=>{
+  if(typeof THREE==='undefined')return;
+  const cv=document.getElementById('gl'),RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let ren;try{ren=new THREE.WebGLRenderer({canvas:cv,antialias:false,powerPreference:'high-performance'})}catch(e){return}
+  ren.setClearColor(0x000000,1);
+  const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,1,.1,200);cam.position.z=22;
+  const R=Math.random,TAU=Math.PI*2,small=innerWidth<700,K=small?.55:1;
+  const PAL={iris:[.5,.32,1],saf:[1,.72,.16],teal:[.2,.85,.7],white:[.9,.9,1]};
+  const pick=(w)=>{let r=R(),a=0;for(const k in w){a+=w[k];if(r<a)return PAL[k]}return PAL.white};
+  const sph=()=>{let x,y,z;do{x=R()*2-1;y=R()*2-1;z=R()*2-1}while(x*x+y*y+z*z>1);return[x,y,z]};
+  const shell=()=>{const[x,y,z]=sph(),l=Math.hypot(x,y,z)||1;return[x/l,y/l,z/l]};
+
+  /* build the bird in local space */
+  const B=[];const add=(x,y,z,w,c)=>B.push([x,y,z,w,c]);
+  for(const side of[-1,1])for(let i=0;i<3100*K;i++){
+    const s=Math.pow(R(),.85);let v=R();const feather=R()<.28;if(feather)v=1;
+    const x=side*(.5+s*6.4),chord=2.3*Math.pow(1-s,.55)+.35;
+    let z=-.6+s*1.8+v*chord;if(feather)z+=Math.max(0,Math.sin(s*38))*.4;
+    const y=.35*s+Math.sin(v*Math.PI)*.25*(1-s)+(R()-.5)*.08;
+    add(x,y,z,1,R()<s*.8?(R()<.25?PAL.white:PAL.saf):pick({iris:.8,white:.2}));
+  }
+  for(let i=0;i<1500*K;i++){const[a,b,c]=R()<.7?shell():sph();add(a*.6,b*.5,c*1.8+.2,0,pick({iris:.55,teal:.3,white:.15}))}
+  for(let i=0;i<450*K;i++){const[a,b,c]=sph();add(a*.42,b*.42+.3,c*.42-2.1,0,pick({iris:.5,white:.3,saf:.2}))}
+  for(let i=0;i<120*K;i++){const t=R(),r=(1-t)*.18,a=R()*TAU;add(Math.cos(a)*r,.25+Math.sin(a)*r,-2.5-t*.8,0,PAL.saf)}
+  for(let i=0;i<600*K;i++){const t=R();add((R()*2-1)*(.25+t*1.1),-.05-t*.1,1.9+t*2,.4,pick({teal:.6,iris:.4}))}
+  const rot=new THREE.Euler(1,.12,.04),v3=new THREE.Vector3();
+
+  const N=B.length,bird=new Float32Array(N*3),scat=new Float32Array(N*3),off=new Float32Array(N*3),col=new Float32Array(N*3),misc=new Float32Array(N*4),size=new Float32Array(N);
+  const blob=g=>{
+    if(g===0){const p=shell(),k=.75+R()*.25;return[p[0]*k,p[1]*k,p[2]*k]}
+    if(g===1){const q=(R()*4)|0,[a,b,c]=sph();return[(q&1?.9:-.9)+a*.38,(q&2?.9:-.9)+b*.38,c*.38]}
+    if(g===2){const r=Math.sqrt(R())*1.5,t=r*2.6+(R()<.5?0:Math.PI)+(R()-.5)*.6;return[Math.cos(t)*r,(R()-.5)*.25,Math.sin(t)*r]}
+    const u=R()*TAU,w=R()*TAU;return[(1+.3*Math.cos(w))*Math.cos(u),.3*Math.sin(w),(1+.3*Math.cos(w))*Math.sin(u)]
+  };
+  B.forEach((p,i)=>{
+    v3.set(p[0],p[1],p[2]).applyEuler(rot);bird.set([v3.x,v3.y,v3.z],i*3);
+    scat.set([R()*2-1,R(),R()*2-1],i*3);
+    const g=(R()*4)|0;off.set(blob(g),i*3);col.set(p[4],i*3);
+    const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
+  });
+
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},
+    uSpan:{value:new THREE.Vector3(26,60,9)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
+  void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
+    vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
+    if(uAmb>.5){p=sc+drift*(.6+seed);}else{
+      vec3 b=position*uBs;float ax=abs(b.x);
+      float f=sin(uTime*2.3-ax*.5)*(.9+.3*sin(uTime*4.6-ax*.9+1.3));
+      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uTime*2.3)*.25;b.z+=f*ax*.06*aMisc.x;
+      b+=aOff*.05*sin(uTime*2.+seed*40.);
+      vec3 hero=b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
+      p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*4.*(.4+seed)+drift*.35*s;
+      float an=uTime*.12;mat2 m=mat2(cos(an),-sin(an),sin(an),cos(an));
+      for(int i=0;i<4;i++){if(abs(aMisc.y-float(i))<.5){vec3 o=aOff;o.xz=m*o.xz;p=mix(p,uC[i]+o*uR[i],smoothstep(0.,1.,uProx[i]));}}
+    }
+    vec2 dm=p.xy-uMouse;p.xy+=normalize(dm+.0001)*exp(-dot(dm,dm)*.12)*1.1;
+    vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z);
+    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim;}`;
+  const FS=`precision highp float;uniform float uTime;varying vec3 vC;varying float vA,vS,vSeed,vSize;
+  void main(){vec2 uv=gl_PointCoord-.5;float a=vSeed*6.283+uTime*(.3+vSeed*.5)*step(.5,vS);
+    uv=mat2(cos(a),-sin(a),sin(a),cos(a))*uv;float d=vS>.5?max(abs(uv.x),abs(uv.y))*1.42:length(uv);
+    float t=clamp(1.6/max(vSize,1.),.05,.4);
+    float ring=smoothstep(.5,.42,d)-smoothstep(.5-t,.42-t,d);float fill=smoothstep(7.,4.,vSize)*smoothstep(.5,.15,d);
+    float al=max(ring,fill)*vA;if(al<.01)discard;gl_FragColor=vec4(vC,al);}`;
+  const mat=(amb)=>{const u=Object.assign({},U);u.uAmb={value:amb};return new THREE.ShaderMaterial({uniforms:u,vertexShader:VS,fragmentShader:FS,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending})};
+  const mk=(g,m)=>{const p=new THREE.Points(g,m);p.frustumCulled=false;scene.add(p);return p};
+
+  const g1=new THREE.BufferGeometry();
+  [['position',bird,3],['aScat',scat,3],['aOff',off,3],['aCol',col,3],['aMisc',misc,4],['aSize',size,1]].forEach(([n,a,s])=>g1.setAttribute(n,new THREE.BufferAttribute(a,s)));
+  mk(g1,mat(0));
+
+  /* large drifting outlined squares & circles (ambient depth layer) */
+  const M=small?30:64,a={position:new Float32Array(M*3),aScat:new Float32Array(M*3),aOff:new Float32Array(M*3),aCol:new Float32Array(M*3),aMisc:new Float32Array(M*4),aSize:new Float32Array(M)};
+  for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.45,saf:.25,teal:.15,white:.15}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=18+R()*40}
+  const g2=new THREE.BufferGeometry();for(const k in a)g2.setAttribute(k,new THREE.BufferAttribute(a[k],k==='aMisc'?4:k==='aSize'?1:3));
+  mk(g2,mat(1));
+
+  /* layout ↔ world mapping */
+  const cl=[...document.querySelectorAll('[data-cl]')].map(el=>({el,i:+el.dataset.cl,side:+el.dataset.side,y:0}));
+  let vw,vh,H,W,sm=scrollY,mx=0,my=0;
+  const fit=()=>{
+    vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
+    cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
+    const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.62,14),document.documentElement.scrollHeight/vh*H,9);
+    U.uBirdOff.value.set(wide?W*.22:0,wide?.4:H*.2,wide?0:-3);U.uBs.value=wide?Math.min(1.1,W/30):.62;U.uDim.value=wide?1:.7;
+    cl.forEach(c=>{const r=c.el.getBoundingClientRect();c.y=r.top+scrollY+r.height/2;
+      U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1:.7)*[3.2,3.8,3.8,2.8][c.i]});
+  };
+  addEventListener('resize',fit);addEventListener('load',fit);fit();
+  addEventListener('pointermove',e=>{mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
+  const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
+  const t0=performance.now();
+  (function loop(now){
+    requestAnimationFrame(loop);
+    const S=scrollY;sm+=(S-sm)*(RM?1:.085);
+    cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
+    U.uTime.value=(now-t0)/1000*(RM?.15:1);
+    U.uShatter.value=ss(.04*vh,.9*vh,sm);
+    cl.forEach(c=>{U.uProx.value[c.i]=Math.min(Math.max((1.05-Math.abs(c.y-(sm+vh/2))/vh)/.8,0),1)});
+    U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
+    ren.render(scene,cam);
+  })(t0);
+})();
+</script>
 </body>
 </html>
