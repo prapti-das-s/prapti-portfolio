@@ -350,16 +350,27 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uHead:{value:new THREE.Vector2()},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
     if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
-      vec3 b=position*uBs;float ax=abs(b.x);
-      float f=sin(uPh-ax*.45)*uFA;
-      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uPh)*.18*uFA;b.z+=f*ax*.05*aMisc.x;
+      vec3 b=position;float wg=aMisc.x;
+      /* head and beak turn on the neck toward the cursor, independent of the body */
+      float hm=smoothstep(-1.1,-2.0,b.z)*(1.-step(.5,wg));vec3 pv=vec3(0.,.1,-1.5),hq=b-pv;
+      float cy=cos(uHead.x*hm),sy=sin(uHead.x*hm),cp=cos(uHead.y*hm),sp=sin(uHead.y*hm);
+      hq.xz=mat2(cy,sy,-sy,cy)*hq.xz;hq.yz=mat2(cp,sp,-sp,cp)*hq.yz;b=pv+hq;
+      /* wingbeat: wings swing about the shoulder, tips lag behind, fast downstroke, slower upstroke that folds the wing in */
+      float ax=abs(b.x),span=clamp(ax/6.9,0.,1.),w=uPh-span*1.15,q=w-.5*sin(w);
+      float st=sin(q),fold=smoothstep(-.1,.9,cos(q));
+      float th=(st*.85*uFA+.16*(1.-uFA))*(.25+.75*span)*step(.5,wg);
+      float sg=sign(b.x);b.y+=ax*sin(th);b.x=sg*ax*cos(th)*(1.-.2*fold*span*uFA*step(.5,wg));
+      b.z+=cos(q)*.4*pow(span,1.3)*uFA*step(.5,wg);
+      b.y-=sin(uPh-.5*sin(uPh))*.3*uFA;                                   /* body rises on the downstroke */
+      b.y+=sin(uPh-1.1)*.4*uFA*smoothstep(1.2,3.5,b.z);                   /* tail follows a beat behind */
+      b*=uBs;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
       vec3 hero=uRot*b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
       p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
@@ -401,7 +412,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
   addEventListener('pointermove',e=>{fastMove+=Math.hypot(e.clientX-lpx,e.clientY-lpy)/30;lpx=e.clientX;lpy=e.clientY;seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
-  let seen=false,lpx=0,lpy=0;const VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
+  let seen=false,lpx=0,lpy=0,headYaw=0,headPitch=0;const VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
   const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
   const t0=performance.now();
   (function loop(now){
@@ -447,6 +458,11 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
      U.uFA.value=.22+.78*fm;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
      const rgt=RG.crossVectors(BD,up).normalize();
+     /* the bird looks at the cursor: head snaps round quickly, lifts toward the viewer as the pointer gets close */
+     {const dx=cxw-BP.x,dy=cyw-BP.y,dist=Math.hypot(dx,dy);
+      let ty=seen?Math.atan2(dx*rgt.x+dy*rgt.y,dx*BD.x+dy*BD.y):Math.sin(T*.8)*.3+Math.sin(T*2.1)*.08;
+      ty=Math.max(-1.25,Math.min(1.25,ty));const tp=seen?Math.min(.5,Math.atan2(1.8,dist+.5)*.7):.05,hk=Math.min(1,(seen?10:3)*dt);
+      headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;U.uHead.value.set(headYaw,headPitch)}
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,4*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
      U.uBirdOff.value.copy(BP).lerp(base,1-k);
