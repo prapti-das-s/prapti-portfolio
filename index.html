@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+<script src="js/bird.js"></script>
 <style>
 :root{
   --void:#000;--bone:#fff;--ash:#9a9a9a;--mist:#bdbdbd;--iris:#8052ff;--saffron:#ffb829;--verdant:#15846e;
@@ -62,7 +63,7 @@ h1,h2,p,.stat,.list a,.contact a,.sub{text-shadow:0 2px 24px rgba(0,6,16,.85)}
 
 /* explore */
 .list{display:flex;flex-direction:column;margin-top:0}
-.list a{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:18px 0;font:400 clamp(30px,3.7vw,48px)/1.1 var(--font);letter-spacing:-.035em;color:var(--ash);opacity:calc(1 - var(--i)*.14);transition:color .4s,opacity .4s,transform .6s var(--ease)}
+.list a{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:18px 0;font:400 clamp(30px,3.7vw,48px)/1.1 var(--font);letter-spacing:-.035em;color:var(--ash);transition:color .4s,opacity .4s,transform .6s var(--ease)}
 .list a em{font:200 14px/1.2 var(--font);font-style:normal;letter-spacing:.025em;text-transform:uppercase;color:var(--ash);white-space:nowrap;transition:color .4s}
 .list a:hover,.list a:focus-visible{color:var(--bone);opacity:1;transform:translateX(14px)}
 .list a:hover em{color:var(--saffron)}
@@ -79,6 +80,45 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:calc(var(--k)*55ms + .15s)}
 .ready h1 .c{opacity:1;transform:none;filter:none}
 
+
+/* point / circle rhythm */
+.point{justify-content:center}
+.panel{max-width:1100px;margin:0 auto;padding:clamp(28px,5vw,64px);border-radius:24px;background:rgba(2,10,20,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12)}
+.panel.big{max-width:1180px}
+.panel p{max-width:34em}
+.hint{margin-top:18px;color:var(--mist)}
+.circle{min-height:100vh;align-items:flex-end;justify-content:center;padding-top:40px;padding-bottom:7vh;text-align:center}
+.circle .cap{max-width:760px;margin:0 auto}
+.circle h2{font-size:clamp(34px,4.6vw,60px)}
+.circle p{margin:18px auto 0;color:var(--bone)}
+.circle small{display:block;margin-top:8px;font:200 14px/1.4 var(--font);color:var(--ash)}
+.inl{color:var(--saffron)}
+.who{max-width:1000px;margin:0 auto;padding:clamp(28px,5vw,64px);border-radius:24px;background:rgba(2,10,20,.66);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);
+  clip-path:circle(0% at 8% 12%);transform:scale(.9);opacity:.2;transition:clip-path 1.6s var(--ease),transform 1.4s var(--ease),opacity 1s}
+.who-wrap.in .who{clip-path:circle(150% at 8% 12%);transform:none;opacity:1}
+.who>*{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.who-wrap.in .who>*{opacity:1;transform:none}
+.who-wrap.in .who>*:nth-child(1){transition-delay:.5s}.who-wrap.in .who>*:nth-child(2){transition-delay:.7s}.who-wrap.in .who>*:nth-child(3){transition-delay:.9s}.who-wrap.in .who>*:nth-child(4){transition-delay:1.1s}.who-wrap.in .who>*:nth-child(5){transition-delay:1.3s}
+.who h2{font-size:clamp(48px,7vw,96px)}
+.who .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.who .tags span{font:400 14px/1 var(--font);padding:11px 16px;border:1px solid rgba(255,255,255,.28);border-radius:9999px}
+.stats{margin:30px 0 48px}
+.btn{display:inline-block;background:var(--iris);padding:16px 24px;border-radius:24px;font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;transition:transform .4s var(--ease),filter .3s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.inds{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:20px}
+.inds span{font:400 clamp(40px,6vw,78px)/1.05 var(--font);letter-spacing:-.04em}
+/* explore: big, bright, readable */
+#explore h2{font-size:clamp(40px,5.4vw,72px)}
+.list{position:relative;margin-top:36px;padding-left:0}
+.list a{display:grid;grid-template-columns:56px 1fr auto;align-items:baseline;gap:16px;padding:22px 0;border-top:1px solid rgba(255,255,255,.14);
+  font:400 clamp(34px,4.4vw,58px)/1.05 var(--font);letter-spacing:-.04em;color:var(--bone);opacity:1;transition:color .3s,padding .5s var(--ease)}
+.list a b{font:600 12px/1 var(--font);letter-spacing:.05em;color:var(--saffron)}
+.list a em{font:200 15px/1.3 var(--font);font-style:normal;letter-spacing:0;text-transform:none;color:var(--mist);text-align:right;max-width:22em}
+.list a:hover,.list a:focus-visible{color:var(--saffron);padding-left:76px;transform:none}
+.list a:hover em{color:var(--bone)}
+.bd{position:absolute;left:0;top:0;opacity:0;pointer-events:none;transition:transform .55s var(--ease),opacity .3s;z-index:2}
+.list.on .bd{opacity:1}
+@media(max-width:860px){.list a{grid-template-columns:36px 1fr}.list a em{grid-column:2;text-align:left}.list a:hover{padding-left:20px}.bd{display:none}.who{clip-path:none}}
 @media(max-width:860px){
   .links a:not(.pill){display:none}
   .grid{grid-template-columns:1fr;gap:36px}.r{grid-column:1}
@@ -97,10 +137,10 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 <nav aria-label="Primary">
   <a class="logo" href="#top"><i></i>Prapti Das</a>
   <div class="links">
-    <a href="site.html#works">Work</a>
-    <a href="site.html#resume">Resume</a>
-    <a href="site.html#blog">Writing</a>
-    <a href="site.html#skills">Skills</a>
+    <a href="site.html#works" data-go>Work</a>
+    <a href="site.html#resume" data-go>Resume</a>
+    <a href="site.html#blog" data-go>Writing</a>
+    <a href="site.html#skills" data-go>Skills</a>
     <a class="pill" href="mailto:das.2006prapti@gmail.com">Get in touch</a>
   </div>
 </nav>
@@ -115,39 +155,83 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     </div></div>
   </section>
 
-  <section id="about" data-cl="0" data-side="-1">
-    <div class="wrap grid"><div class="r">
-      <span class="label rv">About</span>
-      <h2 class="rv" style="--d:.1s">I know how to grow things.</h2>
-      <p class="rv" style="--d:.2s">I build brands from the ground up and push them into spaces they haven't occupied yet. Five internships across fashion, real estate, edtech, martech, and events have given me a wide lens and a very specific skill set.</p>
-      <p class="rv" style="--d:.3s">I write a campaign concept in the morning and dig into funnel data in the afternoon. That range is what makes me useful.</p>
+  <!-- point 1 -->
+  <section id="about" class="point">
+    <div class="wrap who-wrap"><div class="who" id="who">
+      <span class="label">Who am I</span>
+      <h2>Prapti Das</h2>
+      <p>I am a growth marketer and content strategist based in Bengaluru. My work sits at the intersection of creative instinct and analytical thinking. I can write a campaign concept in the morning and dig into funnel data in the afternoon, and that range is what makes me useful.</p>
+      <p>Five internships across fashion, real estate, edtech, martech and events have given me a wide lens. I have run paid acquisition, built content roadmaps from scratch, managed social accounts, run A/B tests and tracked performance across every campaign I have touched. I follow fashion closely, watch a lot of films, and care about architecture and design history, because the best marketing borrows from everywhere.</p>
+      <div class="tags"><span>Growth Marketing</span><span>Content Strategy</span><span>Fashion &amp; Apparel</span><span>Film &amp; Entertainment</span><span>Architecture &amp; Design</span><span>Social Media</span><span>A/B Testing</span><span>Analytics</span><span>Python · Automation</span></div>
     </div></div>
   </section>
 
-  <section id="stats" data-cl="1" data-side="1">
-    <div class="wrap grid"><div class="stats">
-      <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small>Fashion · EdTech · MarTech · Real Estate · Events</small></div>
-      <div class="stat rv" style="--d:.12s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaign, Sept 2024</small></div>
-      <div class="stat rv" style="--d:.24s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ inter-collegiate business fests</small></div>
-      <div class="stat rv" style="--d:.36s"><b data-n="3" data-s="K">3K</b><span>Followers in 3 months</span><small>Synapse club content series</small></div>
-    </div></div>
+  <!-- circle 1 -->
+  <section class="circle" data-cl="0" data-side="0">
+    <div class="cap"><span class="label rv">01 · Growth Marketing</span><h2 class="rv" style="--d:.1s">10K+ downloads in a month.</h2><p class="rv" style="--d:.2s">Paid acquisition, funnel optimization, A/B testing and conversion analysis across martech, fashion and edtech. <small>Aavo app campaign, Sept 2024.</small></p></div>
   </section>
 
-  <section id="explore" data-cl="2" data-side="-1">
-    <div class="wrap grid">
-      <div><span class="label rv">Explore</span><h2 class="rv" style="--d:.1s">Where would you like to go?</h2></div>
-      <div class="list" role="navigation" aria-label="Explore">
-        <a class="rv" style="--i:0" href="site.html#works">The Workshop<em>Creative Work</em></a>
-        <a class="rv" style="--i:1;--d:.08s" href="site.html#resume">Hogwarts Registry<em>Resume</em></a>
-        <a class="rv" style="--i:2;--d:.16s" href="site.html#blog">The Written Word<em>Writing</em></a>
-        <a class="rv" style="--i:3;--d:.24s" href="site.html#skills">The Armory<em>Skills</em></a>
-        <a class="rv" style="--i:4;--d:.32s" href="site.html#experience">The Quest Log<em>Experience</em></a>
+  <!-- point 2 -->
+  <section id="stats" class="point">
+    <div class="wrap"><div class="panel">
+      <span class="label rv">By the numbers</span>
+      <div class="stats">
+        <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small>Fashion · EdTech · MarTech · Real Estate · Events</small></div>
+        <div class="stat rv" style="--d:.12s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaign, Sept 2024</small></div>
+        <div class="stat rv" style="--d:.24s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ inter-collegiate business fests</small></div>
+        <div class="stat rv" style="--d:.36s"><b data-n="3" data-s="K">3K</b><span>Followers in 3 months</span><small>Synapse club content series</small></div>
       </div>
-    </div>
+      <a class="btn rv" href="site.html#resume" data-go>View résumé &amp; KPIs</a>
+    </div></div>
   </section>
 
-  <section id="contact" data-cl="3" data-side="1">
-    <div class="wrap grid"><div class="contact">
+  <!-- circle 2 -->
+  <section class="circle" data-cl="1" data-side="0">
+    <div class="cap"><span class="label rv">02 · Content Strategy</span><h2 class="rv" style="--d:.1s">3K followers in three months.</h2><p class="rv" style="--d:.2s">Content pillars, platform calendars and campaign copywriting. Pre-launch roadmaps for a premium fashion brand. <small>Synapse club content series.</small></p></div>
+  </section>
+
+  <!-- point 3 -->
+  <section id="industries" class="point">
+    <div class="wrap"><div class="panel">
+      <span class="label rv">Five industries</span>
+      <div class="inds">
+        <span class="rv">Fashion</span><span class="rv" style="--d:.08s">EdTech</span><span class="rv" style="--d:.16s">MarTech</span><span class="rv" style="--d:.24s">Real Estate</span><span class="rv" style="--d:.32s">Events</span>
+      </div>
+      <a class="ghost rv" style="margin-top:36px" href="site.html#passion" data-go>Where I want to build a career <span aria-hidden="true">→</span></a>
+    </div></div>
+  </section>
+
+  <!-- circle 3 -->
+  <section class="circle" data-cl="2" data-side="0">
+    <div class="cap"><span class="label rv">03 · Film &amp; Entertainment</span><h2 class="rv" style="--d:.1s">Stories, cut to move.</h2><p class="rv" style="--d:.2s">Video edits, spec campaigns and personal creative projects. <a class="inl" href="site.html#works" data-go>See the work →</a></p></div>
+  </section>
+
+  <!-- point 4 -->
+  <section id="explore" class="point">
+    <div class="wrap"><div class="panel big">
+      <span class="label rv">Explore</span>
+      <h2 class="rv" style="--d:.1s">Where would you like to go?</h2>
+      <p class="hint rv" style="--d:.15s">Pick a page. The bird will take you there.</p>
+      <div class="list" role="navigation" aria-label="Explore" id="list">
+        <svg class="bd" id="bd" viewBox="0 0 60 40" width="54" height="36" aria-hidden="true"><path d="M2 30 C14 8 34 4 58 16 C42 16 34 22 28 34 C22 24 12 24 2 30Z" fill="#ffb829"/></svg>
+        <a class="rv" href="site.html#works" data-go><b>01</b>Work<em>Video edits, spec campaigns, personal projects</em></a>
+        <a class="rv" href="site.html#resume" data-go><b>02</b>Resume<em>Education, experience, credentials</em></a>
+        <a class="rv" href="site.html#blog" data-go><b>03</b>Writing<em>An essay on Brutalist architecture</em></a>
+        <a class="rv" href="site.html#skills" data-go><b>04</b>Skills<em>Technical and strategic capabilities</em></a>
+        <a class="rv" href="site.html#experience" data-go><b>05</b>Experience<em>Internships, leadership, competitions</em></a>
+        <a class="rv" href="site.html#passion" data-go><b>06</b>Industries<em>Where I'm headed and why</em></a>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- circle 4 -->
+  <section class="circle" data-cl="3" data-side="0">
+    <div class="cap"><span class="label rv">04 · Analytics &amp; Performance</span><h2 class="rv" style="--d:.1s">Every campaign, tracked.</h2><p class="rv" style="--d:.2s">User behavior analysis, funnel tracking and hashtag strategy performance, so the next decision is better than the last.</p></div>
+  </section>
+
+  <!-- point 5 -->
+  <section id="contact" class="point">
+    <div class="wrap"><div class="panel contact">
       <span class="label rv">Contact</span>
       <h2 class="rv" style="--d:.1s;margin-bottom:48px">Let's build what's next.</h2>
       <a class="rv" style="--d:.2s" href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a>
@@ -169,7 +253,10 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     (function f(now){const p=Math.min((now-t0)/1500,1),e=1-Math.pow(1-p,4);el.textContent=Math.round(n*e)+(p<1?'':sf);if(p<1)requestAnimationFrame(f)})(t0)};
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
     const b=e.target.querySelector&&e.target.querySelector('b[data-n]');if(b)count(b);io.unobserve(e.target)}),{threshold:.2});
-  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  document.querySelectorAll('.rv,.who-wrap').forEach(el=>io.observe(el));
+  const L=document.getElementById('list'),bd=document.getElementById('bd');
+  if(L&&bd)L.querySelectorAll('a').forEach(a=>{const mv=()=>{L.classList.add('on');bd.style.transform='translate('+(a.offsetLeft+2)+'px,'+(a.offsetTop+a.offsetHeight/2-18)+'px)'};a.addEventListener('mouseenter',mv);a.addEventListener('focus',mv)});
+  if(L)L.addEventListener('mouseleave',()=>L.classList.remove('on'));
 })();
 
 /* ---------- 3D: particle bird → shatter → constellations ---------- */
@@ -231,18 +318,18 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   });
 
   const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},
-    uSpan:{value:new THREE.Vector3(26,60,9)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
+    uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
   const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
-    if(uAmb>.5){p=sc+drift*(.6+seed);}else{
+    if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
       vec3 b=position*uBs;float ax=abs(b.x);
       float f=sin(uTime*2.3-ax*.5)*(.9+.3*sin(uTime*4.6-ax*.9+1.3));
       b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uTime*2.3)*.25;b.z+=f*ax*.06*aMisc.x;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
       vec3 hero=b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
-      p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*4.*(.4+seed)+drift*.35*s;
+      p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
       float an=uTime*.12;mat2 m=mat2(cos(an),-sin(an),sin(an),cos(an));
       for(int i=0;i<4;i++){if(abs(aMisc.y-float(i))<.5){vec3 o=aOff;o.xz=m*o.xz;p=mix(p,uC[i]+o*uR[i],smoothstep(0.,1.,uProx[i]));}}
     }
@@ -263,8 +350,8 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   mk(g1,mat(0));
 
   /* large drifting outlined squares & circles (ambient depth layer) */
-  const M=small?30:64,a={position:new Float32Array(M*3),aScat:new Float32Array(M*3),aOff:new Float32Array(M*3),aCol:new Float32Array(M*3),aMisc:new Float32Array(M*4),aSize:new Float32Array(M)};
-  for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.3,saf:.3,teal:.2,white:.15,vio:.05}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=18+R()*40}
+  const M=small?18:38,a={position:new Float32Array(M*3),aScat:new Float32Array(M*3),aOff:new Float32Array(M*3),aCol:new Float32Array(M*3),aMisc:new Float32Array(M*4),aSize:new Float32Array(M)};
+  for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.3,saf:.3,teal:.2,white:.15,vio:.05}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=14+R()*26}
   const g2=new THREE.BufferGeometry();for(const k in a)g2.setAttribute(k,new THREE.BufferAttribute(a[k],k==='aMisc'?4:k==='aSize'?1:3));
   mk(g2,mat(1));
 
@@ -274,10 +361,10 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   const fit=()=>{
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
-    const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.62,14),document.documentElement.scrollHeight/vh*H,9);
-    U.uBirdOff.value.set(wide?W*.22:0,wide?.4:H*.2,wide?0:-3);U.uBs.value=wide?Math.min(1.1,W/30):.62;U.uDim.value=wide?1:.7;
+    const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.5,12),document.documentElement.scrollHeight/vh*H,6);
+    U.uBirdOff.value.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);U.uBs.value=wide?Math.min(1.3,W/25):.7;U.uDim.value=wide?.9:.65;
     cl.forEach(c=>{const r=c.el.getBoundingClientRect();c.y=r.top+scrollY+r.height/2;
-      U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1:.7)*[3.2,3.8,3.8,2.8][c.i]});
+      U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
   addEventListener('pointermove',e=>{mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});

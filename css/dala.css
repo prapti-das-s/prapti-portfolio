@@ -1,0 +1,77 @@
+/* Shared theme for every inner page — matches the landing page (black/navy void, Inter, iris + saffron accents).
+   Loaded after style.css; it repaints the older gothic layout without changing structure. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
+:root{
+  --ink:#020a14;--parchment:#fff;--aged:#bdbdbd;--blood:#8052ff;--deep-red:#8052ff;--gold:#ffb829;
+  --tarnished:rgba(255,255,255,.14);--fog:#bdbdbd;--shadow:transparent;
+  --iris:#8052ff;--saffron:#ffb829;--font:'PPNeueMontreal','Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+html{background:#020a14}
+body{background:radial-gradient(ellipse at 50% 0%,#07213a 0%,#020a14 55%,#000 100%) fixed;color:#fff;font:200 18px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+body::before{display:none}
+#field{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.page{position:relative;z-index:1}
+
+/* nav (same as landing) */
+#nav{height:auto;padding:22px clamp(20px,4vw,48px);background:linear-gradient(#020a14e6,#020a1400);border:0;backdrop-filter:none}
+.nav-logo{display:flex;align-items:center;gap:12px;font:400 18px/1 var(--font);letter-spacing:-.02em;color:#fff;text-decoration:none}
+.nav-logo i{width:18px;height:18px;border:2px solid var(--iris);display:block;transform:rotate(12deg);transition:transform .6s,border-radius .6s}
+.nav-logo:hover i{transform:rotate(135deg);border-radius:50%}
+.nav-links{gap:6px;align-items:center}
+.nav-links a{font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;color:#9a9a9a;padding:10px 14px;border:0;border-radius:24px;background:none}
+.nav-links a:hover{color:#fff;background:none;border:0}
+.nav-links a.active{color:#fff;background:var(--iris);border:0}
+.hamburger span{background:#fff}
+
+/* type */
+h1,h2,h3,.sec-title,.hp-name,.hp-section-title,.blog-title,.shadow-title,.olympian-title,.passion-title,.hp-registry-title,.campaign-header-text h3{
+  font-family:var(--font)!important;font-weight:400!important;letter-spacing:-.04em!important;color:#fff!important;text-shadow:none!important;font-style:normal!important}
+.shadow-title,.olympian-title,.passion-title,.blog-title,.hp-name{font-size:clamp(44px,7vw,96px)!important;line-height:1.05!important}
+.sec-title{font-size:clamp(34px,4.6vw,60px)!important}
+.page p,.page li,.shadow-sub,.olympian-sub,.passion-sub,.blog-body,.hp-tagline,.hp-contact{font-family:var(--font)!important;font-weight:200!important;color:#d6dde6!important;font-style:normal!important}
+.eyebrow,.blog-eyebrow,.hp-registry-label,.blog-meta,.tl-date,.stat-sub,.portal-world,.video-label{font:600 12px/1.2 var(--font)!important;letter-spacing:.05em!important;text-transform:uppercase;color:var(--saffron)!important}
+.stat-number,.tl-company,.hp-exp-company,.hp-edu-school{font-family:var(--font)!important;font-weight:400!important;color:#fff!important}
+.tl-role,.hp-exp-role,.stat-label,.hp-edu-detail{font-family:var(--font)!important;color:#bdbdbd!important;font-style:normal!important}
+a{color:inherit}
+
+/* banners lose their themed costumes */
+.shadow-banner,.olympian-banner,.passion-banner,.blog-banner,.hp-header,.hp-registry,section[style],.section-sm[style],div[style*="background:#060614"]{
+  background:transparent!important;border:0!important;box-shadow:none!important}
+.shadow-banner,.olympian-banner,.passion-banner,.blog-banner{padding:56px 0 24px!important;text-align:center}
+.rune-circle,.wave-wrap,.steam-wrap,.lightning,.ornament,.hp-watermark,.hp-crest,.snitch,.raven,.spark,.bolt,.ticker-wrap,.hero-grid,.skill-icon,.quest-icon,.industry-icon,.portal-icon,.corner{display:none!important}
+
+/* cards */
+.skill-card,.quest-card,.industry-card,.stat-card,.video-card,.design-card,.campaign-block,.hp-parchment,.about-full,.portal-card,.carousel-wrap,.tl-item{
+  background:rgba(2,10,20,.62)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:24px!important;box-shadow:none!important;backdrop-filter:blur(8px);color:#fff}
+.skill-card::before,.quest-card::before,.industry-card::before{background:var(--iris)!important}
+.skill-card:hover,.quest-card:hover,.industry-card:hover,.video-card:hover,.portal-card:hover{border-color:var(--iris)!important;transform:translateY(-4px)}
+.skill-card h3,.quest-card h3,.industry-card h3,.industry-label{color:#fff!important}
+.hp-parchment{padding:clamp(24px,4vw,56px)}
+.hp-divider{background:rgba(255,255,255,.14)!important;border:0!important;height:1px}
+.hp-section-title{border-color:rgba(255,255,255,.14)!important}
+.tl-dot{background:var(--iris)!important;border-color:var(--iris)!important;box-shadow:none!important}
+.timeline::before{background:rgba(255,255,255,.14)!important}
+.tag,.hp-skill,.v-tag{background:transparent!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:9999px!important;color:#fff!important;font-family:var(--font)!important;font-style:normal!important}
+.tag:hover{border-color:var(--saffron)!important;color:var(--saffron)!important}
+.blog-pull{border-left:2px solid var(--iris)!important;background:transparent!important;color:#fff!important}
+
+/* buttons + links */
+.btn,.btn-red{background:var(--iris)!important;color:#fff!important;border:0!important;border-radius:24px!important;font:600 14px/1.2 var(--font)!important;letter-spacing:.025em;text-transform:uppercase;padding:14px 22px!important;box-shadow:none!important}
+.btn-outline{background:transparent!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important;border-radius:24px!important;font-family:var(--font)!important}
+.back-btn{background:none!important;border:0!important;color:var(--saffron)!important;font:400 14px/1.2 var(--font)!important;letter-spacing:.025em;text-transform:uppercase;padding:18px clamp(20px,4vw,48px)!important}
+.c-arrow,.c-dot{border-color:rgba(255,255,255,.3)!important}.c-dot.active{background:var(--iris)!important}
+
+/* footer */
+footer{background:transparent!important;border-top:1px solid rgba(255,255,255,.1)!important;text-align:center;padding:48px 20px 36px}
+.footer-sigil{font:400 18px/1 var(--font)!important;letter-spacing:-.02em;color:#fff!important}
+.footer-links a,.footer-copy{font-family:var(--font)!important;font-weight:200!important;color:#9a9a9a!important;font-style:normal!important}
+.footer-links a:hover{color:var(--saffron)!important}
+::selection{background:var(--iris);color:#fff}
+@media(max-width:900px){
+  .nav-links{background:#020a14f2!important;border:0!important}
+  .nav-links a{padding:14px 20px}
+}
+
+.shadow-title{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important}
+#page-resume,#page-resume>*,.hp-registry{background-image:none!important}
+#page-resume .hp-parchment{background:rgba(2,10,20,.7)!important}
