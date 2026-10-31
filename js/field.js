@@ -2,7 +2,7 @@
 (function(){
   var cv=document.getElementById('field');if(!cv)return;var c=cv.getContext('2d'),W,H,D,m={x:-999,y:-999},R=Math.random;
   var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var COL=['72,140,255','140,230,255','51,191,242','235,247,255','255,184,41'];
+  var COL=['140,110,255','190,150,255','160,110,245','245,238,255','226,184,87'];
   var P=[];for(var i=0;i<90;i++)P.push({x:R(),y:R(),vx:(R()-.5)*.00004,vy:(R()-.5)*.00004,z:6+R()*16,c:COL[R()*5|0],t:R()<.5,r:R()*6.28,ox:0,oy:0});
   function fit(){D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;c.setTransform(D,0,0,D,0,0)}
   addEventListener('resize',fit);fit();
