@@ -11,7 +11,10 @@
   <script src="js/patronus.js" defer></script>
 
   <!-- Inline SVG favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><rect x='9' y='9' width='14' height='14' fill='none' stroke='%238052ff' stroke-width='3'/></svg>"><circle cx='16' cy='16' r='14' fill='%230d0a06' stroke='%23c9a84c' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='16' fill='%23c9a84c'>P</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/logo.css">
   <meta name="theme-color" content="#020a14">
 </head>
 <body>
@@ -20,7 +23,7 @@
      NAVIGATION
      ============================================================ -->
 <nav id="nav">
-  <a class="nav-logo" href="index.html" data-go aria-label="Prapti Das, home"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
+  <a class="brand" href="index.html" data-go aria-label="Prapti Das, home"><img class="brand-mk" src="favicon.svg" width="36" height="36" alt=""><span>Prapti Das</span></a>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" data-go>Home</a></li>
     <li><a href="#works"      id="nav-works"      onclick="showPage('works');return false;">Work</a></li>
@@ -163,9 +166,14 @@
     </div>
 
     <div class="hp-contact">
-      <p>📍 Bengaluru, Karnataka &nbsp;·&nbsp; 📞 +91 7619505512</p>
+      <p>📍 Bengaluru, Karnataka</p>
       <p>✉ das.2006prapti@gmail.com &nbsp;·&nbsp; 🔗 linkedin.com/in/praptid2006</p>
     </div>
+
+    <hr class="hp-divider">
+
+    <h2 class="hp-section-title">Summary</h2>
+    <p class="hp-summary">BBA (Finance &amp; Economics) student with growth experience across five Bengaluru startups. Skilled in performance marketing, SEO, A/B testing and funnel analytics, and I build websites and automation tools.</p>
 
     <hr class="hp-divider">
 
@@ -211,7 +219,7 @@
       <div class="hp-exp-company">Solid Corp (MarTech) · Bengaluru · Sept 2025 – Jan 2026</div>
       <div class="hp-exp-role">Growth Marketing Intern</div>
       <ul class="hp-exp-bullets">
-        <li>Led growth for multiple client brands, improving ROI and audience targeting</li>
+        <li>Led growth for RoofMyWorld and Nibble Foods, improving ROI and audience targeting</li>
         <li>Ran A/B tests and funnel analytics that grew qualified leads 25% per month</li>
         <li>Aligned product, design and client teams around shared KPIs</li>
         <li>Supported data interpretation and reporting for client decision-making</li>
@@ -236,6 +244,35 @@
         <li>Analysed user behaviour to optimise engagement and growth strategy</li>
         <li>Created brand assets and community content across platforms</li>
         <li>Used data-driven insights and funnel analysis to improve acquisition, engagement and retention</li>
+      </ul>
+    </div>
+
+    <hr class="hp-divider">
+
+    <h2 class="hp-section-title">Projects</h2>
+
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">Portfolio website · Personal project</div>
+      <div class="hp-exp-role">Designed, built and deployed this site</div>
+      <ul class="hp-exp-bullets">
+        <li>Showcases video edits, campaign work and writing, with a self-built booking calendar on Google Calendar instead of a third-party scheduler</li>
+      </ul>
+    </div>
+
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">AiSensey · Marketing automation</div>
+      <div class="hp-exp-role">WhatsApp webinar reminders</div>
+      <ul class="hp-exp-bullets">
+        <li>Automated WhatsApp reminders from Zoom registrations in Google Sheets</li>
+        <li>Built supporting tools in Python, n8n and Streamlit</li>
+      </ul>
+    </div>
+
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">LinkedIn &amp; Substack · Writing</div>
+      <div class="hp-exp-role">Author</div>
+      <ul class="hp-exp-bullets">
+        <li>Write on emotional intelligence and workplace performance</li>
       </ul>
     </div>
 
@@ -311,33 +348,37 @@
 
     <hr class="hp-divider">
 
-    <h2 class="hp-section-title">Skills &amp; Certifications</h2>
+    <h2 class="hp-section-title">Skills</h2>
+    <p class="hp-sub">Growth &amp; acquisition</p>
     <div class="hp-skills">
-      <span class="hp-skill">Content Strategy</span>
-      <span class="hp-skill">Social Media</span>
-      <span class="hp-skill">Influencer Marketing</span>
-      <span class="hp-skill">Paid Acquisition</span>
-      <span class="hp-skill">A/B Testing</span>
-      <span class="hp-skill">Funnel Analytics</span>
-      <span class="hp-skill">SEO</span>
-      <span class="hp-skill">Market Research</span>
-      <span class="hp-skill">Generative AI</span>
-      <span class="hp-skill">Python</span>
-      <span class="hp-skill">SQL</span>
-      <span class="hp-skill">Power BI</span>
-      <span class="hp-skill">Advanced Excel</span>
-      <span class="hp-skill">n8n</span>
-      <span class="hp-skill">Streamlit</span>
-      <span class="hp-skill">Next.js</span>
-      <span class="hp-skill">Sanity CMS</span>
-      <span class="hp-skill">HTML/CSS</span>
-      <span class="hp-skill">Copywriting</span>
-      <span class="hp-skill">Video Editing</span>
-      <span class="hp-skill">Storyboarding</span>
-      <span class="hp-skill">Public Speaking</span>
-      <span class="hp-skill">English (C1) · Hindi &amp; Bengali (Fluent) · Tamil &amp; Assamese (Conversational)</span>
-      <span class="hp-skill">Oracle — Generative AI (Aug 2025)</span>
-      <span class="hp-skill">Infosys Springboard — Intro to AI (Jul 2025)</span>
+      <span class="hp-skill">Content Strategy</span><span class="hp-skill">Social Media</span><span class="hp-skill">Influencer Marketing</span><span class="hp-skill">Paid Acquisition</span><span class="hp-skill">A/B Testing</span><span class="hp-skill">Funnel Analytics</span><span class="hp-skill">SEO</span><span class="hp-skill">Market Research</span>
+    </div>
+    <p class="hp-sub">AI &amp; technical</p>
+    <div class="hp-skills">
+      <span class="hp-skill">Generative AI</span><span class="hp-skill">Python</span><span class="hp-skill">SQL</span><span class="hp-skill">Power BI</span><span class="hp-skill">Advanced Excel</span><span class="hp-skill">n8n</span><span class="hp-skill">Streamlit</span><span class="hp-skill">Next.js</span><span class="hp-skill">Sanity CMS</span><span class="hp-skill">HTML/CSS</span>
+    </div>
+    <p class="hp-sub">Creative</p>
+    <div class="hp-skills">
+      <span class="hp-skill">Copywriting</span><span class="hp-skill">Video Editing</span><span class="hp-skill">Storyboarding</span>
+    </div>
+
+    <hr class="hp-divider">
+
+    <h2 class="hp-section-title">Certifications</h2>
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">Oracle · Aug 2025</div>
+      <div class="hp-exp-role">Generative AI</div>
+    </div>
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">Infosys Springboard · Jul 2025</div>
+      <div class="hp-exp-role">Introduction to AI</div>
+    </div>
+
+    <hr class="hp-divider">
+
+    <h2 class="hp-section-title">Languages</h2>
+    <div class="hp-skills">
+      <span class="hp-skill">English (C1)</span><span class="hp-skill">Hindi (Fluent)</span><span class="hp-skill">Bengali (Fluent)</span><span class="hp-skill">Tamil (Conversational)</span><span class="hp-skill">Assamese (Conversational)</span>
     </div>
 
     <hr class="hp-divider">
@@ -711,6 +752,46 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
+        <span class="eyebrow" style="color:#d4a060;">The Track Record</span>
+        <h2 class="sec-title" style="color:#d4a060;">Five Industries, Already Worked In</h2>
+        <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#a08060; margin-top:1rem; font-size:1.05rem; max-width:600px; margin-left:auto; margin-right:auto;">
+          Growth work across five Bengaluru startups, each with a result I can point to.
+        </p>
+      </div>
+
+      <div class="industry-grid">
+        <div class="industry-card" style="--ic:#c080a0;">
+          <div class="industry-label">Fashion</div>
+          <h3>Darshe · Premium Fashion</h3>
+          <p>Ran the founder's social media, built the pre-launch roadmap with content pillars and influencer coordination, and grew the organic audience to 2K+ followers through analytics, SEO and hashtag strategy. Sept – Nov 2025.</p>
+        </div>
+        <div class="industry-card" style="--ic:#7070cc;">
+          <div class="industry-label">EdTech</div>
+          <h3>GenAIPeople · AI Career Mentorship</h3>
+          <p>Weekly content across 5 formats, the company website built on Next.js and Sanity CMS, a managed ₹20K ad budget, and an outbound LinkedIn funnel for senior developers that brings in 15–20 qualified strategy calls a month. Dec 2025 – present.</p>
+        </div>
+        <div class="industry-card" style="--ic:#50aacc;">
+          <div class="industry-label">MarTech</div>
+          <h3>Solid Corp · Growth Marketing</h3>
+          <p>Led growth for RoofMyWorld and Nibble Foods. A/B tests and funnel analytics grew qualified leads 25% a month. Sept 2025 – Jan 2026.</p>
+        </div>
+        <div class="industry-card" style="--ic:#70cc50;">
+          <div class="industry-label">Real Estate</div>
+          <h3>Propalyst · Real Estate Tech</h3>
+          <p>Lifted website traffic 15% in one month through optimised listings, local SEO and campaign tracking, and streamlined listing data by coordinating 50+ brokers. Sept 2025 – Jan 2026.</p>
+        </div>
+        <div class="industry-card" style="--ic:#e2b857;">
+          <div class="industry-label">Event Management</div>
+          <h3>Aavo · Events App</h3>
+          <p>Scaled the app to 10K+ downloads and 1K+ followers in one month through digital campaigns. Away from work, 86% win rate across 10+ intercollegiate fests with CUSBMA. Sept 2024 – Apr 2025.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
         <span class="eyebrow" style="color:#d4a060;">The Long Game</span>
         <h2 class="sec-title" style="color:#d4a060;">Where I Want to Build a Career</h2>
         <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:#a08060; margin-top:1rem; font-size:1.05rem; max-width:600px; margin-left:auto; margin-right:auto;">
@@ -727,8 +808,9 @@
           <p>
             Film has always shaped how people see the world. I want to work on the marketing side
             of that: campaigns, release strategy, social campaigns for films and streaming projects.
-            I follow film marketing closely, study how studios position releases, and have a strong
-            sense of what works for entertainment audiences.
+            I follow film marketing closely and study how studios position releases. I already work
+            in performance: I cut video edits, I am Finance Head of Zariya Productions, the street-play group
+            that placed 3rd at Mood Indigo, IIT Bombay, and I made the poster for Charitra Ka Chitra.
           </p>
         </div>
 
@@ -740,7 +822,7 @@
             from scratch and managed the founder's entire social presence. Fashion marketing
             demands both cultural awareness and executional precision. I have experience in both,
             and a genuine interest in the history and business of fashion that makes me better
-            at the work.
+            at the work. That work took the audience to 2K+ organic followers.
           </p>
         </div>
 

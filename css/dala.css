@@ -196,3 +196,7 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 .gd-row-2 .deck-card[data-p="2"]{transform:translateX(-14%) rotate(-6deg) scale(.9)}
 .gd-row-2 .gd-copy{position:relative;z-index:5;padding-left:clamp(0px,1.5vw,20px)}
 @media(max-width:860px){.gd-row-2{grid-template-columns:1fr}.gd-row-2 .deck-col{padding:0 18px}}
+
+/* resume page: summary and skill group labels */
+.hp-summary{margin:0;font-size:1.02rem;line-height:1.7;position:relative;z-index:1}
+.hp-sub{margin:1rem 0 .45rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;position:relative;z-index:1}

@@ -10,13 +10,16 @@
   <link rel="stylesheet" href="css/contact.css">
   <script src="js/bird.js"></script>
   <script src="js/patronus.js" defer></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23020a14'/><rect x='8' y='6' width='3.4' height='19' fill='%238052ff'/><circle cx='16.5' cy='12' r='5.4' fill='none' stroke='%238052ff' stroke-width='3'/><path d='M21.6 10.2 29 12.4l-7.4 2.6z' fill='%23ffb829'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/logo.css">
   <meta name="theme-color" content="#020a14">
 </head>
 <body>
 
 <nav id="nav">
-  <a class="nav-logo" href="index.html" data-go aria-label="Prapti Das, home"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
+  <a class="brand" href="index.html" data-go aria-label="Prapti Das, home"><img class="brand-mk" src="favicon.svg" width="36" height="36" alt=""><span>Prapti Das</span></a>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" data-go>Home</a></li>
     <li><a href="site.html#works" data-go>Work</a></li>
@@ -34,7 +37,7 @@
   <header class="book-head">
     <span class="eyebrow">Contact</span>
     <h1>Let's talk.</h1>
-    <p>Pick a day and a time that suits you. I will get a calendar invite, and so will you, with a Google Meet link.</p>
+    <p>Pick a day and a time that suits you. Booked times go straight onto my Google Calendar, and you get a calendar invite by email.</p>
   </header>
 
   <section class="book" id="book" aria-label="Book a call">
@@ -71,10 +74,11 @@
       </form>
 
       <div id="step-done" class="book-step" hidden>
-        <h2>You're booked.</h2>
+        <h2 id="done-title">You're booked.</h2>
         <p class="book-chosen" id="done-when"></p>
-        <p>A calendar invite is on its way to <b id="done-mail"></b>. Check your inbox, or your calendar app.</p>
+        <p id="done-text">A calendar invite is on its way to <b id="done-mail"></b>. Check your inbox, or your calendar app.</p>
         <p id="done-meet" hidden><a class="btn" id="done-link" href="#" target="_blank" rel="noopener">Open Google Meet link</a></p>
+        <p><a class="btn-ghost" id="done-gcal" href="#" target="_blank" rel="noopener" hidden>Add to my Google Calendar</a></p>
       </div>
 
       <div id="step-fallback" class="book-step" hidden>
@@ -85,7 +89,7 @@
     </div>
   </section>
 
-  <p class="book-alt">Prefer another way? <a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a> &nbsp;·&nbsp; <a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="tel:+917619505512">+91 761 950 5512</a></p>
+  <p class="book-alt">Prefer another way? <a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a> &nbsp;·&nbsp; <a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a></p>
 </main>
 
 <canvas id="field" aria-hidden="true"></canvas>

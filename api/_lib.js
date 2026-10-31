@@ -33,7 +33,9 @@ const inRange = ms => ms >= Date.now() + MIN_NOTICE_MS && ms <= Date.now() + MAX
 
 /* ---- Google Calendar (OAuth refresh token for Prapti's own account) ---- */
 const env = process.env;
-const configured = () => !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && env.GOOGLE_REFRESH_TOKEN);
+const useScript = () => !!(env.BOOKING_SCRIPT_URL && env.BOOKING_SCRIPT_KEY);   // easy mode: a Google Apps Script web app on Prapti's account
+const useOAuth = () => !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && env.GOOGLE_REFRESH_TOKEN);
+const configured = () => useScript() || useOAuth();
 const CAL = encodeURIComponent(env.GOOGLE_CALENDAR_ID || 'primary');
 
 let cached = { token: null, exp: 0 };
@@ -60,7 +62,23 @@ async function gfetch(url, opts = {}) {
   return j;
 }
 /* busy intervals [{start,end}] in ms between two ms timestamps */
+async function scriptCall(params, body) {
+  const u = new URL(env.BOOKING_SCRIPT_URL);
+  u.searchParams.set('key', env.BOOKING_SCRIPT_KEY);
+  Object.keys(params || {}).forEach(k => u.searchParams.set(k, params[k]));
+  const r = await fetch(u, body
+    ? { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ ...body, key: env.BOOKING_SCRIPT_KEY }) }
+    : { redirect: 'follow' });
+  const j = await r.json().catch(() => null);
+  if (j && j.error === 'slot_taken') throw new Error('slot_taken');
+  if (!r.ok || !j || j.error) throw new Error('script_error');
+  return j;
+}
 async function getBusy(fromMs, toMs) {
+  if (useScript()) {
+    const j = await scriptCall({ action: 'busy', from: new Date(fromMs).toISOString(), to: new Date(toMs).toISOString() });
+    return (j.busy || []).map(b => ({ start: Date.parse(b.start), end: Date.parse(b.end) }));
+  }
   const j = await gfetch('https://www.googleapis.com/calendar/v3/freeBusy', {
     method: 'POST',
     body: JSON.stringify({ timeMin: new Date(fromMs).toISOString(), timeMax: new Date(toMs).toISOString(), items: [{ id: decodeURIComponent(CAL) }] })
@@ -70,6 +88,9 @@ async function getBusy(fromMs, toMs) {
 }
 const overlaps = (busy, s, e) => busy.some(b => s < b.end && e > b.start);
 async function createEvent({ startMs, name, email, notes }) {
+  if (useScript()) {
+    return scriptCall({}, { action: 'book', start: istISO(startMs), end: istISO(startMs + STEP_MIN * 60000), name, email, notes });
+  }
   return gfetch(`https://www.googleapis.com/calendar/v3/calendars/${CAL}/events?sendUpdates=all&conferenceDataVersion=1`, {
     method: 'POST',
     body: JSON.stringify({

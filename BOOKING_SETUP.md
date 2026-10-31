@@ -1,26 +1,21 @@
 # Booking page setup (Google Calendar, no Calendly)
 
-The booking page (`contact.html`) talks to two serverless functions that Vercel runs automatically:
-`api/availability.js` (open slots) and `api/book.js` (creates the event and emails the guest an invite).
-Nothing works until these four environment variables exist in Vercel
-(Project → Settings → Environment Variables), then redeploy:
+`contact.html` shows a month calendar, the open time slots (Mon-Fri 4:00-8:00 PM IST, Sat 12:00-5:00 PM IST, Sundays off,
+30-minute calls) and a details form. Until your calendar is connected it works in **request mode**: the visitor picks a slot and
+their email app opens with the request filled in, plus an "Add to my Google Calendar" link. Connect the calendar and it becomes
+fully automatic: taken times disappear, the event lands on your calendar and the guest gets an invite.
 
-| Variable | Value |
-|---|---|
-| `GOOGLE_CLIENT_ID` | OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | OAuth client secret |
-| `GOOGLE_REFRESH_TOKEN` | refresh token for **your** Google account |
-| `GOOGLE_CALENDAR_ID` | optional, defaults to `primary` |
+## Easiest way (about 3 minutes, no Google Cloud console)
+1. Go to script.google.com, click **New project**, delete the sample code and paste in everything from `apps-script/Code.gs`.
+2. Change `KEY` at the top to any long random string (keep a copy).
+3. Click **Deploy > New deployment > Web app**. Set **Execute as: Me** and **Who has access: Anyone**. Authorise it with your Google account when asked.
+4. Copy the **Web app URL**.
+5. In Vercel: Project > Settings > Environment Variables, add `BOOKING_SCRIPT_URL` (the URL) and `BOOKING_SCRIPT_KEY` (the same KEY). Redeploy.
 
-## One-time Google setup
-1. console.cloud.google.com → create a project → **APIs & Services → Library → Google Calendar API → Enable**.
-2. **OAuth consent screen**: user type External, add yourself as a test user, then set publishing status to **In production**
-   (otherwise the refresh token expires after 7 days; the "unverified app" warning is fine for your own account).
-3. **Credentials → Create credentials → OAuth client ID → Web application**. Add `https://developers.google.com/oauthplayground` as an authorised redirect URI.
-4. Open developers.google.com/oauthplayground → gear icon → tick **Use your own OAuth credentials**, paste the client ID and secret.
-   Authorise the scope `https://www.googleapis.com/auth/calendar.events` and also `https://www.googleapis.com/auth/calendar.freebusy`, sign in with your account, then **Exchange authorization code for tokens** and copy the **refresh token**.
-5. Put the three values into Vercel and redeploy.
+## Alternative: Google OAuth (Google Cloud console)
+Set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN` (and optionally `GOOGLE_CALENDAR_ID`). This mode also adds a Google Meet link.
+Steps: enable the Google Calendar API, create an OAuth client (Web), use developers.google.com/oauthplayground with your own credentials and the
+scopes `calendar.events` and `calendar.freebusy`, then copy the refresh token. Publish the consent screen "In production" so the token does not expire.
 
-## Rules (edit in `api/_lib.js`)
-Mon–Fri 4:00–8:00 PM IST, Sat 12:00–5:00 PM IST, Sundays off. 30-minute slots, no bookings within 4 hours, up to 60 days ahead.
-Slots that clash with anything already on your calendar are hidden automatically, and the server re-checks before booking.
+## Rules (edit in `api/_lib.js` and the matching `localSlots` in `js/booking.js`)
+No bookings within 4 hours, up to 60 days ahead. The server re-checks the calendar right before booking, so two people cannot take the same slot.
