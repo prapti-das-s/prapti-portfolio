@@ -349,16 +349,16 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
     if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
       vec3 b=position*uBs;float ax=abs(b.x);
-      float f=sin(uTime*2.3-ax*.5)*(.9+.3*sin(uTime*4.6-ax*.9+1.3));
-      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uTime*2.3)*.25;b.z+=f*ax*.06*aMisc.x;
+      float f=sin(uPh-ax*.45)*uFA;
+      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uPh)*.18*uFA;b.z+=f*ax*.05*aMisc.x;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
       vec3 hero=uRot*b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
       p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
@@ -389,7 +389,7 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 
   /* layout ↔ world mapping */
   const cl=[...document.querySelectorAll('[data-cl]')].map(el=>({el,i:+el.dataset.cl,side:+el.dataset.side,y:0}));
-  let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0;let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
+  let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
   const fit=()=>{
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
@@ -408,20 +408,24 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
     U.uShatter.value=ss(.04*vh,.9*vh,sm);
-    /* free 3D flight: a smooth, never-quite-repeating path through depth; the bird points along it and banks into turns */
-    {const tt=U.uTime.value,k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4;
-     const path=(u,o)=>o.set((Math.sin(u*.21+1)*.55+Math.sin(u*.53+2)*.3+Math.sin(u*.97)*.1)*W*.32*amp,
-                              base.y+(Math.sin(u*.17+4)*.5+Math.sin(u*.41+1)*.3+Math.sin(u*.83+2)*.12)*H*.3*amp,
-                              base.z+Math.sin(u*.13+3)*5+Math.sin(u*.37)*2-3);
-     path(tt,P0);path(tt+.12,P1);path(tt+.4,P2);
-     const fwd=F.subVectors(P1,P0).normalize(),fwd2=F2.subVectors(P2,P1).normalize();
-     const turn=fwd.x*fwd2.y-fwd.y*fwd2.x;           /* signed curvature -> bank */
-     bank+=(Math.max(-1.1,Math.min(1.1,-turn*60))-bank)*.05;
-     const up=UP.set(0,0,1);up.addScaledVector(fwd,-up.dot(fwd));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
-     const rgt=RG.crossVectors(fwd,up).normalize();
-     MX.makeBasis(rgt,up,F3.copy(fwd).negate());QT.setFromRotationMatrix(MX);
-     QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,.12);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QS));
-     U.uBirdOff.value.copy(P0).lerp(base,1-k);
+    /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
+    {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
+     if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
+     const T=U.uTime.value;
+     TG.set(Math.sin(T*.10)*W*.30*amp+Math.sin(T*.27+1)*W*.08*amp,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+     DS.subVectors(TG,BP).normalize();DP.copy(BD);
+     BD.lerp(DS,Math.min(1,.7*dt)).normalize();
+     BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
+     BP.addScaledVector(BD,3.4*dt);
+     const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
+     bank+=(Math.max(-.6,Math.min(.6,-yaw*.9))-bank)*Math.min(1,1.6*dt);
+     fm+=(((BD.y>.05)||Math.sin(T*.5)>.15?1:0)-fm)*Math.min(1,.8*dt);   /* flap while climbing / in bursts, glide otherwise */
+     U.uFA.value=.22+.78*fm;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
+     const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
+     const rgt=RG.crossVectors(BD,up).normalize();
+     MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
+     QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,2.2*dt));U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QS));
+     U.uBirdOff.value.copy(BP).lerp(base,1-k);
      const r=heroTxt?heroTxt.getBoundingClientRect():null;let over=false;
      if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw,hh=3*bsz*sc/H*vh;
        over=sx+hw>r.left-30&&sx-hw<r.right+30&&sy+hh>r.top-20&&sy-hh<r.bottom+20}
