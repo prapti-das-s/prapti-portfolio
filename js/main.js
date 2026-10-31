@@ -59,7 +59,7 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   });
 });
 
-// ── CAROUSEL ────────────────────────────────────────────────
+// ── DECK CAROUSEL (moves only when a button/arrow key is pressed) ─────────
 let currentSlide = 0;
 const totalSlides = 3;
 
@@ -67,25 +67,14 @@ function moveCarousel(dir) {
   currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
   updateCarousel();
 }
-
-function goToSlide(i) {
-  currentSlide = i;
-  updateCarousel();
-}
-
+function goToSlide(i) { currentSlide = i; updateCarousel(); }
 function updateCarousel() {
-  const track = document.getElementById('carousel-track');
-  if (!track) return;
-  track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
-  document.querySelectorAll('.c-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentSlide);
+  document.querySelectorAll('.deck-card').forEach((el, i) => {
+    el.dataset.p = (i - currentSlide + totalSlides) % totalSlides;
   });
+  const n = document.getElementById('deck-count');
+  if (n) n.textContent = '0' + (currentSlide + 1) + ' / 0' + totalSlides;
 }
-
-// auto-advance
-setInterval(() => moveCarousel(1), 5500);
-
-// keyboard arrows on works page
 document.addEventListener('keydown', e => {
   const works = document.getElementById('page-works');
   if (works && works.classList.contains('active')) {
@@ -183,75 +172,50 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.tl-item, .skill-card, .quest-card, .industry-card, .video-card, .portal-card').forEach(el => {
+document.querySelectorAll('.tl-item, .skill-card, .quest-card, .industry-card, .portal-card').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(18px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
   observer.observe(el);
 });
 
-// ── INLINE VIDEO PLAYBACK ─────────────────────────────────────
-function playInline(videoId) {
-  const card  = document.getElementById('card-' + videoId);
-  const thumb = card.querySelector('.video-thumb-inner');
+// ── REEL CARDS: spotlight follows the pointer ────────────────
+document.querySelectorAll('.reel').forEach(r => r.addEventListener('pointermove', e => {
+  const b = r.getBoundingClientRect();
+  r.style.setProperty('--mx', (e.clientX - b.left) + 'px');
+  r.style.setProperty('--my', (e.clientY - b.top) + 'px');
+}));
 
-  thumb.innerHTML = '';
-  thumb.style.padding = '0';
-  thumb.style.background = '#000';
-  thumb.style.cursor = 'default';
-  thumb.style.position = 'relative';
-  thumb.onclick = null;
+// ── RESUME: click an experience to pop it open ───────────────
+document.querySelectorAll('.hp-exp-item').forEach((it, i) => {
+  if (i === 0) it.classList.add('open');
+  const head = it.querySelector('.hp-exp-company');
+  if (!head) return;
+  head.setAttribute('role', 'button'); head.tabIndex = 0;
+  const tog = () => it.classList.toggle('open');
+  head.addEventListener('click', tog);
+  head.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+});
 
-  // iframe
-  const iframe = document.createElement('iframe');
-  iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-  iframe.allowFullscreen = true;
-  iframe.style.cssText = 'width:100%; height:100%; position:absolute; inset:0; border:none; z-index:1;';
-  thumb.appendChild(iframe);
+// ── RESUME: small shapes scattered around the page ───────────
+(function () {
+  const pg = document.getElementById('page-resume'); if (!pg) return;
+  const cols = ['#7a78ff', '#a56cff', '#4f9dff', '#e2b857'];
+  for (let i = 0; i < 26; i++) {
+    const s = document.createElement('span'); s.className = 'sh'; s.setAttribute('aria-hidden', 'true');
+    const z = 8 + Math.random() * 20, c = cols[i % 4];
+    s.style.cssText = `left:${Math.random() * 96}%;top:${4 + Math.random() * 92}%;width:${z}px;height:${z}px;border-color:${c};` +
+      `border-radius:${Math.random() < .5 ? '50%' : '0'};--t:${(5 + Math.random() * 7).toFixed(1)}s;animation-delay:-${(Math.random() * 8).toFixed(1)}s;--r:${(Math.random() * 90).toFixed(0)}deg`;
+    pg.appendChild(s);
+  }
+})();
 
-  // stop button — sits on top of the iframe
-  const stopBtn = document.createElement('button');
-  stopBtn.textContent = '✕ Stop';
-  stopBtn.style.cssText = `
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    background: rgba(13,10,6,.88);
-    border: 1px solid var(--gold, #c9a84c);
-    color: var(--gold, #c9a84c);
-    font-family: 'Special Elite', monospace;
-    font-size: .6rem;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    padding: .35rem .9rem;
-    cursor: pointer;
-    transition: all .2s;
-    white-space: nowrap;
-  `;
-  stopBtn.onmouseenter = () => {
-    stopBtn.style.background = 'rgba(201,168,76,.18)';
-  };
-  stopBtn.onmouseleave = () => {
-    stopBtn.style.background = 'rgba(13,10,6,.88)';
-  };
-  stopBtn.onclick = () => stopInline(videoId);
-  thumb.appendChild(stopBtn);
-}
-
-function stopInline(videoId) {
-  const card  = document.getElementById('card-' + videoId);
-  const thumb = card.querySelector('.video-thumb-inner');
-  const label = card.querySelector('.video-label').textContent;
-
-  // restore the original thumb
-  thumb.innerHTML = `
-    <span class="video-play-btn">&#9654;</span>
-    <span class="video-thumb-label">${label}</span>
-  `;
-  thumb.style.background = '';
-  thumb.style.cursor = 'pointer';
-  thumb.onclick = () => playInline(videoId);
-}
+// ── WRITING: reading progress bar ────────────────────────────
+(function () {
+  const bar = document.createElement('div'); bar.id = 'read-bar'; document.body.appendChild(bar);
+  addEventListener('scroll', () => {
+    const on = document.getElementById('page-blog')?.classList.contains('active');
+    const h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.opacity = on ? 1 : 0; bar.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+  }, { passive: true });
+})();
