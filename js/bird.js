@@ -8,7 +8,7 @@
   de.appendChild(cv);
   var W,H,DPR,busy=false;
   function size(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0)}
-  var PAL=['rgba(72,140,255,','rgba(140,230,255,','rgba(51,191,242,','rgba(235,247,255,','rgba(255,184,41,'];
+  var PAL=['rgba(140,110,255,','rgba(190,150,255,','rgba(160,110,245,','rgba(245,238,255,','rgba(226,184,87,'];
   var R=Math.random,P=[];
   for(var i=0;i<1700;i++){
     var kind=i<1300?0:i<1550?1:2; /* wing, body, head/tail */

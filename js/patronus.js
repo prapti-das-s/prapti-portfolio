@@ -9,7 +9,7 @@
   /* ---------- reel modal ---------- */
   var st = document.createElement('style');
   st.textContent =
-    '#reel{position:fixed;inset:0;z-index:99998;display:grid;place-items:center;padding:4vw;visibility:hidden;opacity:0;transition:opacity .35s,visibility .35s;background:radial-gradient(circle at 50% 50%,rgba(60,50,170,.35),rgba(2,2,12,.94))}' +
+    '#reel{position:fixed;inset:0;z-index:99998;display:grid;place-items:center;padding:4vw;visibility:hidden;opacity:0;transition:opacity .35s,visibility .35s;background:radial-gradient(circle at 50% 50%,rgba(90,50,190,.35),rgba(2,2,12,.94))}' +
     '#reel.on{visibility:visible;opacity:1}' +
     '#reel .box{position:relative;width:min(1000px,92vw);transform:scale(.6) rotate(-2deg);opacity:0;transition:transform .7s cubic-bezier(.2,.9,.2,1.15),opacity .4s}' +
     '#reel.on .box{transform:none;opacity:1}' +
@@ -44,7 +44,7 @@
   function size() { D = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * D; cv.height = H * D; c.setTransform(D, 0, 0, D, 0, 0); }
   size(); addEventListener('resize', size);
 
-  var PAL = [[110, 150, 255], [140, 230, 255], [90, 200, 250], [235, 247, 255], [226, 184, 87]];
+  var PAL = [[140, 110, 255], [190, 150, 255], [160, 110, 245], [245, 238, 255], [226, 184, 87]];
   var P = [];
   for (var i = 0; i < 620; i++) {
     P.push({ k: i < 470 ? 0 : i < 570 ? 1 : 2, s: Math.pow(R(), .8), v: R(), side: R() < .5 ? 0 : 1, seed: R(), c: R() < .1 ? 4 : R() < .4 ? 3 : (R() * 3 | 0), sz: 1 + R() * 1.8, tri: R() < .3 });
@@ -62,62 +62,62 @@
     return [x, y];
   }
 
-  var m = { x: W / 2, y: H / 2, seen: false };
-  var b = { x: -200, y: H / 2, vx: 0, vy: 0, face: 1, fs: 1, scale: 0, alpha: 1, ta: 1, hold: 0 };
-  var trail = [], bits = [];
+  var m = { x: 0, y: 0, px: 0, py: 0, seen: false };
+  var trail = [], bits = [], fl = [], busy = false;
 
+  /* cursor: no bird, just a glittering trail that follows the pointer */
   addEventListener('pointermove', function (e) {
     if (e.pointerType === 'touch') return;
-    if (!m.seen) { m.seen = true; var side = R() < .5 ? -1 : 1; b.x = m.x = e.clientX; b.y = e.clientY; b.x += side * W * .55; b.y -= H * .3; }
+    if (!m.seen) { m.seen = true; m.px = e.clientX; m.py = e.clientY; }
     m.x = e.clientX; m.y = e.clientY;
-    var t = e.target;
-    b.ta = t && t.closest && t.closest('h1,h2,h3,p,li,.sub,.label,.stat,small,.tags,.list a') ? .22 : 1;
+    var dx = m.x - m.px, dy = m.y - m.py, sp = Math.hypot(dx, dy); m.px = m.x; m.py = m.y;
+    if (!FINE || RM) return;
+    for (var k = 0, n = Math.min(6, 1 + (sp * .12 | 0)); k < n; k++)
+      trail.push({ x: m.x + (R() - .5) * 10, y: m.y + (R() - .5) * 10, vx: -dx * .04 + (R() - .5) * .8, vy: -dy * .04 + (R() - .5) * .8 - .1, l: 1, c: R() * 5 | 0, z: .8 + R() * 1.8 });
   }, { passive: true });
-  document.addEventListener('pointerleave', function () { b.ta = 0; });
 
   function burst(x, y) {
-    for (var i = 0; i < 420; i++) {
+    for (var i = 0; i < 380; i++) {
       var a = R() * TAU, sp = 2 + Math.pow(R(), 1.6) * 15;
       bits.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, l: 1, d: .012 + R() * .018, c: R() < .15 ? 4 : R() * 4 | 0, z: 1 + R() * 2.4, tri: R() < .4 });
     }
-    b.hold = 55; b.scale = 0; b.x = x; b.y = y;
+  }
+  /* a bird that flies in from the edge, toward the click, then goes boom */
+  function launch(x, y, i) {
+    var side = i % 2 ? -1 : 1;
+    fl.push({ sx: side > 0 ? W + 140 : -140, sy: y + (R() - .5) * H * .7, tx: x + (R() - .5) * 150, ty: y + (R() - .5) * 100, t: -i * .1, dur: .5 + R() * .08, bend: (R() - .5) * 220, L: 46 + R() * 22, px: 0, py: 0 });
   }
 
-  var t0 = performance.now();
+  var t0 = performance.now(), last = t0;
   (function loop(now) {
     requestAnimationFrame(loop);
+    var dt = Math.min((now - last) / 1000, .05); last = now;
     c.clearRect(0, 0, W, H);
     var t = (now - t0) / 1000;
-    if (FINE && m.seen && !RM) {
-      if (b.hold > 0) b.hold--; else {
-        b.vx += (m.x - b.x) * .014; b.vy += (m.y - b.y) * .014; b.vx *= .87; b.vy *= .87;
-        b.x += b.vx; b.y += b.vy; b.scale += (1 - b.scale) * .05;
+    for (var f = fl.length - 1; f >= 0; f--) {
+      var o = fl[f]; o.t += dt; var u = o.t / o.dur;
+      if (u < 0) continue;
+      if (u >= 1) { burst(o.tx, o.ty); fl.splice(f, 1); continue; }
+      var e = Math.pow(u, 1.7), x = o.sx + (o.tx - o.sx) * e, y = o.sy + (o.ty - o.sy) * e + Math.sin(u * Math.PI) * o.bend;
+      var face = o.tx > o.sx ? 1 : -1, rot = Math.max(-.6, Math.min(.6, Math.atan2(y - (o.py || y), Math.abs(x - (o.px || x)) + .01))) * face;
+      o.px = x; o.py = y;
+      var L = o.L * (.6 + .4 * u), flapT = t * 16;
+      c.save(); c.translate(x, y); c.rotate(rot);
+      for (var i = 0; i < P.length; i++) {
+        var p = P[i], q = pos(p, flapT + p.seed * .4, L), qx = q[0] * face, qy = q[1];
+        var a = .55 + .45 * Math.sin(t * 6 + p.seed * 60), col = PAL[p.c];
+        c.fillStyle = c.strokeStyle = 'rgba(' + col + ',' + a.toFixed(2) + ')';
+        if (p.tri) { c.beginPath(); var z = p.sz * 1.6; c.moveTo(qx, qy - z); c.lineTo(qx + z, qy + z); c.lineTo(qx - z, qy + z); c.closePath(); c.stroke(); }
+        else c.fillRect(qx, qy, p.sz, p.sz);
       }
-      var sp = Math.hypot(b.vx, b.vy);
-      if (Math.abs(b.vx) > .5) b.face = b.vx > 0 ? 1 : -1;
-      b.fs += (b.face - b.fs) * .12;
-      b.alpha += (b.ta - b.alpha) * .08;
-      /* trail */
-      if (b.hold === 0 && sp > 1.2) for (var k = 0; k < Math.min(5, 1 + sp * .25); k++)
-        trail.push({ x: b.x - b.face * 30 * b.scale + (R() - .5) * 18, y: b.y + (R() - .5) * 18, vx: -b.vx * .05 + (R() - .5) * .8, vy: -b.vy * .05 + (R() - .5) * .8 - .1, l: 1, c: R() * 5 | 0, z: .8 + R() * 1.8 });
-      /* bird */
-      var L = 56 * b.scale, flapT = t * (7 + Math.min(sp, 30) * .45), rot = Math.max(-.5, Math.min(.5, b.vy * .03)) * b.fs;
-      if (b.scale > .02 && b.alpha > .01) {
-        c.save(); c.translate(b.x, b.y); c.rotate(rot);
-        for (var i = 0; i < P.length; i++) {
-          var p = P[i], q = pos(p, flapT + p.seed * .4, L), x = q[0] * b.fs, y = q[1];
-          var a = (.5 + .5 * Math.sin(t * 5 + p.seed * 60)) * b.alpha * Math.min(b.scale * 1.4, 1), col = PAL[p.c];
-          c.fillStyle = c.strokeStyle = 'rgba(' + col + ',' + a.toFixed(2) + ')';
-          if (p.tri) { c.beginPath(); var z = p.sz * 1.6; c.moveTo(x, y - z); c.lineTo(x + z, y + z); c.lineTo(x - z, y + z); c.closePath(); c.stroke(); }
-          else c.fillRect(x, y, p.sz, p.sz);
-        }
-        c.restore();
-      }
+      c.restore();
+      /* streak behind the bird */
+      for (var k = 0; k < 4; k++) trail.push({ x: x - face * L * .4 + (R() - .5) * 14, y: y + (R() - .5) * 14, vx: -face * (1 + R() * 2), vy: (R() - .5) * 1.4, l: 1, c: R() * 5 | 0, z: 1 + R() * 2 });
     }
     for (var j = trail.length - 1; j >= 0; j--) {
-      var r = trail[j]; r.x += r.vx; r.y += r.vy; r.l -= .018;
+      var r = trail[j]; r.x += r.vx; r.y += r.vy; r.l -= .02;
       if (r.l <= 0) { trail.splice(j, 1); continue; }
-      c.fillStyle = 'rgba(' + PAL[r.c] + ',' + (r.l * .8 * b.alpha).toFixed(2) + ')'; c.fillRect(r.x, r.y, r.z, r.z);
+      c.fillStyle = 'rgba(' + PAL[r.c] + ',' + (r.l * .8).toFixed(2) + ')'; c.fillRect(r.x, r.y, r.z, r.z);
     }
     for (var n = bits.length - 1; n >= 0; n--) {
       var s = bits[n]; s.x += s.vx; s.y += s.vy; s.vx *= .955; s.vy *= .955; s.vy += .03; s.l -= s.d;
@@ -128,14 +128,16 @@
     }
   })(t0);
 
-  /* click on [data-reel] -> burst, then reel */
+  /* click on [data-reel] -> birds fly in and go boom, then the reel opens */
   document.addEventListener('click', function (e) {
     var el = e.target.closest && e.target.closest('[data-reel]');
     if (!el) return;
     e.preventDefault(); e.stopPropagation();
+    if (busy) return; busy = true;
     var x = e.clientX || W / 2, y = e.clientY || H / 2;
-    if (!RM) burst(x, y);
-    setTimeout(function () { openReel(el.getAttribute('data-reel'), el.getAttribute('data-title') || ''); }, RM ? 0 : 480);
+    if (RM) { burst(x, y); }
+    else for (var i = 0; i < 3; i++) launch(x, y, i);
+    setTimeout(function () { busy = false; openReel(el.getAttribute('data-reel'), el.getAttribute('data-title') || ''); }, RM ? 0 : 850);
   }, true);
 
   window.Patronus = { burst: burst, openReel: openReel, closeReel: closeReel };
