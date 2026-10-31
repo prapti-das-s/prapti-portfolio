@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#07031a">
 <meta property="og:title" content="Prapti Das — Growth Marketer & Content Strategist">
 <meta property="og:description" content="I build brands from the ground up and push them into spaces they haven't occupied yet.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><rect x='9' y='9' width='14' height='14' fill='none' stroke='%238052ff' stroke-width='3'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2307031a'/><rect x='8' y='6' width='3.4' height='19' fill='%238d6bff'/><circle cx='16.5' cy='12' r='5.4' fill='none' stroke='%238d6bff' stroke-width='3'/><path d='M21.6 10.2 29 12.4l-7.4 2.6z' fill='%23e2b857'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -32,8 +32,10 @@ a{color:inherit;text-decoration:none}
 /* nav */
 body>nav{position:fixed;inset:0 0 auto 0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px var(--pad);max-width:1280px;margin:0 auto}
 .logo{display:flex;align-items:center;gap:12px;font:400 18px/1 var(--font);letter-spacing:-.02em}
-.logo i{width:18px;height:18px;border:2px solid var(--iris);display:block;transform:rotate(12deg);transition:transform .6s var(--ease),border-radius .6s var(--ease)}
-.logo:hover i{transform:rotate(135deg);border-radius:50%}
+.logo .mk{width:38px;height:38px;display:block;overflow:visible;transition:transform .5s var(--ease)}
+.mk-stem,.mk-tail,.mk-beak{fill:var(--iris)}.mk-bowl{fill:none;stroke:var(--iris);stroke-width:3.2}.mk-eye{fill:var(--saffron);transform-box:fill-box;transform-origin:center;animation:mkblink 6s infinite}.mk-beak{fill:var(--saffron);transform-box:fill-box;transform-origin:0 50%;transition:transform .4s var(--ease)}
+@keyframes mkblink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.logo:hover .mk{transform:rotate(-8deg) translateY(-2px)}.logo:hover .mk-beak{transform:rotate(-14deg)}
 .links{display:flex;align-items:center;gap:clamp(14px,1.9vw,26px)}
 .links a{font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;color:var(--ash);transition:color .3s}
 .links a:hover{color:var(--bone)}
@@ -57,8 +59,8 @@ h1,h2,p,.stat,.list a,.contact a,.sub{text-shadow:0 2px 24px rgba(0,6,16,.85)}
 .ghost:hover{gap:20px}
 
 /* stats */
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:72px 36px}
-.stat b{display:block;font:400 clamp(56px,7vw,78px)/1 var(--font);letter-spacing:-.04em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:44px 36px}
+.stat b{display:block;font:400 clamp(44px,5.4vw,66px)/1 var(--font);letter-spacing:-.04em}
 .stat span{display:block;margin-top:12px;color:var(--bone)}
 .stat small{display:block;margin-top:6px;font:200 14px/1.4 var(--font);color:var(--ash)}
 
@@ -103,7 +105,7 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 .who h2{font-size:clamp(48px,7vw,96px)}
 .who .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
 .who .tags span{font:400 14px/1 var(--font);padding:11px 16px;border:1px solid rgba(255,255,255,.28);border-radius:9999px}
-.stats{margin:30px 0 48px}
+.stats{margin:30px 0 28px}.chips.mini{margin:0 0 36px}.chips.mini span{font-size:clamp(13px,1.3vw,16px);padding:10px 16px}
 .btn{display:inline-block;background:var(--iris);padding:16px 24px;border-radius:24px;font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;transition:transform .4s var(--ease),filter .3s}
 .btn:hover{transform:translateY(-2px);filter:brightness(1.15)}
 .inds{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:20px}
@@ -147,6 +149,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
 #explore .bd{display:none}
 @media(max-width:700px){#explore .list{grid-template-columns:1fr}#explore .list a em{display:none}}
 @media(max-width:860px){.list a{grid-template-columns:36px 1fr}.list a em{grid-column:2;text-align:left}.list a:hover{padding-left:20px}.bd{display:none}.who{clip-path:none}}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:860px){
   .links a:not(.pill){display:none}
   .grid{grid-template-columns:1fr;gap:36px}.r{grid-column:1}
@@ -163,7 +166,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
 <canvas id="gl" aria-hidden="true"></canvas><div id="veil" aria-hidden="true"></div>
 
 <nav aria-label="Primary">
-  <a class="logo" href="#top"><i></i>Prapti Das</a>
+  <a class="logo" href="#top" aria-label="Prapti Das, top of page"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
   <div class="links">
     <a href="#top">Home</a>
     <a href="site.html#works" data-go>Work</a>
@@ -172,7 +175,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <a href="site.html#skills" data-go>Skills</a>
     <a href="site.html#experience" data-go>Experience</a>
     <a href="site.html#passion" data-go>Industries</a>
-    <a class="pill" href="#" data-reel="PX56KsfuxCQ" data-title="Showreel">&#9654;&nbsp; Watch the reel</a>
+    <a class="pill" href="contact.html" data-go>Book a call</a>
   </div>
 </nav>
 
@@ -203,10 +206,13 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       <span class="label rv">By the numbers</span>
       <div class="stats">
         <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small>Fashion · EdTech · MarTech · Real Estate · Events</small></div>
-        <div class="stat rv" style="--d:.12s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaign, Sept 2024</small></div>
-        <div class="stat rv" style="--d:.24s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ inter-collegiate business fests</small></div>
-        <div class="stat rv" style="--d:.36s"><b data-n="3" data-s="K">3K</b><span>Followers in 3 months</span><small>Synapse club content series</small></div>
+        <div class="stat rv" style="--d:.1s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaigns, plus 1K+ followers</small></div>
+        <div class="stat rv" style="--d:.2s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ intercollegiate business fests</small></div>
+        <div class="stat rv" style="--d:.3s"><b data-n="25" data-s="%">25%</b><span>Qualified-lead growth a month</span><small>A/B tests and funnel analytics, Solid Corp</small></div>
+        <div class="stat rv" style="--d:.4s"><b data-n="15" data-s="%">15%</b><span>Website traffic lift in a month</span><small>Local SEO and listings, Propalyst</small></div>
+        <div class="stat rv" style="--d:.5s"><b data-n="3" data-s="K+">3K+</b><span>Followers in 3 months</span><small>Synapse content series, 10K+ views</small></div>
       </div>
+      <div class="chips mini rv"><span>₹20K ad budget managed</span><span>50+ brokers coordinated</span><span>2K+ organic followers (Darshe)</span><span>5 content formats every week</span></div>
       <a class="btn rv" href="site.html#resume" data-go>View résumé &amp; KPIs</a>
     </div></div>
   </section>
@@ -218,10 +224,10 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       <span class="label">What I do</span>
       <h2>Four things, done properly.</h2>
       <div class="pil">
-        <article><b>01</b><h3>Growth Marketing</h3><p>Paid acquisition, funnel optimization and A/B testing across martech, fashion and edtech.</p></article>
-        <article><b>02</b><h3>Content Strategy</h3><p>Pillars, calendars and copy that give a brand a voice before it has an audience.</p></article>
-        <article><b>03</b><h3>Film &amp; Entertainment</h3><p>Video edits, spec campaigns and personal creative projects, cut to move.</p></article>
-        <article><b>04</b><h3>Analytics &amp; Performance</h3><p>Behaviour analysis, funnel tracking and hashtag performance, so each decision beats the last.</p></article>
+        <article><b>01</b><h3>Growth Marketing</h3><p>Paid acquisition, funnels and A/B tests: qualified leads up 25% a month, and a ₹20K ad budget managed.</p></article>
+        <article><b>02</b><h3>Content Strategy</h3><p>Weekly content across 5 formats, plus the pillars and copy that give a brand a voice.</p></article>
+        <article><b>03</b><h3>Film &amp; Entertainment</h3><p>Video edits and personal creative projects, cut to move.</p></article>
+        <article><b>04</b><h3>Analytics &amp; Performance</h3><p>Behaviour analysis and funnel tracking: traffic up 15% in a month, and 2K+ organic followers built.</p></article>
       </div>
     </div></div>
   </section>
@@ -243,7 +249,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       
       <div class="list" role="navigation" aria-label="Explore" id="list">
         <svg class="bd" id="bd" viewBox="0 0 60 40" width="54" height="36" aria-hidden="true"><path d="M2 30 C14 8 34 4 58 16 C42 16 34 22 28 34 C22 24 12 24 2 30Z" fill="#ffb829"/></svg>
-        <a class="rv" href="site.html#works" data-go><b>01</b>Work<em>Video edits, spec campaigns, personal projects</em></a>
+        <a class="rv" href="site.html#works" data-go><b>01</b>Work<em>Video edits, design pieces, personal projects</em></a>
         <a class="rv" href="site.html#resume" data-go><b>02</b>Resume<em>Education, experience, credentials</em></a>
         <a class="rv" href="site.html#blog" data-go><b>03</b>Writing<em>An essay on Brutalist architecture</em></a>
         <a class="rv" href="site.html#skills" data-go><b>04</b>Skills<em>Technical and strategic capabilities</em></a>
@@ -258,6 +264,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <div class="wrap"><div class="panel contact">
       <span class="label rv">Contact</span>
       <h2 class="rv" style="--d:.1s;margin-bottom:48px">Let's build what's next.</h2>
+      <a class="rv" style="--d:.15s" href="contact.html" data-go>Book a call ↗</a>
       <a class="rv" style="--d:.2s" href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a>
       <a class="rv" style="--d:.28s" href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a class="rv" style="--d:.36s" href="tel:+917619505512">+91 761 950 5512</a>
@@ -391,7 +398,8 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
-  addEventListener('pointermove',e=>{mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
+  addEventListener('pointermove',e=>{seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
+  let seen=false;
   const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
   const t0=performance.now();
   (function loop(now){
@@ -404,11 +412,25 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
      const T=U.uTime.value;
-     TG.set(Math.sin(T*.10)*W*.30*amp+Math.sin(T*.27+1)*W*.08*amp,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+     const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0;
+     if(seen){
+       /* follow the cursor from a comfortable distance, slowly circling it so the bird never sits on the pointer */
+       const rad=Math.max(W*.11,3.2)*amp,an=T*.55;
+       TG.set(
+         Math.min(Math.max(cam.position.x+mx*hx+Math.cos(an)*rad*1.1,cam.position.x-hx*.9),cam.position.x+hx*.9),
+         Math.min(Math.max(cam.position.y+my*hy+Math.sin(an)*rad*.55+rad*.25,cam.position.y-hy*.8),cam.position.y+hy*.8),
+         base.z-2+Math.sin(T*.07+1)*2);
+     }else{
+       TG.set(Math.sin(T*.10)*W*.30*amp+Math.sin(T*.27+1)*W*.08*amp,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+     }
      DS.subVectors(TG,BP).normalize();DP.copy(BD);
-     BD.lerp(DS,Math.min(1,.7*dt)).normalize();
+     BD.lerp(DS,Math.min(1,(seen?1.5:.7)*dt)).normalize();
      BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
-     BP.addScaledVector(BD,3.4*dt);
+     const gapD=TG.distanceTo(BP);
+     BP.addScaledVector(BD,(seen?Math.min(2.6+gapD*.35,6.5):3.4)*dt);
+     /* never leave the hero: keep the bird inside the visible area */
+     BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*.95),cam.position.x+hx*.95);
+     BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85);
      const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
      bank+=(Math.max(-.6,Math.min(.6,-yaw*.9))-bank)*Math.min(1,1.6*dt);
      fm+=(((BD.y>.05)||Math.sin(T*.5)>.15?1:0)-fm)*Math.min(1,.8*dt);   /* flap while climbing / in bursts, glide otherwise */
@@ -418,10 +440,13 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,2.2*dt));U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QS));
      U.uBirdOff.value.copy(BP).lerp(base,1-k);
-     const r=heroTxt?heroTxt.getBoundingClientRect():null;let over=false;
-     if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw,hh=3*bsz*sc/H*vh;
-       over=sx+hw>r.left-30&&sx-hw<r.right+30&&sy+hh>r.top-20&&sy-hh<r.bottom+20}
-     U.uDim.value+=((over?.14:dimBase)-U.uDim.value)*.07}glow.position.set(U.uBirdOff.value.x,1,7);glow.intensity=.4+1.9*(1-U.uShatter.value);
+     const r=heroTxt?heroTxt.getBoundingClientRect():null;let f=0;
+     /* f: 0 = clear of the text, 1 = right behind it; eased so the bird fades out gradually and glows back in as it leaves */
+     if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw;
+       const gx=Math.max(r.left-sx,0,sx-r.right),gy=Math.max(r.top-sy,0,sy-r.bottom),gap=Math.hypot(gx,gy)-hw*.25;
+       f=1-Math.min(Math.max(gap/(hw*.85),0),1)}
+     const tgtDim=dimBase+(.12-dimBase)*(f*f*(3-2*f));
+     U.uDim.value+=(tgtDim-U.uDim.value)*(tgtDim<U.uDim.value?.045:.028)}glow.position.set(U.uBirdOff.value.x,1,7);glow.intensity=.4+1.9*(1-U.uShatter.value);
     cl.forEach(c=>{U.uProx.value[c.i]=Math.min(Math.max((1.05-Math.abs(c.y-(sm+vh/2))/vh)/.8,0),1)});
     U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
     ren.render(scene,cam);

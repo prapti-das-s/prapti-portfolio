@@ -41,6 +41,8 @@
     }
     c.restore();
   }
+  /* veil colour = the page's own background, so the sweep never reads as a black screen */
+  function col(a){var m=(getComputedStyle(de).backgroundColor||'').match(/\d+/g)||[7,3,26];return 'rgba('+m[0]+','+m[1]+','+m[2]+','+a+')'}
   var ease=function(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
   function fly(mode,done){ /* mode 'out': black wipes in behind the bird; 'in': black wipes away ahead of it */
     size();cv.style.display='block';
@@ -50,15 +52,15 @@
       cx.clearRect(0,0,W,H);
       var edge=Math.max(bx-span*.15,0),g;
       if(mode==='out'){
-        g=cx.createLinearGradient(edge-260,0,edge,0);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');
-        cx.fillStyle='#000';cx.fillRect(0,0,Math.max(edge-260,0),H);cx.fillStyle=g;cx.fillRect(Math.max(edge-260,0),0,Math.min(260,edge),H);
+        g=cx.createLinearGradient(edge-260,0,edge,0);g.addColorStop(0,col(0));g.addColorStop(1,col(1));
+        cx.fillStyle=col(1);cx.fillRect(0,0,Math.max(edge-260,0),H);cx.fillStyle=g;cx.fillRect(Math.max(edge-260,0),0,Math.min(260,edge),H);
       }else{
         var s=Math.min(bx+span*.15,W);
-        g=cx.createLinearGradient(s,0,s+260,0);g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(1,'rgba(0,0,0,0)');
-        cx.fillStyle=g;cx.fillRect(s,0,260,H);cx.fillStyle='#000';cx.fillRect(s+260,0,W,H);
+        g=cx.createLinearGradient(s,0,s+260,0);g.addColorStop(0,''+col(1)+'');g.addColorStop(1,''+col(0)+'');
+        cx.fillStyle=g;cx.fillRect(s,0,260,H);cx.fillStyle=col(1);cx.fillRect(s+260,0,W,H);
       }
       cx.save();cx.translate(bx,by);bird(cx,(now-t0)/1000,span,Math.cos(u*6.283)*.1);cx.restore();
-      if(u<1)requestAnimationFrame(f);else{if(mode==='in')cv.style.display='none';else{cx.fillStyle='#000';cx.fillRect(0,0,W,H)}done&&done()}
+      if(u<1)requestAnimationFrame(f);else{if(mode==='in')cv.style.display='none';else{cx.fillStyle=col(1);cx.fillRect(0,0,W,H)}done&&done()}
     })(t0);
   }
   window.Bird={
@@ -71,15 +73,14 @@
     /* change what is shown on this page while the bird flies past */
     swap:function(fn){
       if(busy)return;if(RM){fn();return}
-      busy=true;fly('out',function(){fn();requestAnimationFrame(function(){fly('in',function(){busy=false})})});
+      busy=true;fly('out',function(){fn();requestAnimationFrame(function(){cv.style.transition='opacity .6s ease';cv.style.opacity='0';setTimeout(function(){cv.style.display='none';cv.style.opacity='1';cv.style.transition='';busy=false},650)})});
     }
   };
-  /* arriving from another page: start fully covered, then the bird uncovers it */
+  /* arriving from another page: no second bird, the new page simply eases in */
   var arrive=false;try{arrive=sessionStorage.getItem(KEY)==='1';sessionStorage.removeItem(KEY)}catch(e){}
   if(arrive&&!RM){
-    size();cv.style.display='block';cx.fillStyle='#000';cx.fillRect(0,0,W,H);busy=true;
-    var go=function(){setTimeout(function(){fly('in',function(){busy=false})},250)};
-    document.readyState==='loading'?document.addEventListener('DOMContentLoaded',go):go();
+    var st=document.createElement('style');st.textContent='@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}body{animation:pageIn .7s cubic-bezier(.2,.7,.2,1) both}';
+    document.head.appendChild(st);
   }
   addEventListener('pageshow',function(e){if(e.persisted){cv.style.display='none';busy=false}});
   addEventListener('resize',function(){if(cv.style.display==='block'&&!busy)size()});

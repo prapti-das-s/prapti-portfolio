@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a call — Prapti Das</title>
+  <meta name="description" content="Pick a time that works and book a call with Prapti Das. Weekdays 4–8 PM IST, Saturdays 12–5 PM IST.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dala.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <script src="js/bird.js"></script>
+  <script src="js/patronus.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23020a14'/><rect x='8' y='6' width='3.4' height='19' fill='%238052ff'/><circle cx='16.5' cy='12' r='5.4' fill='none' stroke='%238052ff' stroke-width='3'/><path d='M21.6 10.2 29 12.4l-7.4 2.6z' fill='%23ffb829'/></svg>">
+  <meta name="theme-color" content="#020a14">
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html" data-go aria-label="Prapti Das, home"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-go>Home</a></li>
+    <li><a href="site.html#works" data-go>Work</a></li>
+    <li><a href="site.html#resume" data-go>Resume</a></li>
+    <li><a href="site.html#blog" data-go>Writing</a></li>
+    <li><a href="site.html#skills" data-go>Skills</a></li>
+    <li><a href="site.html#experience" data-go>Experience</a></li>
+    <li><a href="site.html#passion" data-go>Industries</a></li>
+    <li><a class="pill active" href="contact.html">Book a call</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<main class="book-page">
+  <header class="book-head">
+    <span class="eyebrow">Contact</span>
+    <h1>Let's talk.</h1>
+    <p>Pick a day and a time that suits you. I will get a calendar invite, and so will you, with a Google Meet link.</p>
+  </header>
+
+  <section class="book" id="book" aria-label="Book a call">
+    <div class="book-cal">
+      <div class="cal-top">
+        <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">&#8592;</button>
+        <div class="cal-month" id="cal-month" aria-live="polite"></div>
+        <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">&#8594;</button>
+      </div>
+      <div class="cal-dow"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      <div class="cal-grid" id="cal-grid" role="grid"></div>
+      <p class="cal-hours">Mon–Fri 4:00–8:00 PM &nbsp;·&nbsp; Sat 12:00–5:00 PM &nbsp;·&nbsp; Sundays off<br>All times are India Standard Time (IST).</p>
+    </div>
+
+    <div class="book-side">
+      <div id="step-pick" class="book-step">
+        <h2 id="side-title">Choose a date</h2>
+        <p class="book-hint" id="side-hint">Pick a highlighted day to see open times.</p>
+        <div class="slots" id="slots" role="list"></div>
+      </div>
+
+      <form id="step-form" class="book-step" hidden novalidate>
+        <h2>Your details</h2>
+        <p class="book-chosen" id="chosen"></p>
+        <label>Name<input id="f-name" name="name" type="text" autocomplete="name" required maxlength="80"></label>
+        <label>Email<input id="f-email" name="email" type="email" autocomplete="email" required maxlength="120"></label>
+        <label>What would you like to talk about? <em>(optional)</em><textarea id="f-notes" name="notes" rows="3" maxlength="600"></textarea></label>
+        <input type="text" id="f-web" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+        <p class="book-err" id="f-err" role="alert" hidden></p>
+        <div class="book-actions">
+          <button type="button" class="btn-ghost" id="f-back">← Change time</button>
+          <button type="submit" class="btn" id="f-go">Confirm booking</button>
+        </div>
+      </form>
+
+      <div id="step-done" class="book-step" hidden>
+        <h2>You're booked.</h2>
+        <p class="book-chosen" id="done-when"></p>
+        <p>A calendar invite is on its way to <b id="done-mail"></b>. Check your inbox, or your calendar app.</p>
+        <p id="done-meet" hidden><a class="btn" id="done-link" href="#" target="_blank" rel="noopener">Open Google Meet link</a></p>
+      </div>
+
+      <div id="step-fallback" class="book-step" hidden>
+        <h2>Booking is warming up</h2>
+        <p>The online calendar isn't reachable right now. Please email me instead and we will find a time.</p>
+        <p><a class="btn" href="mailto:das.2006prapti@gmail.com?subject=Call%20with%20Prapti">das.2006prapti@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <p class="book-alt">Prefer another way? <a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a> &nbsp;·&nbsp; <a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a> &nbsp;·&nbsp; <a href="tel:+917619505512">+91 761 950 5512</a></p>
+</main>
+
+<canvas id="field" aria-hidden="true"></canvas>
+<script src="js/field.js"></script>
+<script src="js/booking.js"></script>
+<script>
+  var hb=document.getElementById('hamburger'),nl=document.getElementById('nav-links');
+  if(hb)hb.addEventListener('click',function(){nl.classList.toggle('open')});
+</script>
+</body>
+</html>

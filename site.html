@@ -20,7 +20,7 @@
      NAVIGATION
      ============================================================ -->
 <nav id="nav">
-  <a class="nav-logo" href="index.html" data-go><i></i>Prapti Das</a>
+  <a class="nav-logo" href="index.html" data-go aria-label="Prapti Das, home"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" data-go>Home</a></li>
     <li><a href="#works"      id="nav-works"      onclick="showPage('works');return false;">Work</a></li>
@@ -29,7 +29,7 @@
     <li><a href="#skills"     id="nav-skills"     onclick="showPage('skills');return false;">Skills</a></li>
     <li><a href="#experience" id="nav-experience" onclick="showPage('experience');return false;">Experience</a></li>
     <li><a href="#passion"    id="nav-passion"    onclick="showPage('passion');return false;">Industries</a></li>
-    <li><a class="pill" href="#" data-reel="PX56KsfuxCQ" data-title="Showreel">&#9654;&nbsp; Watch the reel</a></li>
+    <li><a class="pill" href="contact.html" data-go>Book a call</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -53,7 +53,7 @@
         <span class="eyebrow">The Reel Room</span>
         <h2 class="sec-title">Press play on the work.</h2>
         <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--aged); margin-top:1rem; font-size:1.05rem;">
-          Six cuts, one design wall, one campaign. Click any card and the bird will take you in.
+          Six video edits, one poster and one carousel. Click a card to watch an edit, only if you want to.
         </p>
       </div>
 
@@ -87,35 +87,41 @@
 
 
       <!-- GRAPHIC DESIGN WORK -->
-      <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:1.5rem; letter-spacing:.06em; margin-top:3.5rem;">
-        Graphic Design &amp; Campaign Work
-      </h3>
+      <h3 class="gd-title">Graphic Design &amp; Campaign Work</h3>
 
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-card-label">◈ &nbsp;Poster Design · Zariya Productions</div>
-          <img src="assets/images/poster.jpg" alt="Zariya Productions Street Play Poster — Mood Indigo 2025" class="design-img">
-          <div class="design-card-caption">Social campaign poster for Zariya Productions street play — Mood Indigo, IIT Bombay 2025</div>
+      <!-- POSTER -->
+      <div class="gd-row">
+        <figure class="gd-media">
+          <img src="assets/images/poster.jpg" alt="Poster for the Zariya Productions street play, Mood Indigo 2025" class="design-img">
+        </figure>
+        <div class="gd-copy">
+          <span class="gd-tag">Poster · Street play</span>
+          <h4>Poster for Aagaz, our street play</h4>
+          <p>I am part of Zariya Productions, the street-play group at Christ University, and I handle its finances as Finance Head. I made this poster for one of our street plays, Aagaz, which we took to Mood Indigo at IIT Bombay in December 2025 and placed 3rd.</p>
+          <p>It was made for the play itself, as a real piece for a real performance.</p>
         </div>
+      </div>
 
-        <div class="design-card">
-          <div class="design-card-label">◈ &nbsp;Spec Campaign · Smash Burger · 2025</div>
-          <div class="campaign-block" style="border:none; background:transparent;">
-        <div class="campaign-header">
-          <span class="campaign-header-text">Smash Burger · Spec Campaign · Self-Initiated · 2025</span>
-          <span class="campaign-sub">Flip with the arrows</span>
-        </div>
+      <!-- CAROUSEL -->
+      <div class="gd-row gd-row-2">
+        <div class="deck-col">
         <div class="deck" id="deck">
           <div class="deck-stage">
-            <div class="deck-card" data-p="0"><img src="assets/images/carousel-1.png" alt="Smash Burger Spec Campaign, post 1"></div>
-            <div class="deck-card" data-p="1"><img src="assets/images/carousel-2.png" alt="Smash Burger Spec Campaign, post 2"></div>
-            <div class="deck-card" data-p="2"><img src="assets/images/carousel-3.png" alt="Smash Burger Spec Campaign, post 3"></div>
+            <div class="deck-card" data-p="0"><img src="assets/images/carousel-1.png" alt="Smash burger carousel, post 1"></div>
+            <div class="deck-card" data-p="1"><img src="assets/images/carousel-2.png" alt="Smash burger carousel, post 2"></div>
+            <div class="deck-card" data-p="2"><img src="assets/images/carousel-3.png" alt="Smash burger carousel, post 3"></div>
           </div>
           <button class="deck-btn prev" onclick="moveCarousel(-1)" aria-label="Previous post">&#8592;</button>
           <button class="deck-btn next" onclick="moveCarousel(1)" aria-label="Next post">&#8594;</button>
           <div class="deck-count" id="deck-count">01 / 03</div>
         </div>
-          <div class="design-card-caption">Self-initiated spec campaign for Smash Burger — concept, copy, and art direction</div>
+        </div>
+        <div class="gd-copy">
+          <span class="gd-tag">Carousel · Personal project</span>
+          <h4>A smash burger carousel, just because</h4>
+          <p>I like smash burgers, so I made a carousel about them. That is the whole story: a personal project, for fun and for practice.</p>
+          <p class="gd-note"><b>To be clear:</b> this was not made for a client or a brand, and I have never worked with any food and beverage company. I enjoy the industry, so I make a few carousels like this here and there.</p>
+          <p class="gd-hint">Flip through the three posts with the arrows.</p>
         </div>
       </div>
 
@@ -180,11 +186,11 @@
 
     <div class="hp-exp-item">
       <div class="hp-exp-company">GenAIPeople (EdTech) · Bengaluru · Dec 2025 – Present</div>
-      <div class="hp-exp-role">Growth Intern</div>
+      <div class="hp-exp-role">Growth Marketing Intern</div>
       <ul class="hp-exp-bullets">
-        <li>Built and deployed digital ad creatives for paid acquisition campaigns</li>
-        <li>Developed and optimized landing pages and core web assets</li>
-        <li>Tracked performance metrics and supported cross-functional marketing execution</li>
+        <li>Produce weekly content across 5 formats: newsletters, LinkedIn, carousels, graphics and video scripts; wrote VSL scripts and storyboards</li>
+        <li>Engineered the company website (Next.js, Sanity CMS, Vercel) with a password-protected CMS so the team can publish independently</li>
+        <li>Managed a ₹20K ad budget, deploying paid-acquisition creatives and tracking performance</li>
       </ul>
     </div>
 
@@ -194,7 +200,7 @@
       <ul class="hp-exp-bullets">
         <li>Ran the founder's social media presence including content planning and daily engagement</li>
         <li>Designed a pre-launch marketing roadmap covering content pillars and influencer outreach</li>
-        <li>Grew organic reach through SEO, hashtag strategy, and performance analytics</li>
+        <li>Grew the organic audience to 2K+ followers through analytics, SEO and hashtag strategy</li>
       </ul>
     </div>
 
@@ -202,9 +208,9 @@
       <div class="hp-exp-company">Solid Corp (MarTech) · Bengaluru · Sept 2025 – Jan 2026</div>
       <div class="hp-exp-role">Growth Marketing Intern</div>
       <ul class="hp-exp-bullets">
-        <li>Led growth marketing for multiple clients, improving ROI and audience targeting</li>
-        <li>Ran A/B testing and funnel analytics to lift conversion rates</li>
-        <li>Coordinated between product, design, and client teams around shared KPI goals</li>
+        <li>Led growth for multiple client brands, improving ROI and audience targeting</li>
+        <li>Ran A/B tests and funnel analytics that grew qualified leads 25% per month</li>
+        <li>Aligned product, design and client teams around shared KPIs</li>
       </ul>
     </div>
 
@@ -212,9 +218,9 @@
       <div class="hp-exp-company">Propalyst (Real Estate Tech) · Bengaluru · Sept 2025 – Jan 2026</div>
       <div class="hp-exp-role">Growth &amp; Operations Intern</div>
       <ul class="hp-exp-bullets">
-        <li>Managed property listing workflows in coordination with brokers and verification teams</li>
-        <li>Improved backend data processes for accuracy and operational efficiency</li>
-        <li>Supported local SEO, listing copy, and campaign tracking initiatives</li>
+        <li>Lifted website traffic 15% in one month through optimised listings, local SEO and campaign tracking</li>
+        <li>Streamlined listing and backend data processes by coordinating 50+ brokers</li>
+        <li>Managed property listing workflows with brokers and verification teams</li>
       </ul>
     </div>
 
@@ -222,9 +228,9 @@
       <div class="hp-exp-company">Aavo (Event Management) · Bengaluru · Sept 2024 – April 2025</div>
       <div class="hp-exp-role">Marketing &amp; Social Media Intern</div>
       <ul class="hp-exp-bullets">
-        <li>Led digital campaigns that took Aavo from zero to 10K+ downloads and 1K+ followers in one month</li>
-        <li>Ran user behavior analysis to inform growth and engagement strategy</li>
-        <li>Produced marketing assets and community-focused content across platforms</li>
+        <li>Scaled the app to 10K+ downloads and 1K+ followers in one month through digital campaigns</li>
+        <li>Analysed user behaviour to optimise engagement and growth strategy</li>
+        <li>Created brand assets and community content across platforms</li>
       </ul>
     </div>
 
@@ -236,7 +242,7 @@
       <div class="hp-exp-company">CUSBMA · Christ University · July 2025 – Present</div>
       <div class="hp-exp-role">Business Festing Team</div>
       <ul class="hp-exp-bullets">
-        <li>86% win rate across 10+ inter-collegiate fests, leading team strategy and on-ground execution</li>
+        <li>86% win rate across 10+ intercollegiate fests, leading team strategy and on-ground execution</li>
       </ul>
     </div>
 
@@ -244,15 +250,23 @@
       <div class="hp-exp-company">Synapse · Christ University · Jan 2025 – Mar 2026</div>
       <div class="hp-exp-role">R&amp;D Head</div>
       <ul class="hp-exp-bullets">
-        <li>Launched a social media content series that reached 10K+ views and added 3K followers in 3 months</li>
+        <li>Led a content series that reached 10K+ views and 3K+ followers in 3 months</li>
+      </ul>
+    </div>
+
+    <div class="hp-exp-item">
+      <div class="hp-exp-company">Zariya Productions · Christ University · 2025 – Present</div>
+      <div class="hp-exp-role">Finance Head</div>
+      <ul class="hp-exp-bullets">
+        <li>Plan budgets for rehearsals, costumes and performances for the street-play group</li>
       </ul>
     </div>
 
     <div class="hp-exp-item">
       <div class="hp-exp-company">Mood Indigo · IIT Bombay · Dec 2025</div>
-      <div class="hp-exp-role">2nd Runner-Up — Aagaz Street Play (Zariya Productions)</div>
+      <div class="hp-exp-role">3rd Place — Aagaz Street Play (Zariya Productions)</div>
       <ul class="hp-exp-bullets">
-        <li>Placed 3rd at one of India's largest cultural festivals in the street play category</li>
+        <li>Placed 3rd in the street play category at one of India's largest cultural festivals</li>
       </ul>
     </div>
 
@@ -268,7 +282,7 @@
       <div class="hp-exp-company">BVBPSMUN · Hyderabad · Aug 2023</div>
       <div class="hp-exp-role">Secretary General</div>
       <ul class="hp-exp-bullets">
-        <li>Led full conference operations, chaired committees, and managed delegate coordination</li>
+        <li>Led conference operations and chaired committees</li>
       </ul>
     </div>
 
@@ -276,19 +290,31 @@
 
     <h2 class="hp-section-title">Skills &amp; Certifications</h2>
     <div class="hp-skills">
-      <span class="hp-skill">Social Media Marketing</span>
       <span class="hp-skill">Content Strategy</span>
-      <span class="hp-skill">Growth Marketing</span>
+      <span class="hp-skill">Social Media</span>
+      <span class="hp-skill">Influencer Marketing</span>
+      <span class="hp-skill">Paid Acquisition</span>
       <span class="hp-skill">A/B Testing</span>
       <span class="hp-skill">Funnel Analytics</span>
       <span class="hp-skill">SEO</span>
+      <span class="hp-skill">Market Research</span>
+      <span class="hp-skill">Generative AI</span>
       <span class="hp-skill">Python</span>
-      <span class="hp-skill">Microsoft Office</span>
+      <span class="hp-skill">SQL</span>
+      <span class="hp-skill">Power BI</span>
+      <span class="hp-skill">Advanced Excel</span>
+      <span class="hp-skill">n8n</span>
+      <span class="hp-skill">Streamlit</span>
+      <span class="hp-skill">Next.js</span>
+      <span class="hp-skill">Sanity CMS</span>
+      <span class="hp-skill">HTML/CSS</span>
+      <span class="hp-skill">Copywriting</span>
+      <span class="hp-skill">Video Editing</span>
+      <span class="hp-skill">Storyboarding</span>
       <span class="hp-skill">Public Speaking</span>
-      <span class="hp-skill">Creative Writing</span>
-      <span class="hp-skill">English · Hindi · Bengali (Native)</span>
-      <span class="hp-skill">Infosys — Intro to AI</span>
-      <span class="hp-skill">Oracle — GenAI Certified</span>
+      <span class="hp-skill">English (C1) · Hindi &amp; Bengali (Fluent) · Tamil &amp; Assamese (Conversational)</span>
+      <span class="hp-skill">Oracle — Generative AI (Aug 2025)</span>
+      <span class="hp-skill">Infosys Springboard — Intro to AI (Jul 2025)</span>
     </div>
 
     <hr class="hp-divider">
@@ -423,7 +449,7 @@
           <h3>Growth Marketing</h3>
           <p>
             Paid acquisition, funnel optimization, A/B testing, and conversion analysis.
-            Ran this across clients in martech, fashion, and edtech with measurable ROI improvements.
+            Qualified leads up 25% a month at Solid Corp, website traffic up 15% in a month at Propalyst, and a ₹20K paid budget managed at GenAIPeople.
           </p>
         </div>
 
@@ -431,8 +457,8 @@
           <h3>Content Strategy</h3>
           <p>
             Content pillars, platform calendars, and campaign copywriting. Built pre-launch
-            roadmaps for a premium fashion brand. Wrote scripts and posts that drove 10K+ views
-            within a single quarter.
+            roadmaps for a premium fashion brand. Weekly content across 5 formats at GenAIPeople, and a Synapse
+            series that reached 10K+ views and 3K+ followers in 3 months.
           </p>
         </div>
 
@@ -447,7 +473,7 @@
         <div class="skill-card" style="--sc:#cc5070;">
           <h3>Public Speaking &amp; Pitching</h3>
           <p>
-            Competed across 10+ inter-collegiate fests with an 86% win rate. Experience
+            Competed across 10+ intercollegiate fests with an 86% win rate. Experience
             pitching campaigns, marketing strategies, and business plans to panels and audiences.
           </p>
         </div>
@@ -455,9 +481,9 @@
         <div class="skill-card" style="--sc:#50aacc;">
           <h3>Technical Skills</h3>
           <p>
-            Python (automation, PyAutoGUI, n8n workflows), Microsoft Office suite,
-            Streamlit dashboards, social media APIs, and Tally Prime. Can build tools
-            to automate what others do manually.
+            Python, SQL, Power BI, Advanced Excel, n8n and Streamlit, plus Next.js and Sanity CMS
+            (built the GenAIPeople site with a password-protected CMS). Automated WhatsApp webinar
+            reminders from Zoom registrations in Google Sheets.
           </p>
         </div>
 
@@ -521,11 +547,11 @@
           <div class="tl-dot"></div>
           <div class="tl-date">Dec 2025 – Present</div>
           <div class="tl-company">GenAIPeople — EdTech · Bengaluru</div>
-          <div class="tl-role">Growth Intern</div>
+          <div class="tl-role">Growth Marketing Intern</div>
           <ul class="tl-bullets">
-            <li>Built and deployed digital ad creatives for paid acquisition</li>
-            <li>Developed landing pages and core web assets for campaign support</li>
-            <li>Monitored performance metrics and executed cross-functional marketing tasks</li>
+            <li>Produce weekly content across 5 formats: newsletters, LinkedIn, carousels, graphics and video scripts; wrote VSL scripts and storyboards</li>
+            <li>Engineered the company website (Next.js, Sanity CMS, Vercel) with a password-protected CMS for independent publishing</li>
+            <li>Managed a ₹20K ad budget, deploying paid-acquisition creatives and tracking performance</li>
           </ul>
         </div>
 
@@ -537,7 +563,7 @@
           <ul class="tl-bullets">
             <li>Managed the founder's social media accounts day-to-day</li>
             <li>Built a full pre-launch marketing roadmap from content pillars to influencer briefs</li>
-            <li>Drove organic growth through SEO, analytics review, and platform-specific hashtag strategy</li>
+            <li>Grew the organic audience to 2K+ followers through analytics, SEO and hashtag strategy</li>
           </ul>
         </div>
 
@@ -547,9 +573,9 @@
           <div class="tl-company">Solid Corp — MarTech · Bengaluru</div>
           <div class="tl-role">Growth Marketing Intern</div>
           <ul class="tl-bullets">
-            <li>Managed growth marketing for multiple clients with focus on ROI and targeting quality</li>
-            <li>Ran A/B tests and analyzed funnel data to boost conversion rates</li>
-            <li>Aligned product, design, and client teams on shared KPI objectives</li>
+            <li>Led growth for multiple client brands, improving ROI and targeting</li>
+            <li>Ran A/B tests and funnel analytics that grew qualified leads 25% per month</li>
+            <li>Aligned product, design and client teams on shared KPIs</li>
           </ul>
         </div>
 
@@ -559,9 +585,9 @@
           <div class="tl-company">Propalyst — Real Estate Tech · Bengaluru</div>
           <div class="tl-role">Growth &amp; Operations Intern</div>
           <ul class="tl-bullets">
-            <li>Coordinated property listing workflows with brokers and verification teams</li>
-            <li>Improved data accuracy and backend process efficiency</li>
-            <li>Supported listing copy, local SEO, and campaign tracking</li>
+            <li>Lifted website traffic 15% in one month through optimised listings, local SEO and campaign tracking</li>
+            <li>Streamlined listing and backend data processes by coordinating 50+ brokers</li>
+            <li>Supported listing copy and verification workflows</li>
           </ul>
         </div>
 
@@ -571,9 +597,9 @@
           <div class="tl-company">Aavo — Event Management · Bengaluru</div>
           <div class="tl-role">Marketing &amp; Social Media Intern</div>
           <ul class="tl-bullets">
-            <li>Took Aavo from zero to 10K+ downloads and 1K+ followers in one month through digital campaigns</li>
-            <li>Ran user behavior analysis to sharpen growth and engagement strategy</li>
-            <li>Produced high-performing marketing assets and community content</li>
+            <li>Scaled the app to 10K+ downloads and 1K+ followers in one month through digital campaigns</li>
+            <li>Analysed user behaviour to optimise engagement</li>
+            <li>Created brand assets and community content</li>
           </ul>
         </div>
       </div>
@@ -587,15 +613,19 @@
       <div class="quest-grid">
         <div class="quest-card">
           <h3>CUSBMA Business Festing Team</h3>
-          <p>Christ University · July 2025 – Present<br>86% win rate across 10+ inter-collegiate fests. Led team coordination, event strategy, and execution.</p>
+          <p>Christ University · July 2025 – Present<br>86% win rate across 10+ intercollegiate fests. Led team coordination, event strategy, and execution.</p>
         </div>
         <div class="quest-card">
           <h3>Synapse — R&amp;D Head</h3>
-          <p>Christ University · Jan 2025 – Mar 2026<br>Launched a content series that reached 10K+ views and grew the club's following by 3K in 3 months.</p>
+          <p>Christ University · Jan 2025 – Mar 2026<br>Led a content series that reached 10K+ views and 3K+ followers in 3 months.</p>
+        </div>
+        <div class="quest-card">
+          <h3>Zariya Productions — Finance Head</h3>
+          <p>Christ University · 2025 – Present<br>Plan budgets for rehearsals, costumes and performances.</p>
         </div>
         <div class="quest-card">
           <h3>Mood Indigo, IIT Bombay</h3>
-          <p>Dec 2025 · 2nd Runner-Up, Aagaz Street Play (Zariya Productions)<br>Placed 3rd at India's largest cultural festival.</p>
+          <p>Dec 2025 · 3rd Place, Aagaz Street Play (Zariya Productions)<br>Placed 3rd in the street play category.</p>
         </div>
         <div class="quest-card">
           <h3>Cross-Currents, Mount Carmel</h3>
@@ -682,10 +712,10 @@
           <div class="industry-label">FMCG &amp; F&amp;B</div>
           <h3>Food &amp; Beverage Marketing</h3>
           <p>
-            I created a self-initiated spec campaign for Smash Burger because I like the brand
-            and wanted to see what I could do with it. Food marketing is high-volume, high-competition,
-            and endlessly creative. The Work section has the full set of posts. I want to work
-            more in this space because it forces you to be sharp, fast, and genuinely funny.
+            I have not worked with any food and beverage company yet, and I want to be upfront about that.
+            I like the industry, so I make the odd carousel for fun, like the smash burger one in the Work
+            section. It is a personal project, not client work. Food marketing is fast, competitive and
+            endlessly creative, and it is a space I would love to move into.
           </p>
         </div>
 
