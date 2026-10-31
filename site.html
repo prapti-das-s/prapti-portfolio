@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dala.css">
   <script src="js/bird.js"></script>
+  <script src="js/patronus.js" defer></script>
 
   <!-- Inline SVG favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><rect x='9' y='9' width='14' height='14' fill='none' stroke='%238052ff' stroke-width='3'/></svg>"><circle cx='16' cy='16' r='14' fill='%230d0a06' stroke='%23c9a84c' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='16' fill='%23c9a84c'>P</text></svg>">
@@ -28,6 +29,7 @@
     <li><a href="#skills"     id="nav-skills"     onclick="showPage('skills');return false;">Skills</a></li>
     <li><a href="#experience" id="nav-experience" onclick="showPage('experience');return false;">Experience</a></li>
     <li><a href="#passion"    id="nav-passion"    onclick="showPage('passion');return false;">Industries</a></li>
+    <li><a class="pill" href="#" data-reel="PX56KsfuxCQ" data-title="Showreel">&#9654;&nbsp; Watch the reel</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -48,63 +50,38 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">The Workshop</span>
-        <h2 class="sec-title">Creative Work</h2>
-        <div class="ornament">🎬</div>
+        <span class="eyebrow">The Reel Room</span>
+        <h2 class="sec-title">Press play on the work.</h2>
         <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--aged); margin-top:1rem; font-size:1.05rem;">
-          Video edits, ad creatives, and campaign work across clients and internships.
+          Six cuts, one design wall, one campaign. Click any card and the bird will take you in.
         </p>
       </div>
 
       <!-- VIDEO GRID -->
       <h3 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--aged); margin-bottom:0.5rem; letter-spacing:.06em;">
-        Video Edits
+        The Cuts
       </h3>
-      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Click any card to watch</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--tarnished); font-size:.9rem; margin-bottom:1.5rem;">Cuts · Press a card</p>
 
-      <div class="video-grid" id="video-grid">
-        <div class="video-card" id="card-PX56KsfuxCQ">
-          <div class="video-thumb-inner" onclick="playInline('PX56KsfuxCQ')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Event Reel</span>
-          </div>
-          <div class="video-label">Event Reel</div>
-        </div>
-        <div class="video-card" id="card-OQyjY4RaYOA">
-          <div class="video-thumb-inner" onclick="playInline('OQyjY4RaYOA')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Storytelling</span>
-          </div>
-          <div class="video-label">Storytelling</div>
-        </div>
-        <div class="video-card" id="card-3UgiNTPewd4">
-          <div class="video-thumb-inner" onclick="playInline('3UgiNTPewd4')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Fast-Paced Edit</span>
-          </div>
-          <div class="video-label">Fast-Paced Edit</div>
-        </div>
-        <div class="video-card" id="card-2KKxfu-ZAeY">
-          <div class="video-thumb-inner" onclick="playInline('2KKxfu-ZAeY')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Montage</span>
-          </div>
-          <div class="video-label">Montage</div>
-        </div>
-        <div class="video-card" id="card-9gqXWOG6lOk">
-          <div class="video-thumb-inner" onclick="playInline('9gqXWOG6lOk')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Storyboard Edit</span>
-          </div>
-          <div class="video-label">Storyboard Edit</div>
-        </div>
-        <div class="video-card" id="card-fZNkgR2OqyA">
-          <div class="video-thumb-inner" onclick="playInline('fZNkgR2OqyA')">
-            <span class="video-play-btn">&#9654;</span>
-            <span class="video-thumb-label">Typography Edit</span>
-          </div>
-          <div class="video-label">Typography Edit</div>
-        </div>
+      <div class="reel-wall" id="video-grid">
+        <button class="reel" type="button" data-reel="PX56KsfuxCQ" data-title="Event Reel" style="--h:265">
+          <span class="reel-n">01</span><span class="reel-t">Event Reel</span><span class="reel-s">Fest energy, cut to the beat</span><span class="reel-play">&#9654;</span>
+        </button>
+        <button class="reel" type="button" data-reel="OQyjY4RaYOA" data-title="Storytelling" style="--h:250">
+          <span class="reel-n">02</span><span class="reel-t">Storytelling</span><span class="reel-s">Narrative pacing, scene by scene</span><span class="reel-play">&#9654;</span>
+        </button>
+        <button class="reel" type="button" data-reel="3UgiNTPewd4" data-title="Fast-Paced Edit" style="--h:205">
+          <span class="reel-n">03</span><span class="reel-t">Fast-Paced Edit</span><span class="reel-s">Quick cuts built for retention</span><span class="reel-play">&#9654;</span>
+        </button>
+        <button class="reel" type="button" data-reel="2KKxfu-ZAeY" data-title="Montage" style="--h:300">
+          <span class="reel-n">04</span><span class="reel-t">Montage</span><span class="reel-s">Moments stitched into a mood</span><span class="reel-play">&#9654;</span>
+        </button>
+        <button class="reel" type="button" data-reel="9gqXWOG6lOk" data-title="Storyboard Edit" style="--h:180">
+          <span class="reel-n">05</span><span class="reel-t">Storyboard Edit</span><span class="reel-s">Frames planned before they move</span><span class="reel-play">&#9654;</span>
+        </button>
+        <button class="reel" type="button" data-reel="fZNkgR2OqyA" data-title="Typography Edit" style="--h:285">
+          <span class="reel-n">06</span><span class="reel-t">Typography Edit</span><span class="reel-s">Type that moves with the message</span><span class="reel-play">&#9654;</span>
+        </button>
       </div>
 
 
@@ -126,27 +103,17 @@
           <div class="campaign-block" style="border:none; background:transparent;">
         <div class="campaign-header">
           <span class="campaign-header-text">Smash Burger · Spec Campaign · Self-Initiated · 2025</span>
-          <span class="campaign-sub">Scroll to see all three posts</span>
+          <span class="campaign-sub">Flip with the arrows</span>
         </div>
-        <div class="carousel-wrap">
-          <div class="carousel-track" id="carousel-track">
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-1.png" alt="Smash Burger Spec Campaign — Post 1">
-            </div>
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-2.png" alt="Smash Burger Spec Campaign — Post 2">
-            </div>
-            <div class="carousel-slide">
-              <img src="assets/images/carousel-3.png" alt="Smash Burger Spec Campaign — Post 3">
-            </div>
+        <div class="deck" id="deck">
+          <div class="deck-stage">
+            <div class="deck-card" data-p="0"><img src="assets/images/carousel-1.png" alt="Smash Burger Spec Campaign, post 1"></div>
+            <div class="deck-card" data-p="1"><img src="assets/images/carousel-2.png" alt="Smash Burger Spec Campaign, post 2"></div>
+            <div class="deck-card" data-p="2"><img src="assets/images/carousel-3.png" alt="Smash Burger Spec Campaign, post 3"></div>
           </div>
-          <button class="c-arrow prev" onclick="moveCarousel(-1)" aria-label="Previous slide">&#8592;</button>
-          <button class="c-arrow next" onclick="moveCarousel(1)"  aria-label="Next slide">&#8594;</button>
-          <div class="c-dots">
-            <div class="c-dot active" onclick="goToSlide(0)"></div>
-            <div class="c-dot" onclick="goToSlide(1)"></div>
-            <div class="c-dot" onclick="goToSlide(2)"></div>
-          </div>
+          <button class="deck-btn prev" onclick="moveCarousel(-1)" aria-label="Previous post">&#8592;</button>
+          <button class="deck-btn next" onclick="moveCarousel(1)" aria-label="Next post">&#8594;</button>
+          <div class="deck-count" id="deck-count">01 / 03</div>
         </div>
           <div class="design-card-caption">Self-initiated spec campaign for Smash Burger — concept, copy, and art direction</div>
         </div>
