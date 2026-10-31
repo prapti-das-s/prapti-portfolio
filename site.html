@@ -6,9 +6,12 @@
   <title>Prapti Das — Portfolio</title>
   <meta name="description" content="Prapti Das — Growth Marketer, Content Strategist, and Creative based in Bengaluru.">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dala.css">
+  <script src="js/bird.js"></script>
 
   <!-- Inline SVG favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230d0a06' stroke='%23c9a84c' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='16' fill='%23c9a84c'>P</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23000'/><rect x='9' y='9' width='14' height='14' fill='none' stroke='%238052ff' stroke-width='3'/></svg>"><circle cx='16' cy='16' r='14' fill='%230d0a06' stroke='%23c9a84c' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='16' fill='%23c9a84c'>P</text></svg>">
+  <meta name="theme-color" content="#020a14">
 </head>
 <body>
 
@@ -16,29 +19,9 @@
      NAVIGATION
      ============================================================ -->
 <nav id="nav">
-  <!-- LOGO -->
-  <a class="nav-logo" onclick="showPage('home')">
-    <svg class="nav-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- outer ring -->
-      <circle cx="24" cy="24" r="22" stroke="#c9a84c" stroke-width="1.5" fill="none" opacity=".6"/>
-      <!-- inner ring -->
-      <circle cx="24" cy="24" r="16" stroke="#c9a84c" stroke-width=".8" fill="none" opacity=".35"/>
-      <!-- P letterform -->
-      <text x="24" y="31" text-anchor="middle"
-            font-family="serif" font-size="20" font-weight="bold"
-            fill="#c9a84c" letter-spacing=".5">P</text>
-      <!-- corner ornaments -->
-      <path d="M6 6 L10 6 L10 10" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M42 6 L38 6 L38 10" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M6 42 L10 42 L10 38" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-      <path d="M42 42 L38 42 L38 38" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".7"/>
-    </svg>
-    <span class="nav-logo-text">Prapti</span>
-  </a>
-
-  <!-- NAV LINKS -->
+  <a class="nav-logo" href="index.html" data-go><i></i>Prapti Das</a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="#home"       id="nav-home"       onclick="showPage('home');return false;">Home</a></li>
+    <li><a href="index.html" data-go>Home</a></li>
     <li><a href="#works"      id="nav-works"      onclick="showPage('works');return false;">Work</a></li>
     <li><a href="#resume"     id="nav-resume"     onclick="showPage('resume');return false;">Resume</a></li>
     <li><a href="#blog"       id="nav-blog"       onclick="showPage('blog');return false;">Writing</a></li>
@@ -46,210 +29,20 @@
     <li><a href="#experience" id="nav-experience" onclick="showPage('experience');return false;">Experience</a></li>
     <li><a href="#passion"    id="nav-passion"    onclick="showPage('passion');return false;">Industries</a></li>
   </ul>
-
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 
 <!-- ============================================================
      PAGE: HOME
      ============================================================ -->
-<div id="page-home" class="page">
-
-  <!-- ticker -->
-  <div class="ticker-wrap">
-    <div class="ticker">
-      <span class="ticker-item">Prapti Das</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Growth Marketing</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Content Strategy</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Campaign Management</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Fashion &amp; Film</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Bengaluru, India</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item">Prapti Das</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Growth Marketing</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Content Strategy</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Campaign Management</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Fashion &amp; Film</span>
-      <span class="ticker-item ticker-sep">✦</span>
-      <span class="ticker-item">Bengaluru, India</span>
-      <span class="ticker-item ticker-sep">✦</span>
-    </div>
-  </div>
-
-  <!-- hero -->
-  <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="lightning"></div>
-    <div class="lightning"></div>
-    <div class="lightning"></div>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow">Bengaluru, India &nbsp;·&nbsp; Growth Marketing &amp; Content Strategy</div>
-      <h1 class="hero-name">Prapti<br>Das</h1>
-      <p class="hero-tagline">Growth Marketer. Content Strategist. Creative Problem Solver.</p>
-      <p class="hero-bio">
-        I build brands from the ground up and push them into spaces they haven't occupied yet.
-        Five internships across fashion, real estate, edtech, martech, and events have given me
-        a wide lens and a very specific skill set: I know how to grow things.
-      </p>
-      <div class="hero-cta">
-        <a href="#works" class="btn btn-red" onclick="showPage('works');return false;">See My Work</a>
-        <a href="#resume" class="btn btn-outline" onclick="showPage('resume');return false;">View Resume</a>
-      </div>
-    </div>
-
-    <div class="hero-aside">
-      <span class="v-tag">Fashion · Film · Food</span>
-      <span class="v-tag">Strategy · Growth · Content</span>
-      <span class="v-tag">Campaigns · Analytics · Copy</span>
-    </div>
-  </section>
-
-  <!-- about -->
-  <section class="section" style="background:radial-gradient(ellipse at 20% 50%,#1a0e00 0%,#0d0a06 60%);">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Chapter I</span>
-        <h2 class="sec-title">About Me</h2>
-        <div class="ornament">⚗</div>
-      </div>
-      <div class="about-full">
-        <div class="about-text">
-          <h3>Who I Am</h3>
-          <p>
-            I am a growth marketer and content strategist based in Bengaluru. My work sits at the
-            intersection of creative instinct and analytical thinking — I can write a campaign concept
-            in the morning and dig into funnel data in the afternoon, and I think that range is what
-            makes me useful.
-          </p>
-          <p>
-            Five internships across fashion, real estate, edtech, martech, and event management have
-            given me a wide lens. I have run paid acquisition, built content roadmaps from scratch,
-            managed social accounts, run A/B tests, and tracked performance across every campaign I
-            have touched. I follow fashion closely, watch a lot of films, and have a genuine interest
-            in architecture and design history — because the best marketing borrows from everywhere.
-          </p>
-        </div>
-
-        <div class="about-stats">
-          <div class="stat-card">
-            <span class="stat-number">5</span>
-            <span class="stat-label">Industries</span>
-            <span class="stat-sub">Fashion · EdTech · MarTech · Real Estate · Events</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">10K+</span>
-            <span class="stat-label">Downloads in 1 month</span>
-            <span class="stat-sub">Aavo app campaign, Sept 2024</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">86%</span>
-            <span class="stat-label">Win Rate</span>
-            <span class="stat-sub">10+ inter-collegiate business fests</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">3K</span>
-            <span class="stat-label">Followers in 3 months</span>
-            <span class="stat-sub">Synapse club content series</span>
-          </div>
-        </div>
-
-        <div class="tags" style="margin-top:2.5rem;">
-          <span class="tag">Growth Marketing</span>
-          <span class="tag">Content Strategy</span>
-          <span class="tag">Fashion &amp; Apparel</span>
-          <span class="tag">Film &amp; Entertainment</span>
-          <span class="tag">Architecture &amp; Design</span>
-          <span class="tag">Social Media</span>
-          <span class="tag">A/B Testing</span>
-          <span class="tag">Analytics</span>
-          <span class="tag">Python · Automation</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- quick nav portals -->
-  <section class="section-sm" style="background:var(--shadow); border-top:1px solid var(--tarnished); border-bottom:1px solid var(--tarnished);">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Explore</span>
-        <h2 class="sec-title">Where Would You Like to Go?</h2>
-      </div>
-      <div class="portals-grid">
-        <a class="portal-card" style="--pc:#8b1a1a" onclick="showPage('works');return false;" href="#works">
-          <span class="portal-icon">🎬</span>
-          <span class="portal-world">The Workshop</span>
-          <span class="portal-name">Creative Work</span>
-          <span class="portal-desc">Video edits, spec campaigns, and personal creative projects</span>
-        </a>
-        <a class="portal-card" style="--pc:#4a3010" onclick="showPage('resume');return false;" href="#resume">
-          <span class="portal-icon">📜</span>
-          <span class="portal-world">Hogwarts Registry</span>
-          <span class="portal-name">Resume</span>
-          <span class="portal-desc">Education, experience, and credentials</span>
-        </a>
-        <a class="portal-card" style="--pc:#c41e3a" onclick="showPage('blog');return false;" href="#blog">
-          <span class="portal-icon">📖</span>
-          <span class="portal-world">The Written Word</span>
-          <span class="portal-name">Writing</span>
-          <span class="portal-desc">An essay on Brutalist architecture</span>
-        </a>
-        <a class="portal-card" style="--pc:#20208a" onclick="showPage('skills');return false;" href="#skills">
-          <span class="portal-icon">⚔️</span>
-          <span class="portal-world">The Armory</span>
-          <span class="portal-name">Skills</span>
-          <span class="portal-desc">Technical and strategic capabilities</span>
-        </a>
-        <a class="portal-card" style="--pc:#1e5f8a" onclick="showPage('experience');return false;" href="#experience">
-          <span class="portal-icon">🔱</span>
-          <span class="portal-world">The Quest Log</span>
-          <span class="portal-name">Experience</span>
-          <span class="portal-desc">Internships, leadership, and competitions</span>
-        </a>
-        <a class="portal-card" style="--pc:#5a3a1a" onclick="showPage('passion');return false;" href="#passion">
-          <span class="portal-icon">☕</span>
-          <span class="portal-world">The Long Game</span>
-          <span class="portal-name">Industries</span>
-          <span class="portal-desc">Where I'm headed and why</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span class="footer-sigil">𝔓𝔯𝔞𝔭𝔱𝔦 𝔇𝔞𝔰</span>
-    <ul class="footer-links">
-      <li><a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="tel:+917619505512">+91 761 950 5512</a></li>
-    </ul>
-    <p class="footer-copy">"It's alive." — Mary Shelley, Frankenstein (and this portfolio)</p>
-  </footer>
-
-</div><!-- /page-home -->
-
-
 <!-- ============================================================
      PAGE: WORK
      ============================================================ -->
 <div id="page-works" class="page">
 
   <div style="padding:.75rem 2rem; background:rgba(10,8,4,.6); border-bottom:1px solid rgba(122,96,48,.3);">
-    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <button class="back-btn" onclick="showPage('home')">← Home</button>
   </div>
 
   <section class="section">
@@ -363,7 +156,7 @@
   </section>
 
   <footer>
-    <span class="footer-sigil">𝔓</span>
+    <span class="footer-sigil">Prapti Das</span>
     <ul class="footer-links">
       <li><a href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a></li>
       <li><a href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn</a></li>
@@ -379,12 +172,12 @@
 <div id="page-resume" class="page">
 
   <div style="padding:.75rem 2rem; background:rgba(10,8,4,.6); border-bottom:1px solid rgba(74,48,16,.5);">
-    <button class="back-btn" onclick="showPage('home')">← Return Through the Veil</button>
+    <button class="back-btn" onclick="showPage('home')">← Home</button>
   </div>
 
   <div class="hp-registry">
-    <span class="hp-registry-label">✦ Hogwarts Registry of Accomplished Witches &amp; Wizards ✦</span>
-    <div class="hp-registry-title">Official Academic &amp; Professional Record — Anno Domini MMXXVI</div>
+    <span class="hp-registry-label">Résumé</span>
+    <div class="hp-registry-title">Education, experience and credentials</div>
   </div>
 
   <div class="hp-parchment">
@@ -393,7 +186,7 @@
     <div class="hp-header">
       <span class="hp-crest">⚡ 🦅 ⚡</span>
       <h1 class="hp-name">Prapti Das</h1>
-      <p class="hp-tagline">"Solemnly sworn to be up to some good."</p>
+      <p class="hp-tagline">Growth Marketer &amp; Content Strategist</p>
     </div>
 
     <div class="hp-contact">
@@ -403,7 +196,7 @@
 
     <hr class="hp-divider">
 
-    <h2 class="hp-section-title">📚 Education</h2>
+    <h2 class="hp-section-title">Education</h2>
 
     <div class="hp-edu-item">
       <div class="hp-edu-school">Christ (Deemed to be) University — Bengaluru, Karnataka</div>
@@ -416,7 +209,7 @@
 
     <hr class="hp-divider">
 
-    <h2 class="hp-section-title">🪄 Experience</h2>
+    <h2 class="hp-section-title">Experience</h2>
 
     <div class="hp-exp-item">
       <div class="hp-exp-company">GenAIPeople (EdTech) · Bengaluru · Dec 2025 – Present</div>
@@ -470,7 +263,7 @@
 
     <hr class="hp-divider">
 
-    <h2 class="hp-section-title">🏆 Leadership &amp; Achievements</h2>
+    <h2 class="hp-section-title">Leadership &amp; Achievements</h2>
 
     <div class="hp-exp-item">
       <div class="hp-exp-company">CUSBMA · Christ University · July 2025 – Present</div>
@@ -514,7 +307,7 @@
 
     <hr class="hp-divider">
 
-    <h2 class="hp-section-title">✨ Skills &amp; Certifications</h2>
+    <h2 class="hp-section-title">Skills &amp; Certifications</h2>
     <div class="hp-skills">
       <span class="hp-skill">Social Media Marketing</span>
       <span class="hp-skill">Content Strategy</span>
@@ -546,7 +339,7 @@
 <div id="page-blog" class="page">
 
   <div style="padding:.75rem 2rem; background:#0e0e0e; border-bottom:1px solid #2a0808;">
-    <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Return to the Atelier</button>
+    <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Home</button>
   </div>
 
   <div class="blog-banner">
@@ -629,7 +422,7 @@
 
     <div style="margin-top:3.5rem; padding:2rem; border:1px solid #2a0808; background:rgba(196,30,58,.04); text-align:center;">
       <div style="font-family:'Special Elite',monospace; font-size:.58rem; letter-spacing:.38em; color:#c41e3a; text-transform:uppercase; margin-bottom:.9rem;">End of Essay</div>
-      <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Return to the Atelier</button>
+      <button class="back-btn" style="color:#c41e3a;" onclick="showPage('home')">← Home</button>
     </div>
   </div>
 
@@ -642,7 +435,7 @@
 <div id="page-skills" class="page">
 
   <div style="padding:.75rem 2rem; background:#060614; border-bottom:1px solid #1a1a6a;">
-    <button class="back-btn" style="color:#7070c0;" onclick="showPage('home')">← Through the Portal</button>
+    <button class="back-btn" style="color:#7070c0;" onclick="showPage('home')">← Home</button>
   </div>
 
   <div class="shadow-banner">
@@ -660,7 +453,6 @@
       <div class="skills-grid">
 
         <div class="skill-card" style="--sc:#7070cc;">
-          <span class="skill-icon">📈</span>
           <h3>Growth Marketing</h3>
           <p>
             Paid acquisition, funnel optimization, A/B testing, and conversion analysis.
@@ -669,7 +461,6 @@
         </div>
 
         <div class="skill-card" style="--sc:#9050cc;">
-          <span class="skill-icon">📝</span>
           <h3>Content Strategy</h3>
           <p>
             Content pillars, platform calendars, and campaign copywriting. Built pre-launch
@@ -679,7 +470,6 @@
         </div>
 
         <div class="skill-card" style="--sc:#5080cc;">
-          <span class="skill-icon">📊</span>
           <h3>Analytics &amp; Performance</h3>
           <p>
             User behavior analysis, funnel tracking, hashtag strategy performance, and
@@ -688,7 +478,6 @@
         </div>
 
         <div class="skill-card" style="--sc:#cc5070;">
-          <span class="skill-icon">🎙️</span>
           <h3>Public Speaking &amp; Pitching</h3>
           <p>
             Competed across 10+ inter-collegiate fests with an 86% win rate. Experience
@@ -697,7 +486,6 @@
         </div>
 
         <div class="skill-card" style="--sc:#50aacc;">
-          <span class="skill-icon">⚙️</span>
           <h3>Technical Skills</h3>
           <p>
             Python (automation, PyAutoGUI, n8n workflows), Microsoft Office suite,
@@ -707,7 +495,6 @@
         </div>
 
         <div class="skill-card" style="--sc:#70cc50;">
-          <span class="skill-icon">✍️</span>
           <h3>Creative Writing</h3>
           <p>
             Long-form essays, campaign copy, email sequences, ad scripts, and editorial content.
@@ -832,27 +619,22 @@
 
       <div class="quest-grid">
         <div class="quest-card">
-          <span class="quest-icon">⚔️</span>
           <h3>CUSBMA Business Festing Team</h3>
           <p>Christ University · July 2025 – Present<br>86% win rate across 10+ inter-collegiate fests. Led team coordination, event strategy, and execution.</p>
         </div>
         <div class="quest-card">
-          <span class="quest-icon">📡</span>
           <h3>Synapse — R&amp;D Head</h3>
           <p>Christ University · Jan 2025 – Mar 2026<br>Launched a content series that reached 10K+ views and grew the club's following by 3K in 3 months.</p>
         </div>
         <div class="quest-card">
-          <span class="quest-icon">🎭</span>
           <h3>Mood Indigo, IIT Bombay</h3>
           <p>Dec 2025 · 2nd Runner-Up, Aagaz Street Play (Zariya Productions)<br>Placed 3rd at India's largest cultural festival.</p>
         </div>
         <div class="quest-card">
-          <span class="quest-icon">🏅</span>
           <h3>Cross-Currents, Mount Carmel</h3>
           <p>Nov 2024 · 3rd Position — Marketing<br>Recognized for campaign ideation, brand positioning, and pitch performance.</p>
         </div>
         <div class="quest-card">
-          <span class="quest-icon">🎖️</span>
           <h3>BVBPSMUN — Secretary General</h3>
           <p>Hyderabad · Aug 2023<br>Led conference operations, chaired committees, and managed delegate coordination end to end.</p>
         </div>
@@ -907,7 +689,6 @@
       <div class="industry-grid">
 
         <div class="industry-card" style="--ic:#d4a060;">
-          <span class="industry-icon">🎬</span>
           <div class="industry-label">Entertainment</div>
           <h3>Film &amp; Media Marketing</h3>
           <p>
@@ -919,7 +700,6 @@
         </div>
 
         <div class="industry-card" style="--ic:#c080a0;">
-          <span class="industry-icon">👗</span>
           <div class="industry-label">Apparel &amp; Lifestyle</div>
           <h3>Fashion Marketing</h3>
           <p>
@@ -932,7 +712,6 @@
         </div>
 
         <div class="industry-card" style="--ic:#e08840;">
-          <span class="industry-icon">🍽️</span>
           <div class="industry-label">FMCG &amp; F&amp;B</div>
           <h3>Food &amp; Beverage Marketing</h3>
           <p>
@@ -960,6 +739,8 @@
 </div><!-- /page-passion -->
 
 
+<canvas id="field" aria-hidden="true"></canvas>
+<script src="js/field.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

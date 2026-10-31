@@ -3,7 +3,7 @@
    ============================================================ */
 
 // ── PAGE ROUTING ────────────────────────────────────────────
-function showPage(id) {
+function _show(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
 
@@ -19,15 +19,27 @@ function showPage(id) {
   pageAnimations(id);
 }
 
-// restore page on load
+// the bird carries you between pages (home lives in index.html)
+let current = null;
+function showPage(id) {
+  if (id === 'home') { Bird.leave('index.html'); return; }
+  if (id === current) return;
+  if (current === null) { current = id; _show(id); return; }
+  current = id;
+  Bird.swap(() => _show(id));
+}
+
+// restore page on load (no animation: arriving by bird already covers the screen)
 (function () {
-  const hash = location.hash.replace('#', '') || 'home';
-  showPage(hash);
+  const hash = location.hash.replace('#', '');
+  const id = document.getElementById('page-' + hash) ? hash : 'works';
+  current = id; _show(id);
 })();
 
 window.addEventListener('popstate', () => {
-  const hash = location.hash.replace('#', '') || 'home';
-  showPage(hash);
+  const hash = location.hash.replace('#', '');
+  if (hash === '') { Bird.leave('index.html'); return; }
+  current = hash; _show(hash);
 });
 
 // ── HAMBURGER NAV ────────────────────────────────────────────
@@ -86,18 +98,7 @@ document.addEventListener('keydown', e => {
 function pageAnimations(id) {
   clearAnimations();
 
-  if (id === 'resume') {
-    spawnSnitch();
-  }
-  if (id === 'blog') {
-    spawnRaven();
-  }
-  if (id === 'skills') {
-    spawnSparks();
-  }
-  if (id === 'experience') {
-    spawnBolts();
-  }
+  /* page-specific themed animations removed: every page shares one look and one bird */
 }
 
 function clearAnimations() {
