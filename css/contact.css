@@ -1,0 +1,42 @@
+/* Booking page */
+.book-page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:128px clamp(20px,4vw,48px) 72px}
+.book-head h1{font-size:clamp(48px,8vw,104px)!important;line-height:1.02!important;margin:10px 0 18px!important}
+.book-head p{max-width:34em;margin:0;font-size:clamp(17px,1.6vw,20px);color:#d6dde6}
+.book{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,3vw,36px);margin-top:44px;align-items:start}
+.book-cal,.book-side{padding:clamp(20px,3vw,32px);border-radius:24px;background:rgba(22,10,56,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(150,105,255,.38)}
+.cal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.cal-month{font:500 clamp(22px,2.4vw,30px)/1 var(--font);letter-spacing:-.03em;color:#fff}
+.cal-nav{all:unset;cursor:pointer;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);color:#fff;font-size:18px;transition:background .3s,border-color .3s,opacity .3s}
+.cal-nav:hover:not(:disabled){background:var(--iris);border-color:var(--iris)}
+.cal-nav:disabled{opacity:.25;cursor:default}
+.cal-nav:focus-visible,.day:focus-visible,.slot:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-dow span{text-align:center;font:600 11px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;color:#9a9a9a;padding-bottom:10px}
+.day{all:unset;box-sizing:border-box;aspect-ratio:1;display:grid;place-items:center;border-radius:12px;font:400 16px/1 var(--font);color:#6d6a86;cursor:default}
+.day.open{color:#fff;cursor:pointer;background:rgba(141,107,255,.16);border:1px solid rgba(141,107,255,.4);transition:background .25s,transform .25s}
+.day.open:hover{background:rgba(141,107,255,.4);transform:translateY(-2px)}
+.day.today{box-shadow:inset 0 0 0 1px var(--saffron)}
+.day.sel{background:var(--iris);border-color:var(--iris);color:#fff}
+.cal-hours{margin:18px 0 0;font-size:14px;line-height:1.6;color:#9a9a9a}
+.book-step h2{font:400 clamp(24px,2.6vw,32px)/1.1 var(--font)!important;margin:0 0 8px}
+.book-hint{margin:0 0 18px;color:#bdbdbd;font-size:15px}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.slot{all:unset;box-sizing:border-box;text-align:center;cursor:pointer;padding:13px 8px;border-radius:12px;border:1px solid rgba(141,107,255,.5);font:500 15px/1 var(--font);color:#fff;transition:background .25s,color .25s,transform .25s}
+.slot:hover{background:var(--iris);transform:translateY(-2px)}
+.book-chosen{margin:0 0 18px;padding:12px 14px;border-radius:12px;background:rgba(255,184,41,.1);border-left:3px solid var(--saffron);color:#fff;font-size:15px;line-height:1.5}
+.book-step label{display:block;margin:0 0 14px;font:600 12px/1.2 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--saffron)}
+.book-step label em{text-transform:none;letter-spacing:0;font-style:normal;color:#9a9a9a;font-weight:300}
+.book-step input[type=text],.book-step input[type=email],.book-step textarea{display:block;width:100%;box-sizing:border-box;margin-top:8px;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.28);color:#fff;font:300 16px/1.4 var(--font)}
+.book-step input:focus,.book-step textarea:focus{outline:2px solid var(--iris);border-color:transparent}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.book-err{margin:0 0 12px;color:#ff9aa8;font-size:14px}
+.book-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn,.book-step .btn{display:inline-block;border:0;cursor:pointer;background:var(--iris);color:#fff;padding:14px 22px;border-radius:24px;font:600 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;text-decoration:none;transition:transform .3s,filter .3s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.btn:disabled{opacity:.6;cursor:wait;transform:none}
+.btn-ghost{all:unset;cursor:pointer;color:#bdbdbd;font:500 14px/1 var(--font);padding:10px 4px}
+.btn-ghost:hover{color:var(--saffron)}
+.book-alt{margin:36px 0 0;color:#9a9a9a;font-size:15px}
+.book-alt a{color:#d6dde6;text-decoration:underline;text-underline-offset:3px}
+.book-alt a:hover{color:var(--saffron)}
+@media(max-width:860px){.book{grid-template-columns:1fr}}
