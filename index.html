@@ -19,8 +19,9 @@
   --pad:clamp(20px,4vw,48px);--ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box}
-html{background:var(--void);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{background:#020a14;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:transparent;color:var(--bone);font:200 18px/1.5 var(--font);font-feature-settings:"ss01" on;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#veil{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,rgba(0,4,12,.15),rgba(0,4,12,.55))}
 #gl{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:1px solid var(--saffron);outline-offset:6px;border-radius:4px}
@@ -49,6 +50,7 @@ h2{font-size:clamp(42px,6.1vw,78px);line-height:1.08}
 .sub{font:400 clamp(22px,2.3vw,27px)/1.2 var(--font);letter-spacing:-.02em;max-width:17em;margin:30px 0 0}
 p{margin:30px 0 0;max-width:34em;color:var(--bone)}
 p+p{margin-top:18px;color:var(--mist)}
+h1,h2,p,.stat,.list a,.contact a,.sub{text-shadow:0 2px 24px rgba(0,6,16,.85)}
 .ghost{display:inline-flex;gap:12px;margin-top:60px;font:400 14px/1.2 var(--font);letter-spacing:.025em;text-transform:uppercase;color:var(--saffron);transition:gap .4s var(--ease)}
 .ghost:hover{gap:20px}
 
@@ -83,14 +85,14 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   #hero{align-items:flex-end;padding-bottom:84px}
   .ghost{margin-top:36px}
   .stats{gap:48px 24px}
-  p,h2,.stat{text-shadow:0 0 24px #000,0 0 8px #000}
+  
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv,h1 .c{transition:none;opacity:1;transform:none;filter:none}}
 </style>
 <noscript><style>.rv,h1 .c{opacity:1;transform:none;filter:none}</style></noscript>
 </head>
 <body>
-<canvas id="gl" aria-hidden="true"></canvas>
+<canvas id="gl" aria-hidden="true"></canvas><div id="veil" aria-hidden="true"></div>
 
 <nav aria-label="Primary">
   <a class="logo" href="#top"><i></i>Prapti Das</a>
@@ -175,10 +177,10 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   if(typeof THREE==='undefined')return;
   const cv=document.getElementById('gl'),RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   let ren;try{ren=new THREE.WebGLRenderer({canvas:cv,antialias:false,powerPreference:'high-performance'})}catch(e){return}
-  ren.setClearColor(0x000000,1);
-  const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,1,.1,200);cam.position.z=22;
+  ren.setClearColor(0x020a14,1);
+  const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x061a2e,.024);const cam=new THREE.PerspectiveCamera(45,1,.1,260);cam.position.z=22;
   const R=Math.random,TAU=Math.PI*2,small=innerWidth<700,K=small?.55:1;
-  const PAL={iris:[.5,.32,1],saf:[1,.72,.16],teal:[.2,.85,.7],white:[.9,.9,1]};
+  const PAL={iris:[.28,.55,1],saf:[.55,.9,1],teal:[.2,.75,.95],white:[.92,.97,1],vio:[.5,.32,1]};
   const pick=(w)=>{let r=R(),a=0;for(const k in w){a+=w[k];if(r<a)return PAL[k]}return PAL.white};
   const sph=()=>{let x,y,z;do{x=R()*2-1;y=R()*2-1;z=R()*2-1}while(x*x+y*y+z*z>1);return[x,y,z]};
   const shell=()=>{const[x,y,z]=sph(),l=Math.hypot(x,y,z)||1;return[x/l,y/l,z/l]};
@@ -190,12 +192,28 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     const x=side*(.5+s*6.4),chord=2.3*Math.pow(1-s,.55)+.35;
     let z=-.6+s*1.8+v*chord;if(feather)z+=Math.max(0,Math.sin(s*38))*.4;
     const y=.35*s+Math.sin(v*Math.PI)*.25*(1-s)+(R()-.5)*.08;
-    add(x,y,z,1,R()<s*.8?(R()<.25?PAL.white:PAL.saf):pick({iris:.8,white:.2}));
+    add(x,y,z,1,R()<s*.8?(R()<.4?PAL.white:PAL.saf):pick({iris:.35,teal:.25,white:.4}));
   }
-  for(let i=0;i<1500*K;i++){const[a,b,c]=R()<.7?shell():sph();add(a*.6,b*.5,c*1.8+.2,0,pick({iris:.55,teal:.3,white:.15}))}
-  for(let i=0;i<450*K;i++){const[a,b,c]=sph();add(a*.42,b*.42+.3,c*.42-2.1,0,pick({iris:.5,white:.3,saf:.2}))}
+  for(let i=0;i<1500*K;i++){const[a,b,c]=R()<.7?shell():sph();add(a*.6,b*.5,c*1.8+.2,0,pick({iris:.3,teal:.3,white:.4}))}
+  for(let i=0;i<450*K;i++){const[a,b,c]=sph();add(a*.42,b*.42+.3,c*.42-2.1,0,pick({iris:.3,white:.5,saf:.2}))}
   for(let i=0;i<120*K;i++){const t=R(),r=(1-t)*.18,a=R()*TAU;add(Math.cos(a)*r,.25+Math.sin(a)*r,-2.5-t*.8,0,PAL.saf)}
   for(let i=0;i<600*K;i++){const t=R();add((R()*2-1)*(.25+t*1.1),-.05-t*.1,1.9+t*2,.4,pick({teal:.6,iris:.4}))}
+
+  /* low-poly forest */
+  scene.add(new THREE.AmbientLight(0x244f7a,.55));
+  const key=new THREE.DirectionalLight(0x8fd8ff,1.9);key.position.set(-8,10,12);scene.add(key);
+  const fill=new THREE.DirectionalLight(0x2f6fd0,.6);fill.position.set(10,-4,8);scene.add(fill);
+  const glow=new THREE.PointLight(0x9fe6ff,2.2,46);scene.add(glow);
+  const jit=(x,y,z)=>{const s=Math.sin(x*12.9898+y*78.233+z*37.719)*43758.5453;return s-Math.floor(s)-.5};
+  const BL=[0x0d3555,0x14496f,0x1b5c88,0x0a2a44,0x1f6a9a];
+  const trunk=(x,z,r,col)=>{
+    const h=240,g=new THREE.CylinderGeometry(r*(.3+R()*.3),r,h,5+((R()*2)|0),40),p=g.attributes.position;
+    for(let i=0;i<p.count;i++){const X=p.getX(i),Y=p.getY(i),Z=p.getZ(i);
+      p.setXYZ(i,X+jit(X,Y,Z)*r*.7+Math.sin(Y*.09+x)*r*.7,Y,Z+jit(Z,Y,X)*r*.7)}
+    const m=new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:col,flatShading:true}));
+    m.position.set(x,-70,z);m.rotation.z=(R()-.5)*.05;m.frustumCulled=false;scene.add(m)};
+  for(let i=0;i<(small?24:48);i++)trunk((R()*2-1)*48,-4-R()*32,.8+R()*1.8,BL[(R()*BL.length)|0]);
+  for(let i=0;i<5;i++)trunk((i%2?1:-1)*(16+R()*14),3+R()*6,1.4+R()*1.6,0x041424);
   const rot=new THREE.Euler(1,.12,.04),v3=new THREE.Vector3();
 
   const N=B.length,bird=new Float32Array(N*3),scat=new Float32Array(N*3),off=new Float32Array(N*3),col=new Float32Array(N*3),misc=new Float32Array(N*4),size=new Float32Array(N);
@@ -246,7 +264,7 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 
   /* large drifting outlined squares & circles (ambient depth layer) */
   const M=small?30:64,a={position:new Float32Array(M*3),aScat:new Float32Array(M*3),aOff:new Float32Array(M*3),aCol:new Float32Array(M*3),aMisc:new Float32Array(M*4),aSize:new Float32Array(M)};
-  for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.45,saf:.25,teal:.15,white:.15}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=18+R()*40}
+  for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.3,saf:.3,teal:.2,white:.15,vio:.05}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=18+R()*40}
   const g2=new THREE.BufferGeometry();for(const k in a)g2.setAttribute(k,new THREE.BufferAttribute(a[k],k==='aMisc'?4:k==='aSize'?1:3));
   mk(g2,mat(1));
 
@@ -270,7 +288,7 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
     const S=scrollY;sm+=(S-sm)*(RM?1:.085);
     cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
-    U.uShatter.value=ss(.04*vh,.9*vh,sm);
+    U.uShatter.value=ss(.04*vh,.9*vh,sm);glow.position.set(U.uBirdOff.value.x,1,7);glow.intensity=.4+1.9*(1-U.uShatter.value);
     cl.forEach(c=>{U.uProx.value[c.i]=Math.min(Math.max((1.05-Math.abs(c.y-(sm+vh/2))/vh)/.8,0),1)});
     U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
     ren.render(scene,cam);
