@@ -166,3 +166,6 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 @media(prefers-reduced-motion:reduce){.sh,.reel,.deck-card{animation:none;transition:none}}
 #page-blog{background:transparent!important}
 #page-blog .blog-pull p::first-letter,#page-blog .blog-pull::first-letter{float:none!important;font-size:inherit!important;line-height:inherit!important;padding:0!important;color:inherit!important;font-weight:inherit!important}
+/* let the triangle/circle field show on every page */
+#page-skills,#page-experience,#page-passion,#page-works,#page-resume,#page-blog{background:transparent!important}
+#page-experience>div[style],#page-passion>div[style],#page-skills>div[style]{background:transparent!important}

@@ -115,21 +115,15 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 .pil h3{margin:14px 0 10px;font:500 22px/1.15 var(--font);letter-spacing:-.03em}
 .pil p{margin:0;font-size:15px;line-height:1.5;color:var(--mist);max-width:none;text-shadow:none}
 @media(max-width:900px){.pil{grid-template-columns:1fr 1fr}}@media(max-width:520px){.pil{grid-template-columns:1fr}}
-/* industries: counter-scrolling marquee */
-.mq{overflow:hidden;margin-top:26px;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.mq-t{display:flex;width:max-content;gap:38px;align-items:center;animation:mq 28s linear infinite}
-.mq.r2 .mq-t{animation-direction:reverse;animation-duration:36s}
-.mq:hover .mq-t{animation-play-state:paused}
-.mq span{font:500 clamp(44px,7vw,92px)/1.1 var(--font);letter-spacing:-.045em;white-space:nowrap;transition:color .3s,-webkit-text-stroke .3s}
-.mq.r2 span{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
-.mq span:hover{color:var(--saffron);-webkit-text-stroke:0}
-.mq i{width:16px;height:16px;border:2px solid var(--iris);transform:rotate(45deg);flex:none;animation:spin 6s linear infinite}
-.ind-orbs{position:relative;height:0}
-.ind-orbs b{position:absolute;right:6%;top:-150px;width:46px;height:46px;border:1.5px solid var(--violet);border-radius:50%;animation:bob 5s ease-in-out infinite alternate}
-.ind-orbs b:nth-child(2){right:22%;top:-60px;width:22px;height:22px;border-radius:0;transform:rotate(30deg);animation-delay:-2s;border-color:var(--saffron)}
-.ind-orbs b:nth-child(3){right:44%;top:-170px;width:14px;height:14px;animation-delay:-3s;border-color:#5aa8ff}
-@keyframes mq{to{transform:translateX(-50%)}}@keyframes spin{to{transform:rotate(405deg)}}@keyframes bob{to{transform:translateY(-26px) rotate(40deg)}}
-@media(prefers-reduced-motion:reduce){.mq-t,.mq i,.ind-orbs b{animation:none}}
+/* industries: still, all five visible at once */
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.chips span{font:500 clamp(18px,2.2vw,26px)/1 var(--font);letter-spacing:-.02em;padding:14px 22px;border:1px solid rgba(150,105,255,.5);border-radius:9999px;background:rgba(40,18,92,.4);transition:color .3s,border-color .3s}
+.chips span:hover{color:var(--saffron);border-color:var(--saffron)}
+/* section names: big, numbered, impossible to miss */
+main{counter-reset:sec}
+section:not(#hero) .label{counter-increment:sec;display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;padding:10px 20px;border:1px solid var(--saffron);border-radius:9999px;background:rgba(226,184,87,.1);font:600 clamp(15px,1.5vw,19px)/1 var(--font);letter-spacing:.06em;color:var(--saffron)}
+section:not(#hero) .label::before{content:counter(sec,decimal-leading-zero);color:#fff;opacity:.85}
+section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var(--saffron);order:-1;display:none}
 /* explore: big, bright, readable */
 #explore h2{font-size:clamp(40px,5.4vw,72px)}
 .list{position:relative;margin-top:36px;padding-left:0}
@@ -236,9 +230,7 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
   <section id="industries" class="point">
     <div class="wrap"><div class="panel">
       <span class="label rv">Five industries</span>
-      <div class="mq" aria-label="Fashion, EdTech, MarTech, Real Estate, Events"><div class="mq-t"><span>Fashion</span><i></i><span>EdTech</span><i></i><span>MarTech</span><i></i><span>Real Estate</span><i></i><span>Events</span><i></i><span>Fashion</span><i></i><span>EdTech</span><i></i><span>MarTech</span><i></i><span>Real Estate</span><i></i><span>Events</span><i></i></div></div>
-      <div class="mq r2" aria-hidden="true"><div class="mq-t"><span>Events</span><i></i><span>Real Estate</span><i></i><span>MarTech</span><i></i><span>EdTech</span><i></i><span>Fashion</span><i></i><span>Events</span><i></i><span>Real Estate</span><i></i><span>MarTech</span><i></i><span>EdTech</span><i></i><span>Fashion</span><i></i></div></div>
-      <div class="ind-orbs" aria-hidden="true"><b></b><b></b><b></b></div>
+      <div class="chips"><span>Fashion</span><span>EdTech</span><span>MarTech</span><span>Real Estate</span><span>Events</span></div>
       <a class="ghost rv" style="margin-top:36px" href="site.html#passion" data-go>Where I want to build a career <span aria-hidden="true">→</span></a>
     </div></div>
   </section>
