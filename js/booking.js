@@ -58,7 +58,11 @@
       requestMode = j.mode === 'request';
       if (!j.slots.length) { $('side-hint').textContent = 'No open times that day. Try another date.'; return; }
       $('side-hint').textContent = requestMode ? 'Pick a time (IST). I will confirm it by email.' : 'Pick a time (IST). Each call is 30 minutes.';
-      $('slots').innerHTML = j.slots.map(function (s) { return '<button type="button" class="slot" role="listitem" data-s="' + s.start + '" data-l="' + s.label + '">' + s.label + '</button>'; }).join('');
+      var sl = $('slots'); sl.textContent = '';                    /* built with the DOM, never as HTML, so nothing from the API can run as code */
+      j.slots.forEach(function (s) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'slot'; b.setAttribute('role', 'listitem');
+        b.dataset.s = String(s.start); b.dataset.l = String(s.label); b.textContent = String(s.label); sl.appendChild(b);
+      });
     }).catch(function () { if (id === reqId) { $('side-hint').textContent = 'Could not load times. Please try again, or email me.'; } });
   }
 
@@ -94,7 +98,7 @@
     e.preventDefault();
     var name = $('f-name').value.trim(), email = $('f-email').value.trim(), err = $('f-err');
     if (!name) { err.textContent = 'Please add your name.'; err.hidden = false; return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = 'Please enter a valid email so I can send the invite.'; err.hidden = false; return; }
+    if (!/^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]{1,64}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/.test(email) || email.length > 120) { err.textContent = 'Please enter a valid email so I can send the invite.'; err.hidden = false; return; }
     if (requestMode) {                      /* calendar not connected: send the request by email and offer an add-to-calendar link */
       var body = 'Hi Prapti,\n\nI would like to book a call on ' + nice(selDate) + ' at ' + slot.label + ' IST.\n\nName: ' + name + '\nEmail: ' + email + ($('f-notes').value ? '\n\nAbout: ' + $('f-notes').value : '') + '\n';
       $('done-when').textContent = nice(selDate) + ' · ' + slot.label + ' IST' + mine(slot.start);
@@ -115,12 +119,14 @@
         if (r.s === 200 && r.j.ok) {
           $('done-when').textContent = nice(selDate) + ' · ' + slot.label + ' IST' + mine(slot.start);
           $('done-mail').textContent = email;
-          if (r.j.meet) { $('done-link').href = r.j.meet; $('done-meet').hidden = false; }
+          if (r.j.meet && /^https:\/\//.test(r.j.meet)) { $('done-link').href = r.j.meet; $('done-meet').hidden = false; }
           $('done-title').textContent = "You're booked."; $('done-gcal').hidden = true;
           show('step-done'); selDate = null; render();
         } else if (r.s === 409) {
           err.textContent = 'Someone just booked that time. Please pick another.'; err.hidden = false; show('step-pick'); loadSlots(selDate);
         } else if (r.s === 503) { show('step-fallback'); }
+        else if (r.s === 429) { err.textContent = 'Too many attempts. Please wait a little, or email me.'; err.hidden = false; }
+        else if (r.j && r.j.error === 'no_links') { err.textContent = 'Please leave links out of your name and note.'; err.hidden = false; }
         else { err.textContent = 'Something went wrong. Please try again, or email me.'; err.hidden = false; }
       }).catch(function () { go.disabled = false; go.textContent = 'Confirm booking'; err.textContent = 'Network problem. Please try again.'; err.hidden = false; });
   });

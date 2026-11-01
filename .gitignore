@@ -11,3 +11,16 @@ node_modules/
 
 # Logs
 *.log
+
+# Secrets and local config: never commit these
+.env
+.env.*
+!.env.example
+.vercel/
+*.pem
+*.key
+*.p12
+service-account*.json
+client_secret*.json
+credentials*.json
+.npmrc

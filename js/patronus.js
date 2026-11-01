@@ -27,7 +27,13 @@
   document.body.appendChild(modal);
   var frame = modal.querySelector('.frame'), capText = modal.querySelector('.cap span');
   function openReel(id, title) {
-    frame.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="' + (title || 'Reel') + '"></iframe>';
+    if (!/^[A-Za-z0-9_-]{6,20}$/.test(String(id))) return;          /* only a plain YouTube id is ever put into the page */
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+    f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    f.allowFullscreen = true; f.title = title || 'Reel';
+    frame.textContent = ''; frame.appendChild(f);
     capText.textContent = title || '';
     modal.classList.add('on');
   }

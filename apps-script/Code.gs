@@ -26,7 +26,10 @@ function doPost(e) {
   try { b = JSON.parse(e.postData.contents); } catch (err) {}
   if (b.key !== KEY) return out_({ error: 'unauthorized' });
   if (b.action !== 'book') return out_({ error: 'bad_action' });
+  var okEmail = typeof b.email === 'string' && b.email.length <= 120 && /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]{1,64}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/.test(b.email);
+  if (!okEmail || typeof b.name !== 'string' || !b.name || b.name.length > 80 || (b.notes && String(b.notes).length > 600)) return out_({ error: 'bad_input' });  // one plain address only
   var s = new Date(b.start), en = new Date(b.end);
+  if (isNaN(s) || isNaN(en) || en - s !== 30 * 60000 || s < new Date()) return out_({ error: 'bad_input' });
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var cal = CalendarApp.getDefaultCalendar();
