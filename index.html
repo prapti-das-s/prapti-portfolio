@@ -208,7 +208,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <div class="wrap"><div class="panel">
       <span class="label rv">By the numbers</span>
       <div class="stats">
-        <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small><a href="site.html#passion" data-go style="text-decoration:underline;text-underline-offset:3px">Fashion (Darshe) · EdTech (GenAIPeople) · MarTech (Solid Corp) · Real estate (Propalyst) · Events (Aavo)</a></small></div>
+        <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small class="ind"><a href="site.html#experience/darshe" data-go>Fashion (Darshe)</a> · <a href="site.html#experience/genaipeople" data-go>EdTech (GenAIPeople)</a> · <a href="site.html#experience/solid" data-go>MarTech (Solid Corp)</a> · <a href="site.html#experience/propalyst" data-go>Real estate (Propalyst)</a> · <a href="site.html#experience/aavo" data-go>Events (Aavo)</a></small></div>
         <div class="stat rv" style="--d:.1s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaigns, plus 1K+ followers</small></div>
         <div class="stat rv" style="--d:.2s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ intercollegiate business fests</small></div>
         <div class="stat rv" style="--d:.3s"><b data-n="25" data-s="%">25%</b><span>Qualified-lead growth a month</span><small>A/B tests and funnel analytics, Solid Corp</small></div>
@@ -350,16 +350,27 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uHead:{value:new THREE.Vector2()},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
     if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
-      vec3 b=position*uBs;float ax=abs(b.x);
-      float f=sin(uPh-ax*.45)*uFA;
-      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uPh)*.18*uFA;b.z+=f*ax*.05*aMisc.x;
+      vec3 b=position;float wg=aMisc.x;
+      /* head and beak turn on the neck toward the cursor, independent of the body */
+      float hm=smoothstep(-1.1,-2.0,b.z)*(1.-step(.5,wg));vec3 pv=vec3(0.,.1,-1.5),hq=b-pv;
+      float cy=cos(uHead.x*hm),sy=sin(uHead.x*hm),cp=cos(uHead.y*hm),sp=sin(uHead.y*hm);
+      hq.xz=mat2(cy,sy,-sy,cy)*hq.xz;hq.yz=mat2(cp,sp,-sp,cp)*hq.yz;b=pv+hq;
+      /* wingbeat: wings swing about the shoulder, tips lag behind, fast downstroke, slower upstroke that folds the wing in */
+      float ax=abs(b.x),span=clamp(ax/6.9,0.,1.),w=uPh-span*1.15,q=w-.5*sin(w);
+      float st=sin(q),fold=smoothstep(-.1,.9,cos(q));
+      float th=(st*.85*uFA+.16*(1.-uFA))*(.25+.75*span)*step(.5,wg);
+      float sg=sign(b.x);b.y+=ax*sin(th);b.x=sg*ax*cos(th)*(1.-.2*fold*span*uFA*step(.5,wg));
+      b.z+=cos(q)*.4*pow(span,1.3)*uFA*step(.5,wg);
+      b.y-=sin(uPh-.5*sin(uPh))*.3*uFA;                                   /* body rises on the downstroke */
+      b.y+=sin(uPh-1.1)*.4*uFA*smoothstep(1.2,3.5,b.z);                   /* tail follows a beat behind */
+      b*=uBs;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
       vec3 hero=uRot*b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
       p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
@@ -401,7 +412,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
   addEventListener('pointermove',e=>{fastMove+=Math.hypot(e.clientX-lpx,e.clientY-lpy)/30;lpx=e.clientX;lpy=e.clientY;seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
-  let seen=false,lpx=0,lpy=0;const VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
+  let seen=false,lpx=0,lpy=0,headYaw=0,headPitch=0,birdY0=0;const VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
   const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
   const t0=performance.now();
   (function loop(now){
@@ -409,7 +420,8 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const S=scrollY;sm+=(S-sm)*(RM?1:.085);
     cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
-    U.uShatter.value=ss(.04*vh,.9*vh,sm);
+    const dv=ss(0,.3*vh,sm);               /* dive progress: 0 at the top, 1 after a short scroll */
+    U.uShatter.value=ss(.14*vh,.95*vh,sm);  /* bursts only after it has dived */
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
@@ -417,7 +429,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
      const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
      const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*.95),cam.position.x+hx*.95);BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
      DP.copy(BD);let spd;
-     if(seen){
+     if(seen&&dv<.02){
        /* keeps an inch or so away from the pointer, on whichever side it arrives from; glides after it smoothly and settles facing it */
        const inch=Math.max(100*2*hx/vw,1.6);
        DS.set(BP.x-cxw,BP.y-cyw,0);const dd=DS.length();
@@ -440,16 +452,24 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
        BP.addScaledVector(BD,3.4*dt);spd=3.4;clampB();VEL.set(BD.x*3.4,BD.y*3.4,0);
      }
+     if(dv>.02){DS.set(.12,-1,0).normalize();BD.lerp(DS,Math.min(1,6*dt)).normalize();spd=Math.max(spd,6)}   /* scrolling: forget the cursor, nose down */
      const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
      bank+=(Math.max(-.6,Math.min(.6,-yaw*.9))-bank)*Math.min(1,1.6*dt);
      /* wingbeats: steady flapping while hovering, flap-and-glide on long runs */
      fm+=((spd>9?(Math.sin(T*1.7)>.1?1:.3):seen?(spd>1.2?1:.55):((BD.y>.05)||Math.sin(T*.5)>.15?1:0))-fm)*Math.min(1,2.2*dt);
-     U.uFA.value=.22+.78*fm;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
+     U.uFA.value=(.22+.78*fm)*(1-.6*dv);ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
      const rgt=RG.crossVectors(BD,up).normalize();
+     /* the bird looks at the cursor: head snaps round quickly, lifts toward the viewer as the pointer gets close */
+     {const dx=cxw-BP.x,dy=cyw-BP.y,dist=Math.hypot(dx,dy);
+      let ty=(seen&&dv<.02)?Math.atan2(dx*rgt.x+dy*rgt.y,dx*BD.x+dy*BD.y):Math.sin(T*.8)*.3+Math.sin(T*2.1)*.08;
+      ty=Math.max(-1.25,Math.min(1.25,ty));const tp=(seen&&dv<.02)?Math.min(.5,Math.atan2(1.8,dist+.5)*.7):.05,hk=Math.min(1,(seen?10:3)*dt);
+      headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;U.uHead.value.set(headYaw,headPitch)}
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,4*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
      U.uBirdOff.value.copy(BP).lerp(base,1-k);
+     if(dv<.001)birdY0=U.uBirdOff.value.y;
+     else{const lk=birdY0+cam.position.y-dv*dv*H*.3,wl=Math.min(1,dv*12);U.uBirdOff.value.y+=(lk-U.uBirdOff.value.y)*wl}   /* rides down the screen with the scroll, then dissolves */
      const r=heroTxt?heroTxt.getBoundingClientRect():null;let f=0;
      /* f: 0 = clear of the text, 1 = right behind it; eased so the bird fades out gradually and glows back in as it leaves */
      if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw;
