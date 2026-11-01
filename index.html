@@ -161,6 +161,24 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   .stats{gap:48px 24px}
   
 }
+
+/* phone navigation + comfort */
+.menu{display:none}
+@media(max-width:860px){
+  body>nav{padding:calc(12px + env(safe-area-inset-top)) 18px 12px;background:linear-gradient(rgba(5,5,26,.94),rgba(5,5,26,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .menu{display:flex;flex-direction:column;justify-content:center;gap:6px;width:46px;height:46px;padding:0 11px;background:rgba(8,8,42,.6);border:1px solid rgba(139,140,240,.45);border-radius:12px;cursor:pointer}
+  .menu span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .35s var(--ease)}
+  nav.open .menu span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+  nav.open .menu span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
+  .links{position:fixed;left:0;right:0;top:0;z-index:-1;flex-direction:column;align-items:stretch;gap:0;padding:calc(84px + env(safe-area-inset-top)) 24px 28px;background:rgba(5,5,26,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(80,80,210,.4);transform:translateY(-102%);opacity:0;pointer-events:none;transition:transform .5s var(--ease),opacity .3s}
+  nav.open .links{transform:none;opacity:1;pointer-events:auto}
+  .links a:not(.pill){display:block!important;font:500 22px/1.2 var(--font);text-transform:none;letter-spacing:-.01em;color:var(--bone);padding:15px 0;border-bottom:1px solid rgba(80,80,210,.25)}
+  .links .pill{margin-top:20px;text-align:center;padding:16px 18px}
+  .panel{padding:26px 20px}
+  .who{padding:26px 20px}
+  section{scroll-margin-top:70px}
+}
+@media(hover:none){.list a:hover,.list a:focus-visible{padding-left:0}.chips a:hover{color:inherit;border-color:rgba(150,105,255,.5)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv,h1 .c{transition:none;opacity:1;transform:none;filter:none}}
 </style>
 <noscript><style>.rv,h1 .c{opacity:1;transform:none;filter:none}</style></noscript>
@@ -180,6 +198,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <a href="site.html#passion" data-go>Industries</a>
     <a class="pill" href="contact.html" data-go>Book a call</a>
   </div>
+  <button class="menu" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
 
 <main id="top">
@@ -408,7 +427,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
     const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.5,12),document.documentElement.scrollHeight/vh*H,6);
-    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):.7;
+    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):Math.min(.7,W/17);
     cl.forEach(c=>{const r=c.el.getBoundingClientRect();c.y=r.top+scrollY+r.height/2;
       U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
@@ -426,11 +445,11 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const q=Math.min(sm/(.9*vh),1);        /* dive progress, driven by scroll: look, stoop, burst */
     U.uShatter.value=ss(.5,.9,q);           /* bursts only once the dive is nearly done */
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
-    {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
+    {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,ampx=cam.aspect>.85?1:.85,nar=cam.aspect<=.85,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
      const T=U.uTime.value;
      const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
-     const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*.95),cam.position.x+hx*.95);BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
+     const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*(nar?.5:.95)),cam.position.x+hx*(nar?.5:.95));BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
      DP.copy(BD);let spd;
      if(seen&&dv<.02){
        /* keeps an inch or so away from the pointer, on whichever side it arrives from; glides after it smoothly and settles facing it */
@@ -449,11 +468,11 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        BD.lerp(DS,Math.min(1,2.6*dt)).normalize();BD.z=0;
        rollP=-1;
      }else{
-       TG.set(Math.sin(T*.10)*W*.30*amp+Math.sin(T*.27+1)*W*.08*amp,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+       TG.set(Math.sin(T*.10)*W*.30*ampx+Math.sin(T*.27+1)*W*.08*ampx,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
        DS.subVectors(TG,BP).normalize();
-       BD.lerp(DS,Math.min(1,.7*dt)).normalize();
+       BD.lerp(DS,Math.min(1,.7*(nar?2.6:1)*dt)).normalize();
        BD.y=Math.max(-.32,Math.min(.32,BD.y));BD.z=Math.max(-.4,Math.min(.4,BD.z));BD.normalize();
-       BP.addScaledVector(BD,3.4*dt);spd=3.4;clampB();VEL.set(BD.x*3.4,BD.y*3.4,0);
+       BP.addScaledVector(BD,3.4*(nar?.5:1)*dt);spd=3.4;clampB();VEL.set(BD.x*3.4,BD.y*3.4,0);
      }
      /* the dive: remember where and which way the bird was heading at the top of the page, then fly one smooth
         curve from there down the screen (a short pull-ahead, then a stoop). Tied to scroll, so scrolling back up reverses it. */
@@ -496,6 +515,14 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
     ren.render(scene,cam);
   })(t0);
+})();
+
+(()=>{const n=document.querySelector('body>nav'),b=n&&n.querySelector('.menu');if(!b)return;
+  const set=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.documentElement.style.overflow=o?'hidden':''};
+  b.addEventListener('click',()=>set(!n.classList.contains('open')));
+  n.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>set(false)));
+  addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  matchMedia('(min-width:861px)').addEventListener('change',e=>{if(e.matches)set(false)});
 })();
 </script>
 </body>
