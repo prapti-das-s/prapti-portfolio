@@ -202,8 +202,9 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 .hp-sub{margin:1rem 0 .45rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7;position:relative;z-index:1}
 
 /* industries line: each industry links to its entry in Experience */
-.stat small.ind a{color:inherit;text-decoration:none;transition:color .3s}
-.stat small.ind a:hover,.stat small.ind a:focus-visible{color:var(--saffron);text-decoration:underline;text-underline-offset:3px}
+.stat small.ind a{color:inherit;text-decoration:none!important;border:0;transition:color .3s}
+.stat small.ind a:hover,.stat small.ind a:focus-visible{text-decoration:none!important}
+.stat small.ind a:hover,.stat small.ind a:focus-visible{color:var(--saffron)}
 /* the entry a visitor was sent to */
 .tl-item{transition:box-shadow .6s,border-color .6s}
 .tl-item.flash{border-color:#8052ff!important;box-shadow:0 0 0 1px #8052ff,0 0 44px rgba(128,82,255,.35)!important}
