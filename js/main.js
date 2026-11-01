@@ -3,7 +3,23 @@
    ============================================================ */
 
 // ── PAGE ROUTING ────────────────────────────────────────────
-function _show(id) {
+function _hash() {
+  const p = location.hash.replace('#', '').split('/');
+  return { id: p[0], anchor: p[1] || '' };
+}
+
+// scroll to a named entry on the current page and give it a short highlight
+function focusEntry(anchor) {
+  const el = anchor && document.getElementById('exp-' + anchor);
+  if (!el) return;
+  setTimeout(() => {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 2400);
+  }, 700);
+}
+
+function _show(id, anchor) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
 
@@ -13,7 +29,8 @@ function _show(id) {
   if (link) link.classList.add('active');
 
   window.scrollTo(0, 0);
-  history.pushState({}, '', '#' + id);
+  history.pushState({}, '', '#' + id + (anchor ? '/' + anchor : ''));
+  if (anchor) focusEntry(anchor);
 
   // trigger page-specific animations
   pageAnimations(id);
@@ -31,15 +48,15 @@ function showPage(id) {
 
 // restore page on load (no animation: arriving by bird already covers the screen)
 (function () {
-  const hash = location.hash.replace('#', '');
-  const id = document.getElementById('page-' + hash) ? hash : 'works';
-  current = id; _show(id);
+  const h = _hash();
+  const id = document.getElementById('page-' + h.id) ? h.id : 'works';
+  current = id; _show(id, h.anchor);
 })();
 
 window.addEventListener('popstate', () => {
-  const hash = location.hash.replace('#', '');
-  if (hash === '') { Bird.leave('index.html'); return; }
-  current = hash; _show(hash);
+  const h = _hash();
+  if (h.id === '') { Bird.leave('index.html'); return; }
+  current = h.id; _show(h.id, h.anchor);
 });
 
 // ── HAMBURGER NAV ────────────────────────────────────────────
