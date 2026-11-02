@@ -2,7 +2,10 @@ const L = require('./_lib');
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  const date = (req.query && req.query.date) || '';
+  if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); return res.status(405).json({ error: 'method_not_allowed' }); }
+  if (L.limited(req, res, 'avail', 90, 60000)) return;                // 90 lookups / minute / visitor
+  const raw = req.query && req.query.date;
+  const date = typeof raw === 'string' ? raw : '';
   if (!L.validDate(date)) return res.status(400).json({ error: 'bad_date' });
   const base = L.baseSlots(date).filter(L.inRange);
   if (!base.length) return res.status(200).json({ slots: [] });

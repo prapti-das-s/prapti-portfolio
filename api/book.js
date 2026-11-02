@@ -1,17 +1,20 @@
 const L = require('./_lib');
-const clean = (v, max) => String(v || '').replace(/[\u0000-\u0008\u000B-\u001F\u007F]/g, '').trim().slice(0, max);
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
+  if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ error: 'method_not_allowed' }); }
+  if (!L.sameSite(req)) return res.status(403).json({ error: 'forbidden' });
+  if (L.limited(req, res, 'book', 3, 3600000, 40)) return;          // 3 attempts / hour / visitor, 40 / hour overall
+
   let b = req.body;
-  if (typeof b === 'string') { try { b = JSON.parse(b); } catch (e) { b = {}; } }
-  b = b || {};
+  if (typeof b === 'string') { try { b = JSON.parse(b); } catch (e) { b = null; } }
+  if (!b || typeof b !== 'object' || Array.isArray(b)) return res.status(400).json({ error: 'bad_input' });
   if (b.website) return res.status(200).json({ ok: true });            // honeypot: bots fill this in
 
-  const name = clean(b.name, 80), email = clean(b.email, 120).toLowerCase(), notes = clean(b.notes, 600);
-  const startMs = Date.parse(b.start || '');
-  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || isNaN(startMs)) return res.status(400).json({ error: 'bad_input' });
+  const name = L.clean(b.name, 80), email = L.clean(b.email, 120).toLowerCase(), notes = L.clean(b.notes, 600);
+  const startMs = typeof b.start === 'string' ? Date.parse(b.start) : NaN;
+  if (!name || !L.isEmail(email) || isNaN(startMs)) return res.status(400).json({ error: 'bad_input' });
+  if (L.hasLink(name) || L.hasLink(notes)) return res.status(400).json({ error: 'no_links' });
 
   /* the slot must be one of the real, open slots */
   const date = L.istISO(startMs).slice(0, 10);
@@ -23,7 +26,8 @@ module.exports = async (req, res) => {
     const busy = await L.getBusy(startMs, end);
     if (L.overlaps(busy, startMs, end)) return res.status(409).json({ error: 'slot_taken' });
     const ev = await L.createEvent({ startMs, name, email, notes });
-    return res.status(200).json({ ok: true, start: L.istISO(startMs), meet: ev.hangoutLink || null });
+    const meet = ev && typeof ev.hangoutLink === 'string' && ev.hangoutLink.startsWith('https://') ? ev.hangoutLink : null;
+    return res.status(200).json({ ok: true, start: L.istISO(startMs), meet });
   } catch (e) {
     if (e && e.message === 'slot_taken') return res.status(409).json({ error: 'slot_taken' });
     return res.status(502).json({ error: 'calendar_unavailable' });

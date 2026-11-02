@@ -104,4 +104,41 @@ async function createEvent({ startMs, name, email, notes }) {
     })
   });
 }
-module.exports = { STEP_MIN, baseSlots, inRange, istISO, label, validDate, configured, getBusy, overlaps, createEvent };
+/* ---- abuse protection -------------------------------------------------------------------------------------------
+   Best-effort limiter kept in memory. On serverless each warm instance has its own counters, so this slows
+   scripted abuse but is not a hard guarantee: also add a Vercel Firewall rate-limit rule (see SECURITY.md). */
+const buckets = new Map();
+function hit(key, max, windowMs) {
+  const now = Date.now();
+  let b = buckets.get(key);
+  if (!b || now > b.reset) { b = { n: 0, reset: now + windowMs }; buckets.set(key, b); }
+  b.n++;
+  if (buckets.size > 5000) for (const [k, v] of buckets) if (now > v.reset) buckets.delete(k);
+  return b.n <= max ? 0 : Math.max(1, Math.ceil((b.reset - now) / 1000));   // 0 = allowed, else seconds to wait
+}
+function clientIp(req) {
+  const h = req.headers || {};
+  return String(h['x-vercel-forwarded-for'] || h['x-real-ip'] || String(h['x-forwarded-for'] || '').split(',')[0] ||
+    (req.socket && req.socket.remoteAddress) || 'unknown').trim().slice(0, 64);
+}
+/* true = the request was refused (429 already sent) */
+function limited(req, res, name, perIp, windowMs, allIps) {
+  const wait = hit(name + ':' + clientIp(req), perIp, windowMs) || (allIps ? hit(name + ':*', allIps, windowMs) : 0);
+  if (!wait) return false;
+  res.setHeader('Retry-After', String(wait));
+  res.status(429).json({ error: 'rate_limited' });
+  return true;
+}
+/* browsers always send Origin on a POST: refuse ones that come from another website */
+function sameSite(req) {
+  const o = req.headers && req.headers.origin;
+  if (!o) return true;
+  try { return new URL(o).host === String(req.headers.host || ''); } catch (e) { return false; }
+}
+/* one plain address: no commas, semicolons, spaces, quotes or angle brackets (stops one booking inviting many people) */
+const EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]{1,64}@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
+const isEmail = e => typeof e === 'string' && e.length <= 120 && EMAIL_RE.test(e);
+/* the invite email goes out from Prapti's own account, so keep links and markup out of what visitors type */
+const hasLink = v => /(https?:|ftp:|www\.|[a-z0-9-]+\.(com|net|org|io|co|in|ru|xyz|top|click|link|info|biz|app|dev|me|ly|gl)\b|[<>])/i.test(v);
+const clean = (v, max) => (typeof v === 'string' ? v : '').replace(/[\u0000-\u0008\u000B-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2060\uFEFF]/g, '').trim().slice(0, max);
+module.exports = { limited, sameSite, isEmail, hasLink, clean, STEP_MIN, baseSlots, inRange, istISO, label, validDate, configured, getBusy, overlaps, createEvent };
