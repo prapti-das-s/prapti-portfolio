@@ -1,4 +1,4 @@
-/* Shared theme for every inner page — matches the landing page (black/navy void, Inter, iris + saffron accents).
+/* Shared theme for every inner page: matches the landing page (black/navy void, Inter, iris + saffron accents).
    Loaded after style.css; it repaints the older gothic layout without changing structure. */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&display=swap');
 :root{
@@ -79,7 +79,7 @@ footer{background:transparent!important;border-top:1px solid rgba(255,255,255,.1
 #page-resume .hp-parchment{background:rgba(2,10,20,.7)!important}
 
 /* ============================================================
-   v3 — one palette (indigo / violet / blue + gold), one font, new layouts
+   v3: one palette (indigo / violet / blue + gold), one font, new layouts
    ============================================================ */
 :root{--iris:#7a78ff;--violet:#a56cff;--blue:#4f9dff;--gold:#e2b857;--saffron:#e2b857;--blood:#7a78ff;--deep-red:#7a78ff;
   --serif:'Fraunces',Georgia,serif;--card:rgba(9,9,40,.72);--edge:rgba(96,96,240,.4);--e:cubic-bezier(.2,.8,.2,1)}
@@ -184,6 +184,9 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 .gd-copy .gd-note{padding:16px 18px;border-left:3px solid var(--saffron,#e2b857);background:rgba(226,184,87,.08);border-radius:0 12px 12px 0;color:#fff!important}
 .gd-copy .gd-note b{color:var(--saffron,#e2b857);font-weight:600}
 .gd-copy .gd-hint{font-size:14px;color:#9a9a9a!important}
-.deck-col .deck{margin:0 auto}
-@media(max-width:860px){.gd-row{grid-template-columns:1fr}.gd-media{max-width:420px}}
+.gd-row-2{grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:clamp(40px,6vw,88px)}
+.deck-col{min-width:0;padding:0 clamp(18px,3vw,40px)}
+.deck-col .deck{margin:0 auto;max-width:360px}
+.gd-row-2 .gd-copy{position:relative;z-index:2;min-width:0}
+@media(max-width:860px){.gd-row,.gd-row-2{grid-template-columns:1fr}.gd-media{max-width:420px}.deck-col{padding:0 24px}}
 @media(prefers-reduced-motion:reduce){.mk-eye{animation:none}}
