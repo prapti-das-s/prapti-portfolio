@@ -1,5 +1,5 @@
-/* Shared page-transition: a particle bird flies across the screen and carries you to the next page.
-   Used by every page (index.html + site.html). Depart -> navigate -> arrive. */
+/* Shared page-transition: ONE particle bird flies across the screen. As it passes, the old page is wiped away and the
+   next page is revealed behind it. No black screens, no second bird. Used by every page. */
 (function(){
   var RM=matchMedia('(prefers-reduced-motion:reduce)').matches, KEY='birdFlight';
   var de=document.documentElement, cv=document.createElement('canvas'), cx=cv.getContext('2d');
@@ -41,46 +41,85 @@
     }
     c.restore();
   }
-  /* veil colour = the page's own background, so the sweep never reads as a black screen */
-  function col(a){var m=(getComputedStyle(de).backgroundColor||'').match(/\d+/g)||[7,3,26];return 'rgba('+m[0]+','+m[1]+','+m[2]+','+a+')'}
+
   var ease=function(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
-  function fly(mode,done){ /* mode 'out': black wipes in behind the bird; 'in': black wipes away ahead of it */
+  var D=1250, VT=!!(window.CSS&&CSS.supports&&CSS.supports('selector(::view-transition)'))&&typeof document.startViewTransition==='function';
+
+  /* cross-page wipe is handled by the View Transitions API where it exists; the old page stays on screen until the bird reveals the new one */
+  var st=document.createElement('style');
+  st.textContent='@view-transition{navigation:auto}'+
+    '::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}'+
+    '::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2;clip-path:inset(0 100% 0 0)}'+
+    '::view-transition-group(bird),::view-transition-old(bird),::view-transition-new(bird){animation:none}::view-transition-group(bird){z-index:3}';
+  document.head.appendChild(st);
+
+  /* the one bird: its position is read from the wipe animation's own clock, so the edge always rides on its body */
+  function sweep(clock,done){
     size();cv.style.display='block';
-    var span=Math.min(W*.5,880),D=1250,t0=performance.now();
+    var span=Math.min(W*.5,880),t0=performance.now();
     (function f(now){
-      var u=Math.min((now-t0)/D,1),e=ease(u),bx=-span*.7+e*(W+span*1.4),by=H*.5+Math.sin(u*6.283)*H*.1-Math.sin(u*3.14)*H*.06;
+      var el=clock?clock():null,u=Math.min((el==null?(clock?0:now-t0):el)/D,1),e=ease(u),bx=-span*.7+e*(W+span*1.4),by=H*.5+Math.sin(u*6.283)*H*.1-Math.sin(u*3.14)*H*.06;
       cx.clearRect(0,0,W,H);
-      var edge=Math.max(bx-span*.15,0),g;
-      if(mode==='out'){
-        g=cx.createLinearGradient(edge-260,0,edge,0);g.addColorStop(0,col(0));g.addColorStop(1,col(1));
-        cx.fillStyle=col(1);cx.fillRect(0,0,Math.max(edge-260,0),H);cx.fillStyle=g;cx.fillRect(Math.max(edge-260,0),0,Math.min(260,edge),H);
-      }else{
-        var s=Math.min(bx+span*.15,W);
-        g=cx.createLinearGradient(s,0,s+260,0);g.addColorStop(0,''+col(1)+'');g.addColorStop(1,''+col(0)+'');
-        cx.fillStyle=g;cx.fillRect(s,0,260,H);cx.fillStyle=col(1);cx.fillRect(s+260,0,W,H);
-      }
       cx.save();cx.translate(bx,by);bird(cx,(now-t0)/1000,span,Math.cos(u*6.283)*.1);cx.restore();
-      if(u<1)requestAnimationFrame(f);else{if(mode==='in')cv.style.display='none';else{cx.fillStyle=col(1);cx.fillRect(0,0,W,H)}done&&done()}
+      if(u<1)requestAnimationFrame(f);else{cv.style.display='none';cv.style.viewTransitionName='';done&&done()}
     })(t0);
   }
+  /* keyframes that follow the bird's exact easing, so the edge of the wipe rides on the bird's body */
+  function frames(span){
+    var k=[],N=48;
+    for(var i=0;i<=N;i++){var u=i/N,e=ease(u),bx=-span*.7+e*(W+span*1.4),fr=Math.min(Math.max(bx/W,0),1);k.push({offset:u,clipPath:'inset(0 '+((1-fr)*100).toFixed(2)+'% 0 0)'})}
+    k[N].clipPath='inset(0 0% 0 0)';return k;
+  }
+  /* wipe with the View Transition pseudo-element when it exists, else clip the live content directly */
+  function run(target,done){
+    size();var span=Math.min(W*.5,880),anim=null;
+    var kf=frames(span);
+    try{
+      if(target==='vt')anim=de.animate(kf,{duration:D,easing:'linear',fill:'both',pseudoElement:'::view-transition-new(root)'});
+      else anim=target.animate(kf,{duration:D,easing:'linear',fill:'both'});
+    }catch(err){anim=null}
+    sweep(anim?function(){return anim.currentTime}:null,function(){if(anim){try{anim.cancel()}catch(err){}}done&&done()});
+  }
+
+  var KEY='birdFlight';
   window.Bird={
-    /* leave this page for another document */
+    /* leave this page for another document: navigate at once; the next page's bird does the wiping */
     leave:function(url){
       if(busy)return;if(RM){location.href=url;return}
-      busy=true;try{sessionStorage.setItem(KEY,'1')}catch(e){}
-      fly('out',function(){location.href=url});
+      try{sessionStorage.setItem(KEY,'1')}catch(e){}
+      location.href=url;
     },
-    /* change what is shown on this page while the bird flies past */
+    /* change what is shown on this page: the bird wipes the old view away and reveals the new one */
     swap:function(fn){
       if(busy)return;if(RM){fn();return}
-      busy=true;fly('out',function(){fn();requestAnimationFrame(function(){cv.style.transition='opacity .6s ease';cv.style.opacity='0';setTimeout(function(){cv.style.display='none';cv.style.opacity='1';cv.style.transition='';busy=false},650)})});
+      busy=true;
+      var fin=function(){busy=false};
+      if(VT){
+        var t=document.startViewTransition(function(){cv.style.viewTransitionName='bird';cv.style.display='block';fn()});
+        t.ready.then(function(){run('vt',fin)}).catch(function(){fn();fin()});
+      }else{
+        var el=document.querySelector('.page.active')||document.body;
+        fn();var nxt=document.querySelector('.page.active')||document.body;run(nxt,fin);
+      }
     }
   };
-  /* arriving from another page: no second bird, the new page simply eases in */
+
+  /* arriving from another page */
   var arrive=false;try{arrive=sessionStorage.getItem(KEY)==='1';sessionStorage.removeItem(KEY)}catch(e){}
-  if(arrive&&!RM){
-    var st=document.createElement('style');st.textContent='@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}body{animation:pageIn .7s cubic-bezier(.2,.7,.2,1) both}';
-    document.head.appendChild(st);
+  if(!RM){
+    if('onpagereveal' in window){
+      addEventListener('pagereveal',function(e){
+        if(!e.viewTransition)return;
+        cv.style.viewTransitionName='bird';cv.style.display='block';busy=true;
+        e.viewTransition.ready.then(function(){run('vt',function(){busy=false})}).catch(function(){cv.style.display='none';busy=false});
+      });
+    }else if(arrive){
+      /* browsers without cross-page view transitions: the new page is wiped in by the bird over its own background */
+      busy=true;de.style.background=getComputedStyle(de).backgroundColor||'';
+      var go=function(){run(document.body,function(){busy=false})};
+      document.body?go():document.addEventListener('DOMContentLoaded',go);
+      if(document.body)document.body.style.clipPath='inset(0 100% 0 0)';
+    }
   }
   addEventListener('pageshow',function(e){if(e.persisted){cv.style.display='none';busy=false}});
   addEventListener('resize',function(){if(cv.style.display==='block'&&!busy)size()});

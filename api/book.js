@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
     const ev = await L.createEvent({ startMs, name, email, notes });
     return res.status(200).json({ ok: true, start: L.istISO(startMs), meet: ev.hangoutLink || null });
   } catch (e) {
+    if (e && e.message === 'slot_taken') return res.status(409).json({ error: 'slot_taken' });
     return res.status(502).json({ error: 'calendar_unavailable' });
   }
 };

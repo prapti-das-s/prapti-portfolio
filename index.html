@@ -8,7 +8,10 @@
 <meta name="theme-color" content="#07031a">
 <meta property="og:title" content="Prapti Das | Growth Marketer & Content Strategist">
 <meta property="og:description" content="I build brands from the ground up and push them into spaces they haven't occupied yet.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2307031a'/><rect x='8' y='6' width='3.4' height='19' fill='%238d6bff'/><circle cx='16.5' cy='12' r='5.4' fill='none' stroke='%238d6bff' stroke-width='3'/><path d='M21.6 10.2 29 12.4l-7.4 2.6z' fill='%23e2b857'/></svg>">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/logo.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -119,8 +122,8 @@ h1 .c{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(10px
 @media(max-width:900px){.pil{grid-template-columns:1fr 1fr}}@media(max-width:520px){.pil{grid-template-columns:1fr}}
 /* industries: still, all five visible at once */
 .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.chips span{font:500 clamp(18px,2.2vw,26px)/1 var(--font);letter-spacing:-.02em;padding:14px 22px;border:1px solid rgba(150,105,255,.5);border-radius:9999px;background:rgba(40,18,92,.4);transition:color .3s,border-color .3s}
-.chips span:hover{color:var(--saffron);border-color:var(--saffron)}
+.chips span,.chips a{text-decoration:none;font:500 clamp(18px,2.2vw,26px)/1 var(--font);letter-spacing:-.02em;padding:14px 22px;border:1px solid rgba(150,105,255,.5);border-radius:9999px;background:rgba(40,18,92,.4);transition:color .3s,border-color .3s}
+.chips span:hover,.chips a:hover,.chips a:focus-visible{color:var(--saffron);border-color:var(--saffron)}
 /* section names: big, numbered, impossible to miss */
 main{counter-reset:sec}
 section:not(#hero) .label{counter-increment:sec;display:inline-flex;align-items:center;gap:12px;margin-bottom:22px;padding:10px 20px;border:1px solid var(--saffron);border-radius:9999px;background:rgba(226,184,87,.1);font:600 clamp(15px,1.5vw,19px)/1 var(--font);letter-spacing:.06em;color:var(--saffron)}
@@ -157,6 +160,24 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   .stats{gap:48px 24px}
   
 }
+
+/* phone navigation + comfort */
+.menu{display:none}
+@media(max-width:860px){
+  body>nav{padding:calc(12px + env(safe-area-inset-top)) 18px 12px;background:linear-gradient(rgba(5,5,26,.94),rgba(5,5,26,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .menu{display:flex;flex-direction:column;justify-content:center;gap:6px;width:46px;height:46px;padding:0 11px;background:rgba(8,8,42,.6);border:1px solid rgba(139,140,240,.45);border-radius:12px;cursor:pointer}
+  .menu span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .35s var(--ease)}
+  nav.open .menu span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+  nav.open .menu span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
+  .links{position:fixed;left:0;right:0;top:0;z-index:-1;flex-direction:column;align-items:stretch;gap:0;padding:calc(84px + env(safe-area-inset-top)) 24px 28px;background:rgba(5,5,26,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(80,80,210,.4);transform:translateY(-102%);opacity:0;pointer-events:none;transition:transform .5s var(--ease),opacity .3s}
+  nav.open .links{transform:none;opacity:1;pointer-events:auto}
+  .links a:not(.pill){display:block!important;font:500 22px/1.2 var(--font);text-transform:none;letter-spacing:-.01em;color:var(--bone);padding:15px 0;border-bottom:1px solid rgba(80,80,210,.25)}
+  .links .pill{margin-top:20px;text-align:center;padding:16px 18px}
+  .panel{padding:26px 20px}
+  .who{padding:26px 20px}
+  section{scroll-margin-top:70px}
+}
+@media(hover:none){.list a:hover,.list a:focus-visible{padding-left:0}.chips a:hover{color:inherit;border-color:rgba(150,105,255,.5)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv,h1 .c{transition:none;opacity:1;transform:none;filter:none}}
 </style>
 <noscript><style>.rv,h1 .c{opacity:1;transform:none;filter:none}</style></noscript>
@@ -165,7 +186,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
 <canvas id="gl" aria-hidden="true"></canvas><div id="veil" aria-hidden="true"></div>
 
 <nav aria-label="Primary">
-  <a class="logo" href="#top" aria-label="Prapti Das, top of page"><svg class="mk" viewBox="0 0 32 32" aria-hidden="true"><rect class="mk-stem" x="7" y="5" width="4.2" height="21" rx="1"/><circle class="mk-bowl" cx="17.5" cy="11.5" r="6.4"/><circle class="mk-eye" cx="19.2" cy="10.6" r="1.5"/><path class="mk-beak" d="M23.4 9.4 31 12l-7.6 3z"/><path class="mk-tail" d="M7 26h4.2L9.1 31z"/></svg><span>Prapti Das</span></a>
+  <a class="brand" href="#top" aria-label="Prapti Das, top of page"><img class="brand-mk" src="favicon.svg" width="36" height="36" alt=""><span>Prapti Das</span></a>
   <div class="links">
     <a href="#top">Home</a>
     <a href="site.html#works" data-go>Work</a>
@@ -176,6 +197,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <a href="site.html#passion" data-go>Industries</a>
     <a class="pill" href="contact.html" data-go>Book a call</a>
   </div>
+  <button class="menu" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
 
 <main id="top">
@@ -208,6 +230,12 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
         <div class="stat rv" style="--d:.12s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaign, Sept 2024</small></div>
         <div class="stat rv" style="--d:.24s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ inter-collegiate business fests</small></div>
         <div class="stat rv" style="--d:.36s"><b data-n="3" data-s="K">3K</b><span>Followers in 3 months</span><small>Synapse club content series</small></div>
+        <div class="stat rv"><b data-n="5">5</b><span>Industries</span><small class="ind"><a href="site.html#experience/darshe" data-go>Fashion (Darshe)</a> · <a href="site.html#experience/genaipeople" data-go>EdTech (GenAIPeople)</a> · <a href="site.html#experience/solid" data-go>MarTech (Solid Corp)</a> · <a href="site.html#experience/propalyst" data-go>Real estate (Propalyst)</a> · <a href="site.html#experience/aavo" data-go>Events (Aavo)</a></small></div>
+        <div class="stat rv" style="--d:.1s"><b data-n="10" data-s="K+">10K+</b><span>Downloads in 1 month</span><small>Aavo app campaigns, plus 1K+ followers</small></div>
+        <div class="stat rv" style="--d:.2s"><b data-n="86" data-s="%">86%</b><span>Win rate</span><small>10+ intercollegiate business fests</small></div>
+        <div class="stat rv" style="--d:.3s"><b data-n="25" data-s="%">25%</b><span>Qualified-lead growth a month</span><small>A/B tests and funnel analytics, Solid Corp</small></div>
+        <div class="stat rv" style="--d:.4s"><b data-n="15" data-s="%">15%</b><span>Website traffic lift in a month</span><small>Local SEO and listings, Propalyst</small></div>
+        <div class="stat rv" style="--d:.5s"><b data-n="3" data-s="K+">3K+</b><span>Followers in 3 months</span><small>Synapse content series, 10K+ views</small></div>
       </div>
       <a class="btn rv" href="site.html#resume" data-go>View résumé &amp; KPIs</a>
     </div></div>
@@ -232,7 +260,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   <section id="industries" class="point">
     <div class="wrap"><div class="panel">
       <span class="label rv">Five industries</span>
-      <div class="chips"><span>Fashion</span><span>EdTech</span><span>MarTech</span><span>Real Estate</span><span>Events</span></div>
+      <div class="chips"><a href="site.html#experience/darshe" data-go>Fashion</a><a href="site.html#experience/genaipeople" data-go>EdTech</a><a href="site.html#experience/solid" data-go>MarTech</a><a href="site.html#experience/propalyst" data-go>Real Estate</a><a href="site.html#experience/aavo" data-go>Events</a></div>
       <a class="ghost rv" style="margin-top:36px" href="site.html#passion" data-go>Where I want to build a career <span aria-hidden="true">→</span></a>
     </div></div>
   </section>
@@ -262,7 +290,6 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       <h2 class="rv" style="--d:.1s;margin-bottom:48px">Let's build what's next.</h2>
       <a class="rv" style="--d:.2s" href="mailto:das.2006prapti@gmail.com">das.2006prapti@gmail.com</a>
       <a class="rv" style="--d:.28s" href="https://linkedin.com/in/praptid2006" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="rv" style="--d:.36s" href="tel:+917619505512">+91 761 950 5512</a>
     </div></div>
   </section>
 </main>
@@ -343,25 +370,44 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uTuck:{value:0},uRev:{value:0},uHead:{value:new THREE.Vector2()},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA,uTuck,uRev;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
-  void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
+  void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;float em=0.,fl=0.;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
     if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
-      vec3 b=position*uBs;float ax=abs(b.x);
-      float f=sin(uPh-ax*.45)*uFA;
-      b.y+=f*pow(ax*.2,1.5)*aMisc.x*1.5+sin(uPh)*.18*uFA;b.z+=f*ax*.05*aMisc.x;
+      vec3 b=position;float wg=aMisc.x;
+      /* head and beak turn on the neck toward the cursor, independent of the body */
+      float hm=smoothstep(-1.1,-2.0,b.z)*(1.-step(.5,wg));vec3 pv=vec3(0.,.1,-1.5),hq=b-pv;
+      float cy=cos(uHead.x*hm),sy=sin(uHead.x*hm),cp=cos(uHead.y*hm),sp=sin(uHead.y*hm);
+      hq.xz=mat2(cy,sy,-sy,cy)*hq.xz;hq.yz=mat2(cp,sp,-sp,cp)*hq.yz;b=pv+hq;
+      /* wingbeat: wings swing about the shoulder, tips lag behind, fast downstroke, slower upstroke that folds the wing in */
+      float ax=abs(b.x),span=clamp(ax/6.9,0.,1.),w=uPh-span*1.15,q=w-.5*sin(w);
+      float st=sin(q),fold=smoothstep(-.1,.9,cos(q));
+      float th=(st*.85*uFA+.16*(1.-uFA))*(.25+.75*span)*step(.5,wg);
+      float sg=sign(b.x);b.y+=ax*sin(th);b.x=sg*ax*cos(th)*(1.-.2*fold*span*uFA*step(.5,wg));
+      b.z+=cos(q)*.4*pow(span,1.3)*uFA*step(.5,wg);
+      /* stoop: wings sweep back and in against the body */
+      b.x*=1.-uTuck*.93*span*step(.5,wg);b.y-=uTuck*span*.5*step(.5,wg);b.z+=uTuck*span*2.4*step(.5,wg);
+      b.y-=sin(uPh-.5*sin(uPh))*.3*uFA;                                   /* body rises on the downstroke */
+      b.y+=sin(uPh-1.1)*.4*uFA*smoothstep(1.2,3.5,b.z);                   /* tail follows a beat behind */
+      b*=uBs;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
-      vec3 hero=uRot*b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
-      p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
+      vec3 hero=uRot*b+uBirdOff;float s=clamp(uShatter,0.,1.);
+      /* crash: shapes fly out of the impact point in every direction (fast at first, then they ease), then drift to rest across the page */
+      vec3 dir=normalize(aOff+vec3(0.,.35,0.)+.0001);
+      float bm=(1.-exp(-9.*s))*(2.5+seed*9.)*(1.-smoothstep(.3,.95,s));
+      p=mix(hero+dir*bm,sc,smoothstep(.2,1.,s))+drift*.25*s;
+      /* phoenix: scrolling back up, the shapes spiral in, glowing like embers, and re-form the bird */
+      float sw=uRev*sin(s*3.14159)*(2.+seed*3.5);vec3 rl=p-hero;rl.xy=mat2(cos(sw),-sin(sw),sin(sw),cos(sw))*rl.xy;p=hero+rl;
+      em=uRev*sin(s*3.14159);fl=(1.-uRev)*min(s*exp(-s*5.)*5.,1.);
       float an=uTime*.12;mat2 m=mat2(cos(an),-sin(an),sin(an),cos(an));
       for(int i=0;i<4;i++){if(abs(aMisc.y-float(i))<.5){vec3 o=aOff;o.xz=m*o.xz;p=mix(p,uC[i]+o*uR[i],smoothstep(0.,1.,uProx[i]));}}
     }
     vec2 dm=p.xy-uMouse;p.xy+=normalize(dm+.0001)*exp(-dot(dm,dm)*.12)*1.1;
-    vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z);
-    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim;}`;
+    vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z)*(1.+em*.6+fl*.9);
+    vC=mix(aCol,vec3(1.,.62,.2),clamp(em,0.,1.)*.85);vC=mix(vC,vec3(1.,.93,.7),clamp(fl,0.,1.));vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim;}`;
   const FS=`precision highp float;uniform float uTime;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){vec2 uv=gl_PointCoord-.5;float a=vSeed*6.283+uTime*(.3+vSeed*.5)*step(.5,vS);
     uv=mat2(cos(a),-sin(a),sin(a),cos(a))*uv;float d=vS>.5?max(abs(uv.x),abs(uv.y))*1.42:length(uv);
@@ -384,17 +430,24 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   /* layout ↔ world mapping */
   const cl=[...document.querySelectorAll('[data-cl]')].map(el=>({el,i:+el.dataset.cl,side:+el.dataset.side,y:0}));
   let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const CP=new THREE.Vector3(),HP=new THREE.Vector3(),BV=new THREE.Vector3(),QF=new THREE.Quaternion(),QR=new THREE.Quaternion(),QR2=new THREE.Quaternion(),XX=new THREE.Vector3(1,0,0);let oa=0,flipT=-1,flipK=0,nextFlip=5;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
+  let att=0,lookW=0,lastMove=-99,curSpd=3.4,rev=0,smPrev=0,hitX=0,hitWY=0,smHit=0;const CT=new THREE.Vector3();
+  let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
   const fit=()=>{
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
     const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.5,12),document.documentElement.scrollHeight/vh*H,6);
-    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):.7;
+    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):Math.min(.7,W/17);
+    /* the crash site: upper part of the "Who am I" card. smHit = how far you scroll before the bird reaches it */
+    {const wh=document.getElementById('who');
+     if(wh){const r=wh.getBoundingClientRect(),tp=r.top+scrollY+r.height*.22;hitX=((r.left+r.width/2)/vw-.5)*W;hitWY=-(tp-vh/2)/vh*H;smHit=Math.max(tp-vh*.62,vh*.35)}
+     else{hitX=0;hitWY=-H*.9;smHit=.9*vh}}
     cl.forEach(c=>{const r=c.el.getBoundingClientRect();c.y=r.top+scrollY+r.height/2;
       U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
   addEventListener('resize',fit);addEventListener('load',fit);fit();
-  addEventListener('pointermove',e=>{seen=true;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
-  let seen=false;
+  document.documentElement.addEventListener('mouseleave',()=>{lastMove=-99});
+  addEventListener('pointermove',e=>{fastMove+=Math.hypot(e.clientX-lpx,e.clientY-lpy)/30;lpx=e.clientX;lpy=e.clientY;seen=true;lastMove=performance.now()*.001;mx=e.clientX/vw*2-1;my=-(e.clientY/vh*2-1)},{passive:true});
+  let seen=false,lpx=0,lpy=0,headYaw=0,headPitch=0,birdY0=0;const S0=new THREE.Vector3(),H0=new THREE.Vector3(),T0=new THREE.Vector3(),VEL=new THREE.Vector3(),QR=new THREE.Quaternion(),QF=new THREE.Quaternion();let rollP=-1,rollDir=1,rollWait=5,fastMove=0;
   const ss=(a,b,x)=>{x=Math.min(Math.max((x-a)/(b-a),0),1);return x*x*(3-2*x)};
   const t0=performance.now();
   (function loop(now){
@@ -402,9 +455,12 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const S=scrollY;sm+=(S-sm)*(RM?1:.085);
     cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
-    U.uShatter.value=ss(.04*vh,.9*vh,sm);
+    const dv=ss(0,.3*vh,sm);               /* scrolling has begun */
+    const q=Math.min(sm/smHit,1);          /* dive progress, driven by scroll: look down, stoop, hit the card */
+    U.uShatter.value=Math.min(Math.max((sm-smHit)/(.4*vh),0),1);   /* it only breaks apart once it has hit */
+    {const dsm=sm-smPrev;smPrev=sm;const dtr=Math.min((now-lastT)/1000,.05);rev+=((dsm<-.12&&U.uShatter.value>.003?1:0)-rev)*Math.min(1,(dsm<-.12?6:1.6)*dtr);U.uRev.value=rev}
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
-    {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
+    {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,ampx=cam.aspect>.85?1:.85,nar=cam.aspect<=.85,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
      const T=U.uTime.value;
      let fR=0,fX=0,hop=0,bob=0;
@@ -440,11 +496,59 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        if(!RM&&flipT<0&&nextFlip<=0){flipT=0;flipK=Math.random()<.5?0:1;nextFlip=6+Math.random()*7}
        if(flipT>=0){flipT+=dt/(flipK?1.2:1.4);const u=Math.min(flipT,1),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;if(flipK)fX=e*TAU;else fR=e*TAU;hop=Math.sin(u*Math.PI);if(flipT>=1)flipT=-1}
      }
+     const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
+     const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*(nar?.5:.95)),cam.position.x+hx*(nar?.5:.95));BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
+     DP.copy(BD);let spd;
+     /* open-sky flight: the bird never stops or hovers. It patrols a wide, slowly drifting path; when the pointer is moving it
+        is curious and spirals in to circle it (a hawk riding a thermal), eyes on the pointer, then wanders off again when you stop. */
+     const tNow=now*.001,live=seen&&dv<.02&&tNow-lastMove<7;
+     att+=((live?1:0)-att)*Math.min(1,(live?1.1:.45)*dt);
+     lookW+=(((seen&&dv<.02&&tNow-lastMove<20)?1:0)-lookW)*Math.min(1,3*dt);
+     TG.set(Math.sin(T*.10)*W*.30*ampx+Math.sin(T*.27+1)*W*.08*ampx,base.y+Math.sin(T*.08+2)*H*.22*amp+Math.sin(T*.21)*H*.06*amp,base.z-2+Math.sin(T*.07+1)*4);
+     if(att>.003){
+       const Rx=Math.max(W*.2,4),Ry=Math.max(H*.12,1.6),th=Math.atan2((BP.y-cyw)/Ry,(BP.x-cxw)/Rx)+.7;   /* a wide, flat oval: gentle climbs and glides, aim a little ahead so it banks smoothly */
+       CT.set(cxw+Math.cos(th)*Rx,cyw+Math.sin(th)*Ry,base.z-2+Math.sin(T*.09+1)*2);
+       TG.lerp(CT,att*att*(3-2*att));
+     }
+     DS.subVectors(TG,BP);DS.z=0;DS.normalize();
+     {/* steer by angle at a limited turn rate: a banked turn in any direction, including a full U-turn, never a snap */
+      const a0=Math.atan2(BD.y,BD.x);let df=Math.atan2(DS.y,DS.x)-a0;df=Math.atan2(Math.sin(df),Math.cos(df));
+      const wm=(1.0+att*.9)*(nar?1.6:1),aa=a0+Math.max(-wm,Math.min(wm,df*2.4))*dt;BD.set(Math.cos(aa),Math.sin(aa),0)}
+     BP.z+=(TG.z-BP.z)*Math.min(1,.4*dt);
+     const spT=(3.4+att*2.4+Math.sin(T*.6)*.5)*(nar?.5:1);curSpd+=(spT-curSpd)*Math.min(1,1.4*dt);   /* quicker when interested, easing in the glide */
+     BP.addScaledVector(BD,curSpd*dt);spd=curSpd;clampB();VEL.set(BD.x*curSpd,BD.y*curSpd,0);
+     /* the dive: remember where and which way the bird was heading at the top of the page, then fly one smooth
+        curve from there down the screen (a short pull-ahead, then a stoop). Tied to scroll, so scrolling back up reverses it. */
+     if(sm<2){S0.set(BP.x,BP.y-cam.position.y,BP.z);H0.copy(BD)}
+     if(q>.003){
+       const A=H*.05,x0=S0.x,y0=S0.y,x3=hitX,y3=hitWY+smHit/vh*H,x1=x0+H0.x*A,y1=y0+H0.y*A+H*.05,x2=x3,y2=y3+H*.55;     /* ends exactly on the card */
+       const u=Math.pow(q,1.7),iu=1-u,a0=iu*iu*iu,a1=3*iu*iu*u,a2=3*iu*u*u,a3=u*u*u;
+       BP.set(a0*x0+a1*x1+a2*x2+a3*x3,(q<1?cam.position.y:-smHit/vh*H)+a0*y0+a1*y1+a2*y2+a3*y3,S0.z+u*3);
+       const tx=3*iu*iu*(x1-x0)+6*iu*u*(x2-x1)+3*u*u*(x3-x2),ty=3*iu*iu*(y1-y0)+6*iu*u*(y2-y1)+3*u*u*(y3-y2);
+       T0.set(tx,ty,0).normalize();
+       T0.lerp(DS.set(0,-1,0),ss(0,.07,q)).normalize();                 /* almost at once the body points straight down */
+       BD.lerp(T0,Math.min(1,16*dt)).normalize();BD.z=0;spd=Math.max(spd,3+11*u);
+     }
+     const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
+     bank+=(Math.max(-.8,Math.min(.8,-yaw*1.25))-bank)*Math.min(1,1.8*dt);
+     /* wingbeats: steady flapping while hovering, flap-and-glide on long runs */
+     fm+=(((BD.y>.04||Math.sin(T*.55)>.1||(att>.5&&Math.sin(T*.8)>-.5))?1:0)-fm)*Math.min(1,2.2*dt);          /* flap to climb or turn, glide in between */
+     U.uFA.value=(.22+.78*fm)*(1-ss(.02,.12,q));U.uTuck.value=ss(.03,.16,q);ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
+     const r0y=RG.crossVectors(BD,up).normalize().y;
+     if(q>.003){const rl=ss(0,.1,q)*1.5708;RG.crossVectors(BD,up).normalize();up.multiplyScalar(Math.cos(rl)).addScaledVector(RG,Math.sin(rl)).normalize()}   /* roll onto its side: a stoop is seen in profile */
      const rgt=RG.crossVectors(BD,up).normalize();
+     /* the bird looks at the cursor: head snaps round quickly, lifts toward the viewer as the pointer gets close */
+     {const dx=cxw-BP.x,dy=cyw-BP.y,dist=Math.hypot(dx,dy);
+      const lkA=Math.atan2(dx*rgt.x+dy*rgt.y,dx*BD.x+dy*BD.y),sway=Math.sin(T*.8)*.3+Math.sin(T*2.1)*.08;let ty=sway*(1-lookW)+lkA*lookW;
+      if(q>.003){const lb=ss(0,.16,q);ty=ty*(1-lb)+Math.atan2(-r0y,-BD.y)*lb}
+      ty=Math.max(-1.25,Math.min(1.25,ty));const tp=.05*(1-lookW)+Math.min(.5,Math.atan2(1.8,dist+.5)*.7)*lookW,hk=Math.min(1,(seen?10:3)*dt);
+      headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;U.uHead.value.set(headYaw,headPitch)}
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,(seen?6:2.2)*dt));QF.copy(QS).multiply(QR.setFromAxisAngle(ZZ,fR)).multiply(QR2.setFromAxisAngle(XX,fX));U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
      U.uBirdOff.value.copy(BP).lerp(base,1-k);U.uBirdOff.value.y+=(bob+hop*1.3)*k;
+     QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,(4+18*ss(0,.06,q))*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
+     U.uBirdOff.value.copy(BP);
      const r=heroTxt?heroTxt.getBoundingClientRect():null;let f=0;
      if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw;
        const gx=Math.max(r.left-sx,0,sx-r.right),gy=Math.max(r.top-sy,0,sy-r.bottom),gap=Math.hypot(gx,gy)-hw*.25;
@@ -455,6 +559,14 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
     ren.render(scene,cam);
   })(t0);
+})();
+
+(()=>{const n=document.querySelector('body>nav'),b=n&&n.querySelector('.menu');if(!b)return;
+  const set=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.documentElement.style.overflow=o?'hidden':''};
+  b.addEventListener('click',()=>set(!n.classList.contains('open')));
+  n.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>set(false)));
+  addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  matchMedia('(min-width:861px)').addEventListener('change',e=>{if(e.matches)set(false)});
 })();
 </script>
 </body>
