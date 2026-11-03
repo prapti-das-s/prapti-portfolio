@@ -7,7 +7,9 @@
   <meta name="description" content="Pick a time that works and book a call with Prapti Das. Weekdays 4–8 PM IST, Saturdays 12–5 PM IST.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/dala.css">
+  <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/mobile.css">
   <script src="js/bird.js"></script>
   <script src="js/patronus.js" defer></script>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -100,6 +102,7 @@
 <script>
   var hb=document.getElementById('hamburger'),nl=document.getElementById('nav-links');
   if(hb)hb.addEventListener('click',function(){nl.classList.toggle('open')});
+  document.addEventListener('click',function(e){if(nl.classList.contains('open')&&!nl.contains(e.target)&&!hb.contains(e.target))nl.classList.remove('open')});
 </script>
 </body>
 </html>
