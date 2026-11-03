@@ -460,13 +460,13 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
     const dv=ss(0,.3*vh,sm);               /* scrolling has begun */
     const mob=cam.aspect<=.85,q=mob?0:Math.min(sm/smHit,1);          /* dive progress, driven by scroll: look down, stoop, hit the card */
-    U.uShatter.value=mob?ss(.1*vh,.3*vh,sm):Math.min(Math.max((sm-smHit)/(.4*vh),0),1);   /* it only breaks apart once it has hit */
+    U.uShatter.value=mob?ss(.3*vh,.52*vh,sm):Math.min(Math.max((sm-smHit)/(.4*vh),0),1);   /* it only breaks apart once it has hit */
     {const dsm=sm-smPrev;smPrev=sm;const dtr=Math.min((now-lastT)/1000,.05);rev+=((dsm<-.12&&U.uShatter.value>.003?1:0)-rev)*Math.min(1,(dsm<-.12?6:1.6)*dtr);U.uRev.value=rev}
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,ampx=cam.aspect>.85?1:.85,nar=cam.aspect<=.85,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
-     const T=U.uTime.value,wq=mob?ss(0,.1*vh,sm):0;
-     if(navEl)navEl.classList.toggle('solid',sm>.12*vh);
+     const T=U.uTime.value,wq=mob?ss(0,.3*vh,sm):0;
+     if(navEl)navEl.classList.toggle('solid',sm>.35*vh);
      const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
      const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*(nar?.5:.95)),cam.position.x+hx*(nar?.5:.95));BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
      DP.copy(BD);let spd;
@@ -501,7 +501,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        BD.lerp(T0,Math.min(1,16*dt)).normalize();BD.z=0;spd=Math.max(spd,3+11*u);
      }
      if(mob){/* phones: the bird sleeps on the header, breathing; scrolling wakes it */
-       const scp=22/25;BP.set(cam.position.x+(perch.x-vw/2)/vw*W/scp,cam.position.y-(perch.y-vh/2)/vh*H/scp+Math.sin(T*1.3)*.05*(1-wq),-3);
+       const scp=22/25;BP.set(cam.position.x+(perch.x-vw/2)/vw*W/scp,cam.position.y-(perch.y-vh/2)/vh*H/scp+Math.sin(T*1.3)*.07*(1-wq),-3);
        BD.set(-1,0,0);DP.copy(BD);curSpd=0;spd=0}
      const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
      bank+=(Math.max(-.8,Math.min(.8,-yaw*1.25))-bank)*Math.min(1,1.8*dt);
@@ -509,7 +509,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
      fm+=(((BD.y>.04||Math.sin(T*.55)>.1||(att>.5&&Math.sin(T*.8)>-.5))?1:0)-fm)*Math.min(1,2.2*dt);          /* flap to climb or turn, glide in between */
      U.uFA.value=(.22+.78*fm)*(1-ss(.02,.12,q));U.uTuck.value=ss(.03,.16,q);U.uTuckL.value=U.uTuck.value;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
      if(mob){/* wings folded while asleep; the near wing opens first, then the far one, then it bursts */
-       U.uFA.value=.5*ss(.25,.9,wq)*(.75+.25*Math.sin(T*5));U.uTuck.value=1-ss(.1,.5,wq);U.uTuckL.value=1-ss(.45,.95,wq);U.uPh.value=ph=1.2}
+       U.uFA.value=.6*ss(.4,1,wq)*(.8+.2*Math.sin(T*5));U.uTuck.value=1-ss(.25,.65,wq);U.uTuckL.value=1-ss(.55,.95,wq);U.uPh.value=ph=1.2}
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
      const r0y=RG.crossVectors(BD,up).normalize().y;
      if(q>.003||mob){const rl=(mob?1:ss(0,.1,q))*1.5708;RG.crossVectors(BD,up).normalize();up.multiplyScalar(Math.cos(rl)).addScaledVector(RG,Math.sin(rl)).normalize()}   /* roll onto its side: a stoop is seen in profile */
@@ -520,7 +520,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       if(q>.003){const lb=ss(0,.16,q);ty=ty*(1-lb)+Math.atan2(-r0y,-BD.y)*lb}
       ty=Math.max(-1.25,Math.min(1.25,ty));const tp=.05*(1-lookW)+Math.min(.5,Math.atan2(1.8,dist+.5)*.7)*lookW,hk=Math.min(1,(seen?10:3)*dt);
       headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;
-      if(mob){const as=1-wq;headYaw=.8*as;headPitch=-.3*as+.5*ss(.08,.45,wq)*(1-ss(.8,1,wq))}   /* asleep: head tucked round; waking: it looks up */
+      if(mob){const as=1-ss(0,.35,wq);headYaw=.95*as;headPitch=-.65*as+.5*ss(.1,.45,wq)*(1-ss(.85,1,wq))}   /* asleep: head tucked round; waking: it looks up */
       U.uHead.value.set(headYaw,headPitch)}
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,(4+18*ss(0,.06,q))*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
