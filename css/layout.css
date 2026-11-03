@@ -1,0 +1,13 @@
+/* Shared layout rules for the inner pages, borrowed from how Stripe, Linear and Awwwards-style portfolios are built:
+   one content width, an 8px spacing scale, a clear type scale, one card style, and 44px touch targets. */
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:64px;--s7:96px;--card-r:20px}
+.page .wrap{max-width:1120px;margin-inline:auto;padding-inline:clamp(20px,4vw,48px)}
+.page .wrap-sm{max-width:760px;margin-inline:auto;padding-inline:clamp(20px,4vw,48px)}
+.section{padding-block:var(--s7)}
+.section-head{margin-bottom:var(--s5)}
+.sec-title,.pg-title,.shadow-title,.olympian-title,.passion-title{font-size:clamp(40px,5.4vw,72px);line-height:1.04;letter-spacing:-.03em}
+.page p{line-height:1.65}
+.skill-card,.quest-card,.industry-card,.tl-item,.reel{border-radius:var(--card-r)}
+.skill-card,.quest-card,.industry-card{padding:var(--s4)}
+a.btn,button.btn,.nav-links a,.slot,.day{min-height:44px}
+@media(max-width:700px){.section{padding-block:var(--s5)}.section-head{margin-bottom:var(--s3)}}

@@ -164,17 +164,23 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
 /* phone navigation + comfort */
 .menu{display:none}
 @media(max-width:860px){
-  body>nav{padding:calc(12px + env(safe-area-inset-top)) 18px 12px;background:linear-gradient(rgba(5,5,26,.94),rgba(5,5,26,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .menu{display:flex;flex-direction:column;justify-content:center;gap:6px;width:46px;height:46px;padding:0 11px;background:rgba(8,8,42,.6);border:1px solid rgba(139,140,240,.45);border-radius:12px;cursor:pointer}
+  body>nav{justify-content:flex-start;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(5,5,26,.34);border-bottom:1px solid rgba(139,140,240,.45);transition:background .4s}
+  body>nav.solid{background:rgba(5,5,26,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .menu{order:-1;display:flex;flex-direction:column;justify-content:center;gap:5px;width:46px;height:46px;padding:0 12px;background:rgba(8,8,42,.6);border:1px solid rgba(139,140,240,.45);border-radius:12px;cursor:pointer}
   .menu span{display:block;height:2px;background:#fff;border-radius:2px;transition:transform .35s var(--ease)}
-  nav.open .menu span:nth-child(1){transform:translateY(4px) rotate(45deg)}
-  nav.open .menu span:nth-child(2){transform:translateY(-4px) rotate(-45deg)}
-  .links{position:fixed;left:0;right:0;top:0;z-index:-1;flex-direction:column;align-items:stretch;gap:0;padding:calc(84px + env(safe-area-inset-top)) 24px 28px;background:rgba(5,5,26,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(80,80,210,.4);transform:translateY(-102%);opacity:0;pointer-events:none;transition:transform .5s var(--ease),opacity .3s}
-  nav.open .links{transform:none;opacity:1;pointer-events:auto}
+  nav.open .menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  nav.open .menu span:nth-child(2){opacity:0}
+  nav.open .menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .links{position:fixed;left:0;top:0;bottom:0;width:min(82vw,320px);z-index:-1;flex-direction:column;align-items:stretch;gap:0;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 24px 28px;background:rgba(5,5,26,.98);border-right:1px solid rgba(80,80,210,.4);transform:translateX(-104%);pointer-events:none;transition:transform .45s var(--ease)}
+  nav.open .links{transform:none;pointer-events:auto}
+  nav.open::before{content:"";position:fixed;inset:0;z-index:-2;background:rgba(2,2,14,.62)}
   .links a:not(.pill){display:block!important;font:500 22px/1.2 var(--font);text-transform:none;letter-spacing:-.01em;color:var(--bone);padding:15px 0;border-bottom:1px solid rgba(80,80,210,.25)}
   .links .pill{margin-top:20px;text-align:center;padding:16px 18px}
   .panel{padding:26px 20px}
   .who{padding:26px 20px}
+  .who p+p,.stat small,.pillar p:nth-of-type(n+2){display:none}
+  .stats{gap:32px 20px}
+  h2{font-size:clamp(34px,10vw,46px)}
   section{scroll-margin-top:70px}
 }
 @media(hover:none){.list a:hover,.list a:focus-visible{padding-left:0}.chips a:hover{color:inherit;border-color:rgba(150,105,255,.5)}}
@@ -197,7 +203,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     <a href="site.html#passion" data-go>Industries</a>
     <a class="pill" href="contact.html" data-go>Book a call</a>
   </div>
-  <button class="menu" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <button class="menu" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <main id="top">
@@ -366,9 +372,9 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uTuck:{value:0},uRev:{value:0},uHead:{value:new THREE.Vector2()},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uTuck:{value:0},uTuckL:{value:0},uRev:{value:0},uHead:{value:new THREE.Vector2()},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA,uTuck,uRev;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA,uTuck,uTuckL,uRev;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
   attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;float em=0.,fl=0.;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
@@ -385,7 +391,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       float sg=sign(b.x);b.y+=ax*sin(th);b.x=sg*ax*cos(th)*(1.-.2*fold*span*uFA*step(.5,wg));
       b.z+=cos(q)*.4*pow(span,1.3)*uFA*step(.5,wg);
       /* stoop: wings sweep back and in against the body */
-      b.x*=1.-uTuck*.93*span*step(.5,wg);b.y-=uTuck*span*.5*step(.5,wg);b.z+=uTuck*span*2.4*step(.5,wg);
+      float tk=b.x<0.?uTuckL:uTuck;b.x*=1.-tk*.93*span*step(.5,wg);b.y-=tk*span*.5*step(.5,wg);b.z+=tk*span*2.4*step(.5,wg);
       b.y-=sin(uPh-.5*sin(uPh))*.3*uFA;                                   /* body rises on the downstroke */
       b.y+=sin(uPh-1.1)*.4*uFA*smoothstep(1.2,3.5,b.z);                   /* tail follows a beat behind */
       b*=uBs;
@@ -427,11 +433,13 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   const cl=[...document.querySelectorAll('[data-cl]')].map(el=>({el,i:+el.dataset.cl,side:+el.dataset.side,y:0}));
   let att=0,lookW=0,lastMove=-99,curSpd=3.4,rev=0,smPrev=0,hitX=0,hitWY=0,smHit=0;const CT=new THREE.Vector3();
   let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
+  const perch={x:0,y:70},navEl=document.querySelector('body>nav');
   const fit=()=>{
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
     const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.5,12),document.documentElement.scrollHeight/vh*H,6);
-    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):Math.min(.7,W/17);
+    base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):Math.min(.42,W/26);
+    {const nb=navEl?navEl.getBoundingClientRect().bottom:70;perch.x=vw-100;perch.y=nb-8}
     /* the crash site: upper part of the "Who am I" card. smHit = how far you scroll before the bird reaches it */
     {const wh=document.getElementById('who');
      if(wh){const r=wh.getBoundingClientRect(),tp=r.top+scrollY+r.height*.22;hitX=((r.left+r.width/2)/vw-.5)*W;hitWY=-(tp-vh/2)/vh*H;smHit=Math.max(tp-vh*.62,vh*.35)}
@@ -451,13 +459,14 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     cam.position.y=-sm/vh*H;cam.position.x+=((mx*.7)-cam.position.x)*.04;
     U.uTime.value=(now-t0)/1000*(RM?.15:1);
     const dv=ss(0,.3*vh,sm);               /* scrolling has begun */
-    const q=Math.min(sm/smHit,1);          /* dive progress, driven by scroll: look down, stoop, hit the card */
-    U.uShatter.value=Math.min(Math.max((sm-smHit)/(.4*vh),0),1);   /* it only breaks apart once it has hit */
+    const mob=cam.aspect<=.85,q=mob?0:Math.min(sm/smHit,1);          /* dive progress, driven by scroll: look down, stoop, hit the card */
+    U.uShatter.value=mob?ss(.1*vh,.3*vh,sm):Math.min(Math.max((sm-smHit)/(.4*vh),0),1);   /* it only breaks apart once it has hit */
     {const dsm=sm-smPrev;smPrev=sm;const dtr=Math.min((now-lastT)/1000,.05);rev+=((dsm<-.12&&U.uShatter.value>.003?1:0)-rev)*Math.min(1,(dsm<-.12?6:1.6)*dtr);U.uRev.value=rev}
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,ampx=cam.aspect>.85?1:.85,nar=cam.aspect<=.85,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
-     const T=U.uTime.value;
+     const T=U.uTime.value,wq=mob?ss(0,.1*vh,sm):0;
+     if(navEl)navEl.classList.toggle('solid',sm>.12*vh);
      const sc0=(22-(base.z-2))/22,hx=W*.5*sc0,hy=H*.5*sc0,cxw=cam.position.x+mx*hx,cyw=cam.position.y+my*hy;
      const clampB=()=>{BP.x=Math.min(Math.max(BP.x,cam.position.x-hx*(nar?.5:.95)),cam.position.x+hx*(nar?.5:.95));BP.y=Math.min(Math.max(BP.y,cam.position.y-hy*.85),cam.position.y+hy*.85)};
      DP.copy(BD);let spd;
@@ -491,21 +500,28 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        T0.lerp(DS.set(0,-1,0),ss(0,.07,q)).normalize();                 /* almost at once the body points straight down */
        BD.lerp(T0,Math.min(1,16*dt)).normalize();BD.z=0;spd=Math.max(spd,3+11*u);
      }
+     if(mob){/* phones: the bird sleeps on the header, breathing; scrolling wakes it */
+       const scp=22/25;BP.set(cam.position.x+(perch.x-vw/2)/vw*W/scp,cam.position.y-(perch.y-vh/2)/vh*H/scp+Math.sin(T*1.3)*.05*(1-wq),-3);
+       BD.set(-1,0,0);DP.copy(BD);curSpd=0;spd=0}
      const yaw=(DP.x*BD.y-DP.y*BD.x)/Math.max(dt,.001);               /* turn rate in the screen plane */
      bank+=(Math.max(-.8,Math.min(.8,-yaw*1.25))-bank)*Math.min(1,1.8*dt);
      /* wingbeats: steady flapping while hovering, flap-and-glide on long runs */
      fm+=(((BD.y>.04||Math.sin(T*.55)>.1||(att>.5&&Math.sin(T*.8)>-.5))?1:0)-fm)*Math.min(1,2.2*dt);          /* flap to climb or turn, glide in between */
-     U.uFA.value=(.22+.78*fm)*(1-ss(.02,.12,q));U.uTuck.value=ss(.03,.16,q);ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
+     U.uFA.value=(.22+.78*fm)*(1-ss(.02,.12,q));U.uTuck.value=ss(.03,.16,q);U.uTuckL.value=U.uTuck.value;ph+=(1.6+5.2*fm)*dt;U.uPh.value=ph;
+     if(mob){/* wings folded while asleep; the near wing opens first, then the far one, then it bursts */
+       U.uFA.value=.5*ss(.25,.9,wq)*(.75+.25*Math.sin(T*5));U.uTuck.value=1-ss(.1,.5,wq);U.uTuckL.value=1-ss(.45,.95,wq);U.uPh.value=ph=1.2}
      const up=UP.set(0,0,1);up.addScaledVector(BD,-up.dot(BD));if(up.lengthSq()<.02)up.set(0,1,0);up.normalize();
      const r0y=RG.crossVectors(BD,up).normalize().y;
-     if(q>.003){const rl=ss(0,.1,q)*1.5708;RG.crossVectors(BD,up).normalize();up.multiplyScalar(Math.cos(rl)).addScaledVector(RG,Math.sin(rl)).normalize()}   /* roll onto its side: a stoop is seen in profile */
+     if(q>.003||mob){const rl=(mob?1:ss(0,.1,q))*1.5708;RG.crossVectors(BD,up).normalize();up.multiplyScalar(Math.cos(rl)).addScaledVector(RG,Math.sin(rl)).normalize()}   /* roll onto its side: a stoop is seen in profile */
      const rgt=RG.crossVectors(BD,up).normalize();
      /* the bird looks at the cursor: head snaps round quickly, lifts toward the viewer as the pointer gets close */
      {const dx=cxw-BP.x,dy=cyw-BP.y,dist=Math.hypot(dx,dy);
       const lkA=Math.atan2(dx*rgt.x+dy*rgt.y,dx*BD.x+dy*BD.y),sway=Math.sin(T*.8)*.3+Math.sin(T*2.1)*.08;let ty=sway*(1-lookW)+lkA*lookW;
       if(q>.003){const lb=ss(0,.16,q);ty=ty*(1-lb)+Math.atan2(-r0y,-BD.y)*lb}
       ty=Math.max(-1.25,Math.min(1.25,ty));const tp=.05*(1-lookW)+Math.min(.5,Math.atan2(1.8,dist+.5)*.7)*lookW,hk=Math.min(1,(seen?10:3)*dt);
-      headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;U.uHead.value.set(headYaw,headPitch)}
+      headYaw+=(ty-headYaw)*hk;headPitch+=(tp-headPitch)*hk;
+      if(mob){const as=1-wq;headYaw=.8*as;headPitch=-.3*as+.5*ss(.08,.45,wq)*(1-ss(.8,1,wq))}   /* asleep: head tucked round; waking: it looks up */
+      U.uHead.value.set(headYaw,headPitch)}
      MX.makeBasis(rgt,up,F3.copy(BD).negate());QT.setFromRotationMatrix(MX);
      QB.setFromAxisAngle(ZZ,bank);QT.multiply(QB);QS.slerp(QT,Math.min(1,(4+18*ss(0,.06,q))*dt));const re=rollP<0?0:(1-Math.cos(rollP*Math.PI))/2;QR.setFromAxisAngle(ZZ,rollDir*re*6.2832);QF.copy(QS).multiply(QR);U.uRot.value.setFromMatrix4(MX.makeRotationFromQuaternion(QF));
      U.uBirdOff.value.copy(BP);

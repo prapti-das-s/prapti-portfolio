@@ -69,6 +69,11 @@ if (hamburger) {
   });
 }
 
+// close the menu when you tap outside it
+document.addEventListener('click', e => {
+  if (navLinks && navLinks.classList.contains('open') && !navLinks.contains(e.target) && !(hamburger && hamburger.contains(e.target))) navLinks.classList.remove('open');
+});
+
 // close nav on link click (mobile)
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
