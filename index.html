@@ -299,25 +299,25 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   let ren;try{ren=new THREE.WebGLRenderer({canvas:cv,antialias:false,powerPreference:'high-performance'})}catch(e){return}
   ren.setClearColor(0x07031a,1);
   const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x160a35,.024);const cam=new THREE.PerspectiveCamera(45,1,.1,260);cam.position.z=22;
-  const R=Math.random,TAU=Math.PI*2,small=innerWidth<700,K=small?.55:1;
+  const R=Math.random,TAU=Math.PI*2,small=innerWidth<700,K=small?.8:1;
   const PAL={iris:[.56,.4,1],saf:[.78,.6,1],teal:[.64,.42,.95],white:[.96,.93,1],vio:[.72,.34,1]};
   const pick=(w)=>{let r=R(),a=0;for(const k in w){a+=w[k];if(r<a)return PAL[k]}return PAL.white};
   const sph=()=>{let x,y,z;do{x=R()*2-1;y=R()*2-1;z=R()*2-1}while(x*x+y*y+z*z>1);return[x,y,z]};
   const shell=()=>{const[x,y,z]=sph(),l=Math.hypot(x,y,z)||1;return[x/l,y/l,z/l]};
 
   /* build the bird in local space */
-  const B=[];const add=(x,y,z,w,c)=>B.push([x,y,z,w,c]);
+  const B=[];const add=(x,y,z,w,c,part,s,v)=>B.push([x,y,z,w,c,part|0,s||0,v||0]);   /* part: 0/1 wings, 2 body, 3 head, 4 beak, 5 tail */
   for(const side of[-1,1])for(let i=0;i<3100*K;i++){
     const s=Math.pow(R(),.85);let v=R();const feather=R()<.28;if(feather)v=1;
     const x=side*(.5+s*6.4),chord=2.3*Math.pow(1-s,.55)+.35;
     let z=-.6+s*1.8+v*chord;if(feather)z+=Math.max(0,Math.sin(s*38))*.4;
     const y=.35*s+Math.sin(v*Math.PI)*.25*(1-s)+(R()-.5)*.08;
-    add(x,y,z,1,R()<s*.8?(R()<.4?PAL.white:PAL.saf):pick({iris:.35,teal:.25,white:.4}));
+    add(x,y,z,1,R()<s*.8?(R()<.4?PAL.white:PAL.saf):pick({iris:.35,teal:.25,white:.4}),side<0?0:1,s,v);
   }
-  for(let i=0;i<1500*K;i++){const[a,b,c]=R()<.7?shell():sph();add(a*.6,b*.5,c*1.8+.2,0,pick({iris:.3,teal:.3,white:.4}))}
-  for(let i=0;i<450*K;i++){const[a,b,c]=sph();add(a*.42,b*.42+.3,c*.42-2.1,0,pick({iris:.3,white:.5,saf:.2}))}
-  for(let i=0;i<120*K;i++){const t=R(),r=(1-t)*.18,a=R()*TAU;add(Math.cos(a)*r,.25+Math.sin(a)*r,-2.5-t*.8,0,PAL.saf)}
-  for(let i=0;i<600*K;i++){const t=R();add((R()*2-1)*(.25+t*1.1),-.05-t*.1,1.9+t*2,.4,pick({teal:.6,iris:.4}))}
+  for(let i=0;i<1500*K;i++){const[a,b,c]=R()<.7?shell():sph();add(a*.6,b*.5,c*1.8+.2,0,pick({iris:.3,teal:.3,white:.4}),2)}
+  for(let i=0;i<450*K;i++){const[a,b,c]=sph();add(a*.42,b*.42+.3,c*.42-2.1,0,pick({iris:.3,white:.5,saf:.2}),3)}
+  for(let i=0;i<120*K;i++){const t=R(),r=(1-t)*.18,a=R()*TAU;add(Math.cos(a)*r,.25+Math.sin(a)*r,-2.5-t*.8,0,PAL.saf,4,t)}
+  for(let i=0;i<600*K;i++){const t=R();add((R()*2-1)*(.25+t*1.1),-.05-t*.1,1.9+t*2,.4,pick({teal:.6,iris:.4}),5,t)}
 
   /* low-poly forest */
   scene.add(new THREE.AmbientLight(0x4a2a85,.6));
@@ -343,6 +343,21 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     if(g===2){const r=Math.sqrt(R())*1.5,t=r*2.6+(R()<.5?0:Math.PI)+(R()-.5)*.6;return[Math.cos(t)*r,(R()-.5)*.25,Math.sin(t)*r]}
     const u=R()*TAU,w=R()*TAU;return[(1+.3*Math.cos(w))*Math.cos(u),.3*Math.sin(w),(1+.3*Math.cos(w))*Math.sin(u)]
   };
+  const SL=new Float32Array(B.length*3),SW=new Float32Array(B.length*3),PT=new Float32Array(B.length),rr=()=>R()*2-1;
+  B.forEach((p,i)=>{
+    const part=p[5],s=p[6],v=p[7];let a,b,c,sl;PT[i]=part;
+    if(part===2){[a,b,c]=sph();sl=[a*2.7,b*1.15,c*.95]}                                                  // body: a low, rounded mass
+    else if(part===3){[a,b,c]=sph();sl=[-2.75+a*.62,-.5+b*.55,.35+c*.55]}                                // head resting low at the front
+    else if(part===4){sl=[-3.1-v*.75+rr()*.07,-.78-v*.3+rr()*.07,.55+rr()*.08]}                         // beak tucked in
+    else if(part===5){const th=-.12*Math.PI-v*.88*Math.PI,w=(1-v)*.55+.12;sl=[.2+(3.3+rr()*w)*Math.cos(th),-.25+(1.5+rr()*w*.6)*Math.sin(th),rr()*.35]}   // tail wrapped round underneath
+    else if(part===0){const th=-.04*Math.PI-s*1.02*Math.PI,w=(1-s)*.7+.3;sl=[.1+(3.35+(v-.5)*w)*Math.cos(th),-.25+(1.5+(v-.5)*w*.7)*Math.sin(th),(R()-.5)*.9]}   // the far wing, folded away, forms a thick coil under the body
+    else{[a,b,c]=sph();const k=Math.sqrt(R());sl=[.2+a*2.8*k,.1+b*1.2*k,.55+Math.abs(c)*.5]}   // the near wing, folded over the body: a plump, rounded mass
+    SL.set(sl,i*3);
+    let sw=sl;
+    if(part===1){const row=Math.floor(v*11),vq=row/11+R()*.03,Lr=19*(.72+.28*(1-row/10)),ch=(2.3*Math.pow(1-s,.55)+.35)*3.4,off=(vq-.3)*ch;   // the near wing unfurls huge: feathers fanned in rows, up and across the screen
+      sw=[-.9+.88*s*Lr+(-.47)*off,.5+.47*s*Lr+.88*off,1.2+s*3.5+vq*.6]}
+    SW.set(sw,i*3);
+  });
   B.forEach((p,i)=>{
     v3.set(p[0],p[1],p[2]).applyEuler(rot);bird.set([v3.x,v3.y,v3.z],i*3);
     scat.set([R()*2-1,R(),R()*2-1],i*3);
@@ -350,10 +365,10 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     const glyph=R()<.2;misc.set([p[3],g,R(),R()<.5?1:0],i*4);size[i]=glyph?8+R()*5:1.8+R()*1.6;
   });
 
-  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uHead:{value:new THREE.Vector2()},uTuck:{value:0},
+  const U={uTime:{value:0},uShatter:{value:0},uPx:{value:1},uDim:{value:1},uAmb:{value:0},uBs:{value:1},uBirdOff:{value:new THREE.Vector3()},uRot:{value:new THREE.Matrix3()},uPh:{value:0},uFA:{value:1},uHead:{value:new THREE.Vector2()},uTuck:{value:0},uSleep:{value:0},uWake:{value:0},uSlSc:{value:1},uSlOff:{value:new THREE.Vector3()},
     uSpan:{value:new THREE.Vector3(26,60,6)},uC:{value:[0,1,2,3].map(()=>new THREE.Vector3())},uR:{value:[3.2,3.8,3.8,2.8]},uProx:{value:[0,0,0,0]},uMouse:{value:new THREE.Vector2(99,99)}};
-  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA,uTuck;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
-  attribute vec3 aScat,aOff,aCol;attribute vec4 aMisc;attribute float aSize;varying vec3 vC;varying float vA,vS,vSeed,vSize;
+  const VS=`uniform float uTime,uShatter,uPx,uDim,uAmb,uBs;uniform vec3 uBirdOff,uSpan;uniform mat3 uRot;uniform float uPh,uFA,uTuck,uSleep,uWake,uSlSc;uniform vec3 uSlOff;uniform vec2 uHead;uniform vec3 uC[4];uniform float uR[4],uProx[4];uniform vec2 uMouse;
+  attribute vec3 aScat,aOff,aCol,aSl,aSw;attribute vec4 aMisc;attribute float aSize,aPart;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){float seed=aMisc.z;vec3 sc=vec3(aScat.x*uSpan.x,5.-aScat.y*uSpan.y,aScat.z*uSpan.z);vec3 p;
     vec3 drift=vec3(sin(uTime*.3+seed*30.),cos(uTime*.25+seed*17.),sin(uTime*.2+seed*9.));
     if(uAmb>.5){p=sc+drift*(.35+seed*.6);}else{
@@ -374,13 +389,17 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       b*=uBs;
       b+=aOff*.05*sin(uTime*2.+seed*40.);
       vec3 hero=uRot*b+uBirdOff;float s=smoothstep(0.,1.,uShatter);
+      if(uSleep>.5){   /* phones: curled up asleep; on scroll the head lifts, one huge wing unfurls, then it bursts */
+        float wk=smoothstep(0.,1.,clamp(uWake*1.35-seed*.35,0.,1.));vec3 sp=mix(aSl,aSw,wk);
+        sp.y+=sin(uTime*1.3)*.07*(1.-uWake)+(aPart>2.5&&aPart<4.5?.55*uWake:0.)+(aPart<.5?.35*uWake:0.);
+        sp+=aOff*.04*sin(uTime*2.+seed*40.);hero=sp*uSlSc+uSlOff;}
       p=mix(hero,sc,s)+normalize(sc-hero+.001)*sin(s*3.14159)*2.2*(.4+seed)+drift*.2*s;
       float an=uTime*.12;mat2 m=mat2(cos(an),-sin(an),sin(an),cos(an));
       for(int i=0;i<4;i++){if(abs(aMisc.y-float(i))<.5){vec3 o=aOff;o.xz=m*o.xz;p=mix(p,uC[i]+o*uR[i],smoothstep(0.,1.,uProx[i]));}}
     }
     vec2 dm=p.xy-uMouse;p.xy+=normalize(dm+.0001)*exp(-dot(dm,dm)*.12)*1.1;
     vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z);
-    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim;}`;
+    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim*(1.-.45*uSleep*(1.-smoothstep(0.,.35,uWake)));}`;
   const FS=`precision highp float;uniform float uTime;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){vec2 uv=gl_PointCoord-.5;float a=vSeed*6.283+uTime*(.3+vSeed*.5)*step(.5,vS);
     uv=mat2(cos(a),-sin(a),sin(a),cos(a))*uv;float d=vS>.5?max(abs(uv.x),abs(uv.y))*1.42:length(uv);
@@ -391,23 +410,26 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
   const mk=(g,m)=>{const p=new THREE.Points(g,m);p.frustumCulled=false;scene.add(p);return p};
 
   const g1=new THREE.BufferGeometry();
-  [['position',bird,3],['aScat',scat,3],['aOff',off,3],['aCol',col,3],['aMisc',misc,4],['aSize',size,1]].forEach(([n,a,s])=>g1.setAttribute(n,new THREE.BufferAttribute(a,s)));
+  [['position',bird,3],['aScat',scat,3],['aOff',off,3],['aCol',col,3],['aMisc',misc,4],['aSize',size,1],['aSl',SL,3],['aSw',SW,3],['aPart',PT,1]].forEach(([n,a,s])=>g1.setAttribute(n,new THREE.BufferAttribute(a,s)));
   mk(g1,mat(0));
 
   /* large drifting outlined squares & circles (ambient depth layer) */
   const M=small?18:38,a={position:new Float32Array(M*3),aScat:new Float32Array(M*3),aOff:new Float32Array(M*3),aCol:new Float32Array(M*3),aMisc:new Float32Array(M*4),aSize:new Float32Array(M)};
   for(let i=0;i<M;i++){a.aScat.set([R()*2-1,R(),R()*2-1],i*3);a.aCol.set(pick({iris:.3,saf:.3,teal:.2,white:.15,vio:.05}),i*3);a.aMisc.set([0,0,R(),R()<.5?1:0],i*4);a.aSize[i]=14+R()*26}
   const g2=new THREE.BufferGeometry();for(const k in a)g2.setAttribute(k,new THREE.BufferAttribute(a[k],k==='aMisc'?4:k==='aSize'?1:3));
+  g2.setAttribute('aSl',new THREE.BufferAttribute(new Float32Array(M*3),3));g2.setAttribute('aSw',new THREE.BufferAttribute(new Float32Array(M*3),3));g2.setAttribute('aPart',new THREE.BufferAttribute(new Float32Array(M),1));
   mk(g2,mat(1));
 
   /* layout ↔ world mapping */
   const cl=[...document.querySelectorAll('[data-cl]')].map(el=>({el,i:+el.dataset.cl,side:+el.dataset.side,y:0}));
-  let vw,vh,H,W,sm=scrollY,mx=0,my=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
+  let vw,vh,H,W,sm=scrollY,mx=0,my=0,slY=0;const base=new THREE.Vector3(),P0=new THREE.Vector3(),P1=new THREE.Vector3(),P2=new THREE.Vector3(),F=new THREE.Vector3(),F2=new THREE.Vector3(),F3=new THREE.Vector3(),UP=new THREE.Vector3(),RG=new THREE.Vector3(),ZZ=new THREE.Vector3(0,0,1),MX=new THREE.Matrix4(),QT=new THREE.Quaternion(),QB=new THREE.Quaternion(),QS=new THREE.Quaternion();let bank=0,fm=0,ph=0,lastT=performance.now(),inited=false;const BP=new THREE.Vector3(),BD=new THREE.Vector3(),TG=new THREE.Vector3(),DS=new THREE.Vector3(),DP=new THREE.Vector3();let dimBase=.9;const heroTxt=document.querySelector('#hero .grid>div');
   const fit=()=>{
     vw=innerWidth;vh=innerHeight;const dpr=Math.min(devicePixelRatio||1,2);ren.setPixelRatio(dpr);ren.setSize(vw,vh,false);U.uPx.value=dpr;
     cam.aspect=vw/vh;cam.updateProjectionMatrix();H=2*Math.tan(Math.PI/8)*22;W=H*cam.aspect;
     const wide=cam.aspect>.85;U.uSpan.value.set(Math.max(W*.5,12),document.documentElement.scrollHeight/vh*H,6);
     base.set(wide?W*.24:0,wide?.4:H*.2,wide?0:-3);dimBase=wide?.9:.65;U.uBs.value=wide?Math.min(1.3,W/25):.7;
+    const lb=document.querySelector('#hero .label');U.uSlSc.value=Math.min(.95,W/9);
+    if(lb){const top=lb.getBoundingClientRect().top+scrollY-(parseFloat(getComputedStyle(lb).transform.split(',')[5])||0),cy=top-16-.1*vh;slY=-(cy-vh/2)/vh*H}   /* rests just above the hero text, like a bench */
     cl.forEach(c=>{const r=c.el.getBoundingClientRect();c.y=r.top+scrollY+r.height/2;
       U.uC.value[c.i].set(wide?c.side*W*.24:0,-(c.y-vh/2)/vh*H,0);U.uR.value[c.i]=(wide?1.2:.8)*[3.2,3.8,3.8,2.8][c.i]});
   };
@@ -425,7 +447,9 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
        look down (head leads) → turn nose-down while still flapping → wings close and it falls, faster and faster → bursts */
     const dtl=Math.min((now-lastTL)/1000,.05);lastTL=now;tl=Math.min(1,Math.max(0,tl+dtl*(S>10?1/2.1:-1/1.2)));
     const look=ss(0,.18,tl),turn=ss(.12,.5,tl),tuck=ss(.4,.65,tl),fall=ss(.42,.85,tl),burst=ss(.68,1,tl);
-    U.uShatter.value=Math.max(burst,ss(.8*vh,1.4*vh,sm));
+    const sleeping=!(cam.aspect>.85);U.uSleep.value=sleeping?1:0;U.uWake.value=ss(0,.5,tl);
+    U.uShatter.value=Math.max(sleeping?ss(.6,1,tl):burst,ss(.8*vh,1.4*vh,sm));
+    U.uSlOff.value.set(0,slY+cam.position.y*Math.max(Math.min(1,sm/(.03*vh)),ss(0,.12,tl)),-1.5);   /* stays put on screen while it wakes */
     /* natural flight: constant speed, wide smooth turns toward a slowly drifting target, bank into turns, flap then glide */
     {const k=1-U.uShatter.value,amp=cam.aspect>.85?1:.4,dt=Math.min((now-lastT)/1000,.05)*(RM?.15:1);lastT=now;
      if(!inited){BP.copy(base);BP.x=-W*.3;BD.set(1,.12,-.1).normalize();inited=true}
