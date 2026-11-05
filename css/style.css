@@ -1,5 +1,5 @@
 /* ============================================================
-   PRAPTI DAS — Portfolio
+   PRAPTI DAS: Portfolio
    Gothic Victorian Maximalist Theme
    ============================================================ */
 
@@ -444,7 +444,7 @@ body::before {
 .tag:hover { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,.09); transform:translateY(-2px); }
 
 /* ============================================================
-   WORKS — VIDEO GRID
+   WORKS: VIDEO GRID
    ============================================================ */
 .video-grid {
   display: grid;
@@ -1246,7 +1246,7 @@ footer {
 }
 
 /* ============================================================
-   ABOUT — NEW LAYOUT (no image)
+   ABOUT: NEW LAYOUT (no image)
    ============================================================ */
 .about-full {
   max-width: 900px;
@@ -1416,7 +1416,7 @@ footer {
 
 
 /* ============================================================
-   DESIGN GRID — poster + carousel side by side
+   DESIGN GRID: poster + carousel side by side
    ============================================================ */
 .design-grid {
   display: grid;

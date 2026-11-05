@@ -1,4 +1,4 @@
-# Prapti Das — Portfolio
+# Prapti Das: Portfolio
 
 Gothic Victorian maximalist portfolio website. Multi-page, fully static HTML/CSS/JS. Ready to deploy on Vercel, Netlify, or GitHub Pages.
 
@@ -50,13 +50,13 @@ prapti-portfolio/
 
 ## How to Upload to GitHub (With Large Video Files)
 
-Videos are between 7MB and 22MB. GitHub allows individual files up to 100MB, but warns at 50MB and can be slow. The correct solution is **Git LFS (Large File Storage)** — GitHub gives you 1GB of LFS storage free.
+Videos are between 7MB and 22MB. GitHub allows individual files up to 100MB, but warns at 50MB and can be slow. The correct solution is **Git LFS (Large File Storage)**: GitHub gives you 1GB of LFS storage free.
 
 The `.gitattributes` file in this repo is already configured to track `.mp4` files with LFS. You just need to install LFS once.
 
 ---
 
-### Step 1 — Install Git LFS on your computer
+### Step 1: Install Git LFS on your computer
 
 **Windows:**
 1. Download Git from https://git-scm.com (if you don't have it already)
@@ -75,20 +75,20 @@ The `.gitattributes` file in this repo is already configured to track `.mp4` fil
 
 ---
 
-### Step 2 — Create a GitHub repository
+### Step 2: Create a GitHub repository
 
 1. Go to https://github.com and log in
 2. Click the **+** button in the top right → **New repository**
 3. Name it: `prapti-portfolio` (or anything you like)
 4. Set it to **Public** (required for free Vercel hosting)
-5. Do NOT check "Add a README" — the repo must be empty
+5. Do NOT check "Add a README": the repo must be empty
 6. Click **Create repository**
 7. Copy the URL it shows you. It will look like:
    `https://github.com/YOUR-USERNAME/prapti-portfolio.git`
 
 ---
 
-### Step 3 — Upload the repo from your computer
+### Step 3: Upload the repo from your computer
 
 Open **Git Bash** (Windows) or **Terminal** (Mac) and run these commands one by one.
 
@@ -108,7 +108,7 @@ git lfs install
 git add .
 
 # 5. Make your first commit
-git commit -m "Initial commit — portfolio"
+git commit -m "Initial commit: portfolio"
 
 # 6. Connect to GitHub
 git remote add origin YOUR-GITHUB-URL
@@ -121,7 +121,7 @@ git push -u origin main
 
 ---
 
-### Step 4 — Deploy on Vercel (free)
+### Step 4: Deploy on Vercel (free)
 
 1. Go to https://vercel.com and sign in with your GitHub account
 2. Click **Add New Project**
@@ -149,7 +149,7 @@ git push
 ```
 
 **"remote: error: GH001: Large files detected":**
-Same fix as above — make sure `git lfs install` runs before `git add`.
+Same fix as above: make sure `git lfs install` runs before `git add`.
 
 **Videos don't play on the live site:**
 Vercel serves LFS files correctly. If videos don't play, check that the `src` paths in `index.html` match the actual filenames in `assets/videos/` exactly (case-sensitive).
@@ -167,7 +167,7 @@ To update the site after the first push:
 # Make your edits in index.html, css/style.css, or js/main.js
 # Then:
 git add .
-git commit -m "Update — describe what you changed"
+git commit -m "Update: describe what you changed"
 git push
 ```
 

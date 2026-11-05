@@ -1,5 +1,5 @@
 /* ============================================================
-   PRAPTI DAS — Portfolio JS
+   PRAPTI DAS: Portfolio JS
    ============================================================ */
 
 // ── PAGE ROUTING ────────────────────────────────────────────
@@ -69,6 +69,11 @@ if (hamburger) {
   });
 }
 
+// close the menu when you tap outside it
+document.addEventListener('click', e => {
+  if (navLinks && navLinks.classList.contains('open') && !navLinks.contains(e.target) && !(hamburger && hamburger.contains(e.target))) navLinks.classList.remove('open');
+});
+
 // close nav on link click (mobile)
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
@@ -111,7 +116,7 @@ function clearAnimations() {
   document.querySelectorAll('.snitch, .raven, .spark, .bolt').forEach(el => el.remove());
 }
 
-// HARRY POTTER — golden snitch
+// HARRY POTTER: golden snitch
 function spawnSnitch() {
   const snitch = document.createElement('div');
   snitch.className = 'snitch';
@@ -137,7 +142,7 @@ function spawnSnitch() {
   }, 5500);
 }
 
-// BOOK THIEF — raven flying across
+// BOOK THIEF: raven flying across
 function spawnRaven() {
   const raven = document.createElement('div');
   raven.className = 'raven';
@@ -145,7 +150,7 @@ function spawnRaven() {
   document.body.appendChild(raven);
 }
 
-// MORTAL INSTRUMENTS — portal sparks
+// MORTAL INSTRUMENTS: portal sparks
 function spawnSparks() {
   for (let i = 0; i < 14; i++) {
     const spark = document.createElement('div');
@@ -166,7 +171,7 @@ function spawnSparks() {
   }
 }
 
-// PERCY JACKSON — lightning bolts falling
+// PERCY JACKSON: lightning bolts falling
 function spawnBolts() {
   for (let i = 0; i < 4; i++) {
     const bolt = document.createElement('div');
