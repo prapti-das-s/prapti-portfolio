@@ -36,13 +36,13 @@ html{-webkit-text-size-adjust:100%}
 
 /* ---------- phone navigation: three dashes on the left, menu slides in from the left ---------- */
 @media(max-width:700px){
-  #nav{height:auto;justify-content:flex-start;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(2,10,20,.94)}
+  #nav{height:auto;justify-content:flex-start;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(2,10,20,.96)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;transform:none!important}
   .hamburger{order:-1;display:flex!important;justify-content:center;width:46px;height:46px;padding:0 12px;border:1px solid rgba(139,140,240,.45);border-radius:12px;background:rgba(8,8,42,.6);position:relative;z-index:2}
   .hamburger span{width:100%;background:#fff}
   #nav:has(.nav-links.open) .hamburger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   #nav:has(.nav-links.open) .hamburger span:nth-child(2){opacity:0}
   #nav:has(.nav-links.open) .hamburger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nav-links,.nav-links.open{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed!important;top:0;left:0;right:auto;bottom:0;width:min(82vw,320px);overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 20px 28px;margin:0;list-style:none;background:#020a14!important;border:0!important;border-right:1px solid rgba(80,80,210,.4)!important;transform:translateX(-104%);pointer-events:none;transition:transform .45s cubic-bezier(.2,.7,.2,1);z-index:-1}
+  .nav-links,.nav-links.open{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed!important;top:0;left:0;right:auto;bottom:auto;height:100vh;height:100dvh;width:min(82vw,320px);overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 20px 28px;margin:0;list-style:none;background:#020a14!important;border:0!important;border-right:1px solid rgba(80,80,210,.4)!important;transform:translateX(-104%);pointer-events:none;transition:transform .45s cubic-bezier(.2,.7,.2,1);z-index:-1}
   .nav-links.open{transform:none;pointer-events:auto;box-shadow:0 0 0 100vmax rgba(2,2,14,.62)}
   .nav-links li{display:block}
   .nav-links a,.nav-links a.active{display:block;padding:15px 4px;font-size:19px;text-transform:none;letter-spacing:0;border-radius:0;border:0!important;border-bottom:1px solid rgba(80,80,210,.25)!important;background:none!important;color:#cfd0ff!important}
