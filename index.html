@@ -533,7 +533,7 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
      if(r&&r.bottom>0&&k>.2){const d=22-U.uBirdOff.value.z,sc=22/d,bsz=U.uBs.value,sx=(U.uBirdOff.value.x-cam.position.x)*sc/W*vw+vw/2,sy=vh/2-(U.uBirdOff.value.y-cam.position.y)*sc/H*vh,hw=6.4*bsz*sc/W*vw;
        const gx=Math.max(r.left-sx,0,sx-r.right),gy=Math.max(r.top-sy,0,sy-r.bottom),gap=Math.hypot(gx,gy)-hw*.25;
        f=1-Math.min(Math.max(gap/(hw*.85),0),1)}
-     const tgtDim=dimBase+(.12-dimBase)*(f*f*(3-2*f));
+     const tgtDim=mob?.95:dimBase+(.12-dimBase)*(f*f*(3-2*f));   /* on phones the sleeping bird stays fully visible */
      U.uDim.value+=(tgtDim-U.uDim.value)*(tgtDim<U.uDim.value?.045:.028)}glow.position.set(U.uBirdOff.value.x,1,7);glow.intensity=.4+1.9*(1-U.uShatter.value);
     cl.forEach(c=>{U.uProx.value[c.i]=Math.min(Math.max((1.05-Math.abs(c.y-(sm+vh/2))/vh)/.8,0),1)});
     U.uMouse.value.set(cam.position.x+mx*W/2,cam.position.y+my*H/2);
