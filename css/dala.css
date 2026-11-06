@@ -211,3 +211,21 @@ body{background:radial-gradient(ellipse at 50% 0%,#14145a 0%,#08082a 50%,#02020a
 /* the entry a visitor was sent to */
 .tl-item{transition:box-shadow .6s,border-color .6s}
 .tl-item.flash{border-color:#8052ff!important;box-shadow:0 0 0 1px #8052ff,0 0 44px rgba(128,82,255,.35)!important}
+
+/* ---- phone menu: a solid full-screen panel that always shows every link, and the page behind it stays put ---- */
+@media(max-width:860px){
+  #nav{z-index:1001}
+  #nav .nav-logo,#nav .brand,#nav .hamburger{position:relative;z-index:1002}
+  #nav-links.open{display:flex!important;flex-direction:column;justify-content:flex-start;position:fixed!important;inset:0!important;top:0!important;height:100vh;height:100dvh;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;gap:2px;padding:104px 24px 48px!important;background:#020a14!important;border:0!important;z-index:1000;align-items:stretch}
+  #nav-links.open li{text-align:center;list-style:none}
+  #nav-links.open li:first-child{margin-top:auto}
+  #nav-links.open li:last-child{margin-bottom:auto;margin-top:12px}
+  #nav-links.open a{display:inline-block;font-size:18px;padding:16px 28px}
+  body:has(#nav-links.open){overflow:hidden}
+  #nav:has(#nav-links.open){background:#020a14}
+  .hamburger span{transition:transform .35s,opacity .25s}
+  #nav:has(#nav-links.open) .hamburger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #nav:has(#nav-links.open) .hamburger span:nth-child(2){opacity:0}
+  #nav:has(#nav-links.open) .hamburger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
