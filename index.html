@@ -364,15 +364,55 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
     if(g===2){const r=Math.sqrt(R())*1.5,t=r*2.6+(R()<.5?0:Math.PI)+(R()-.5)*.6;return[Math.cos(t)*r,(R()-.5)*.25,Math.sin(t)*r]}
     const u=R()*TAU,w=R()*TAU;return[(1+.3*Math.cos(w))*Math.cos(u),.3*Math.sin(w),(1+.3*Math.cos(w))*Math.sin(u)]
   };
+/* Sleeping dragon in side profile, facing left. dragonSleep(part,ci,s,v,R,TAU) -> [x,y,z] for one particle.
+   Shapes are real outlines; particles fill them and crowd their edges so the silhouette reads. */
+const dragonSleep=(()=>{
+  const bez=(a,b,c,d,t)=>{const u=1-t;return[u*u*u*a[0]+3*u*u*t*b[0]+3*u*t*t*c[0]+t*t*t*d[0],u*u*u*a[1]+3*u*u*t*b[1]+3*u*t*t*c[1]+t*t*t*d[1]]};
+  const inside=(P,x,y)=>{let c=false;for(let i=0,j=P.length-1;i<P.length;j=i++){if((P[i][1]>y)!==(P[j][1]>y)&&x<(P[j][0]-P[i][0])*(y-P[i][1])/(P[j][1]-P[i][1])+P[i][0])c=!c}return c};
+  const box=P=>{let a=1e9,b=1e9,c=-1e9,d=-1e9;P.forEach(p=>{a=Math.min(a,p[0]);b=Math.min(b,p[1]);c=Math.max(c,p[0]);d=Math.max(d,p[1])});return[a,b,c,d]};
+  const mkPoly=P=>({P,B:box(P)});
+  /* torso with the neck sweeping down to the head, arched back and a heavy haunch */
+  const TORSO=mkPoly([[-2.35,-.55],[-2.15,-.05],[-1.7,.45],[-1.1,.85],[-.3,1.1],[.6,1.22],[1.5,1.2],[2.3,1.0],[2.95,.55],[3.3,-.1],[3.3,-.7],[2.85,-1.15],[2.1,-1.3],[1.2,-1.28],[.2,-1.22],[-.8,-1.12],[-1.6,-.95]]);
+  const HG=(p)=>[-3.2+(p[0]+3.2)*1.22,-.6+(p[1]+.6)*1.22];
+  const HEAD=mkPoly([[-4.15,-.98],[-3.95,-.72],[-3.55,-.5],[-3.3,-.2],[-3.05,.08],[-2.7,.2],[-2.35,.08],[-2.15,-.25],[-2.25,-.7],[-2.7,-1.0],[-3.3,-1.12],[-3.8,-1.12]].map(HG));
+  const ARM=mkPoly([[-3.65,-1.3],[-3.2,-1.12],[-2.3,-1.05],[-1.6,-1.1],[-1.3,-1.4],[-2.0,-1.52],[-3.0,-1.5]]);
+  /* folded wing: shoulder, wrist peak, four finger tips with scalloped membrane between them */
+  const WSH=[-1.1,.72],WRI=[.05,1.9],T=[[3.95,.95],[4.2,.5],[3.95,.02],[3.3,-.34]],SC=[[2.95,.62],[3.35,.2],[2.9,-.18]];
+  const WING=mkPoly([WSH,WRI,[1.6,1.55],T[0],SC[0],T[1],SC[1],T[2],SC[2],T[3],[2.2,-.02],[.9,.25],[-.4,.42]]);
+  const SPARS=[[WSH,WRI],[WRI,T[0]],[WRI,T[1]],[WRI,T[2]],[WRI,T[3]]];
+  const HORN1=[[-2.75,.2],[-2.3,.72],[-1.7,.95],[-1.2,.75]],HORN2=[[-2.5,.08],[-2.05,.45],[-1.55,.5],[-1.2,.3]];
+  const fill=(poly,R,edge)=>{
+    const P=poly.P,B=poly.B;
+    if(R()<edge){const i=(R()*P.length)|0,a=P[i],b=P[(i+1)%P.length],t=R();return[a[0]+(b[0]-a[0])*t+(R()-.5)*.05,a[1]+(b[1]-a[1])*t+(R()-.5)*.05]}
+    for(let k=0;k<40;k++){const x=B[0]+R()*(B[2]-B[0]),y=B[1]+R()*(B[3]-B[1]);if(inside(P,x,y))return[x,y]}
+    return[(B[0]+B[2])/2,(B[1]+B[3])/2]};
+  const tailPt=(t,R)=>{const p=t<.5?bez([3.0,-.55],[4.5,-.7],[4.5,-2.0],[2.6,-2.2],t*2):bez([2.6,-2.2],[.9,-2.4],[-1.4,-2.45],[-2.9,-1.95],t*2-1),th=(1-t)*.5+.05;
+    return[p[0]+(R()-.5)*th*2,p[1]+(R()-.5)*th*2]};
+  return(part,ci,s,v,R,TAU)=>{
+    const rr=()=>R()*2-1;
+    const wingPt=near=>{
+      let x,y;
+      if(R()<.3){const k=(R()*SPARS.length)|0,t=Math.pow(R(),.9),A=SPARS[k][0],Bp=SPARS[k][1];x=A[0]+(Bp[0]-A[0])*t+rr()*.03;y=A[1]+(Bp[1]-A[1])*t+rr()*.03}
+      else{[x,y]=fill(WING,R,.12)}
+      y+=.2*Math.sin(Math.PI*Math.min(Math.max((x+1.1)/5.3,0),1));
+      return near?[x,y,.55+rr()*.15]:[(x+.15)*.9-.55,(y+.25)*.9+.18,-.5+rr()*.15]};
+    if(part===1)return wingPt(true);
+    if(part===0){const k=ci%100;if(k<30)return[...tailPt(R(),R),rr()*.25];if(k<52)return wingPt(false);if(k<88){const q=fill(TORSO,R,.06);return[q[0],q[1],rr()*.45]}const q=fill(HEAD,R,.06);return[q[0],q[1],.2+rr()*.25]}
+    if(part===5){const q=tailPt(R(),R);return[q[0],q[1],rr()*.25]}
+    if(part===2){const k=ci%100;
+      if(k<72){const q=fill(TORSO,R,.1);return[q[0],q[1],rr()*.45]}
+      if(k<86){const q=fill(ARM,R,.12);return[q[0],q[1],.45+rr()*.15]}
+      const t=R(),back=bez([-1.5,.55],[-.5,1.5],[1.8,1.45],[3.0,.55],t),h=.12+.3*Math.abs(Math.sin(t*20))*(1-.4*Math.abs(2*t-1));return[back[0]+rr()*.03,back[1]+R()*h,rr()*.1]}
+    if(part===3){if(ci%4===0){const H=ci%8?HORN1:HORN2,t=R(),p=bez(H[0],H[1],H[2],H[3],t),th=(1-t)*.16+.03;return[p[0]+rr()*th,p[1]+rr()*th,rr()*.08]}
+      const q=fill(HEAD,R,.1);return[q[0],q[1],.2+rr()*.25]}
+    if(part===4){if(ci%7===0)return[-3.05+rr()*.1,-.36+rr()*.06,.6];const t=R(),x=-4.3+t*1.1,y=-1.05+t*.2;return[x+rr()*.05,y+rr()*.06-.02,.25+rr()*.12]}
+    return[0,0,0]};
+})();
+  const CI={};
   const SL=new Float32Array(B.length*3),SW=new Float32Array(B.length*3),PT=new Float32Array(B.length),rr=()=>R()*2-1;
   B.forEach((p,i)=>{
     const part=p[5],s=p[6],v=p[7];let a,b,c,sl;PT[i]=part;
-    if(part===2){[a,b,c]=sph();sl=[a*2.7,b*1.15,c*.95]}                                                  // body: a low, rounded mass
-    else if(part===3){[a,b,c]=sph();sl=[-2.75+a*.62,-.5+b*.55,.35+c*.55]}                                // head resting low at the front
-    else if(part===4){sl=[-3.1-v*.75+rr()*.07,-.78-v*.3+rr()*.07,.55+rr()*.08]}                         // beak tucked in
-    else if(part===5){const th=-.12*Math.PI-v*.88*Math.PI,w=(1-v)*.55+.12;sl=[.2+(3.3+rr()*w)*Math.cos(th),-.25+(1.5+rr()*w*.6)*Math.sin(th),rr()*.35]}   // tail wrapped round underneath
-    else if(part===0){const th=-.04*Math.PI-s*1.02*Math.PI,w=(1-s)*.7+.3;sl=[.1+(3.35+(v-.5)*w)*Math.cos(th),-.25+(1.5+(v-.5)*w*.7)*Math.sin(th),(R()-.5)*.9]}   // the far wing, folded away, forms a thick coil under the body
-    else{[a,b,c]=sph();const k=Math.sqrt(R());sl=[.2+a*2.8*k,.1+b*1.2*k,.55+Math.abs(c)*.5]}   // the near wing, folded over the body: a plump, rounded mass
+    sl=dragonSleep(part,CI[part]=(CI[part]||0)+1,s,v,R,TAU);   // a sleeping dragon in profile: head on its forelimbs, wing folded over its back, tail curled round
     SL.set(sl,i*3);
     let sw=sl;
     if(part===1){const row=Math.floor(v*11),vq=row/11+R()*.03,Lr=19*(.72+.28*(1-row/10)),ch=(2.3*Math.pow(1-s,.55)+.35)*3.4,off=(vq-.3)*ch;   // the near wing unfurls huge: feathers fanned in rows, up and across the screen
@@ -419,8 +459,8 @@ section:not(#hero) .label::after{content:"";width:28px;height:1px;background:var
       for(int i=0;i<4;i++){if(abs(aMisc.y-float(i))<.5){vec3 o=aOff;o.xz=m*o.xz;p=mix(p,uC[i]+o*uR[i],smoothstep(0.,1.,uProx[i]));}}
     }
     vec2 dm=p.xy-uMouse;p.xy+=normalize(dm+.0001)*exp(-dot(dm,dm)*.12)*1.1;
-    vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z);
-    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim*(1.-.45*uSleep*(1.-smoothstep(0.,.35,uWake)));}`;
+    vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=aSize*uPx*(22./-mv.z)*(uSleep>.5&&aSize>6.?mix(.5,1.,smoothstep(0.,.4,uWake)):1.);
+    vC=aCol;vSeed=seed;vS=aMisc.w;vSize=aSize;vA=(.55+.45*sin(uTime*1.6+seed*60.))*uDim*(1.-.12*uSleep*(1.-smoothstep(0.,.35,uWake)));}`;
   const FS=`precision highp float;uniform float uTime;varying vec3 vC;varying float vA,vS,vSeed,vSize;
   void main(){vec2 uv=gl_PointCoord-.5;float a=vSeed*6.283+uTime*(.3+vSeed*.5)*step(.5,vS);
     uv=mat2(cos(a),-sin(a),sin(a),cos(a))*uv;float d=vS>.5?max(abs(uv.x),abs(uv.y))*1.42:length(uv);
